@@ -1,6 +1,6 @@
 # ALS MSISDN Oracle (Work in Progress)
 
-Code is based on the [Mojaloop ALS Consent Oracle] (https://github.com/mojaloop/als-consent-oracle)
+Code is based on the [Mojaloop ALS Consent Oracle](https://github.com/mojaloop/als-consent-oracle)
 
 ## Overview
 
