@@ -43,7 +43,7 @@ async function register(server: Server): Promise<Server> {
     Vision,
     Blip,
     ErrorHandling,
-    Util.Hapi.HapiEventPlugin,
+    Util.Hapi.HapiEventPlugin
     // TODO: ALS is sending incorrect headers (vnd.application.parties instead of vnd.interoperability.participants)
     // So we need to disable this validation for now
     // Util.Hapi.FSPIOPHeaderValidation

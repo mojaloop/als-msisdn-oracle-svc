@@ -21,7 +21,9 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     // Sometimes openapi generator emits empty interfaces
-    '@typescript-eslint/no-empty-interface': 'warn'
+    '@typescript-eslint/no-empty-interface': 'warn',
+    'import/no-named-as-default-member': 'off',
+    'import/no-named-as-default': 'off',
   },
   settings: {
     'import/resolver': {
@@ -35,7 +37,7 @@ module.exports = {
         'test /**/*.ts',
       ],
       rules: {
-        '@typescript-eslint/explicit-function-return-type': 'off'
+        '@typescript-eslint/explicit-function-return-type': 'off',
       }
     },
     {

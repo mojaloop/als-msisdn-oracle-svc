@@ -36,7 +36,10 @@ export class OracleDB {
     return this.Db.transaction(async (trx): Promise<number> => {
       // Transaction is rolled back automatically if there is
       // an error and the returned promise is rejected
-      const partyMapItems: PartyMapItem[] = await trx<PartyMapItem>('oracleMSISDN').select('*').where({ id: partyMapItem.id }).limit(1)
+      const partyMapItems: PartyMapItem[] = await trx<PartyMapItem>('oracleMSISDN')
+        .select('*')
+        .where({ id: partyMapItem.id })
+        .limit(1)
 
       if (partyMapItems.length === 0) {
         throw new NotFoundError('oracleMSISDN', partyMapItem.id)
@@ -57,7 +60,10 @@ export class OracleDB {
   // Retrieve PartyMapItem by ID (unique)
   public async retrieve(id: string): Promise<PartyMapItem> {
     // Returns array containing PartyMapItems
-    const partyMapItems: PartyMapItem[] = await this.Db<PartyMapItem>('oracleMSISDN').select('*').where({ id: id }).limit(1)
+    const partyMapItems: PartyMapItem[] = await this.Db<PartyMapItem>('oracleMSISDN')
+      .select('*')
+      .where({ id: id })
+      .limit(1)
 
     if (partyMapItems.length === 0) {
       throw new NotFoundError('oracleMSISDN', id)
