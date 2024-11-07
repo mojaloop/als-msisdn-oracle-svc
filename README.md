@@ -2,9 +2,6 @@
 
 Code is based on the [Mojaloop ALS Consent Oracle](https://github.com/mojaloop/als-consent-oracle)
 
-## Overview
-
-- [Documentation](./docs/README.md)
 
 ## Setup
 
