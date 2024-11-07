@@ -1,0 +1,171 @@
+{
+  "name": "@mojaloop/als-msisdn-oracle-svc",
+  "version": "0.0.1",
+  "description": "An Account Lookup Service Oracle for MSISDN identifiers",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18.x"
+  },
+  "config": {
+    "knex": "--knexfile ./dist/config/knexfile.ts"
+  },
+  "scripts": {
+    "audit:fix": "npm audit fix",
+    "audit:check": "npx audit-ci --config ./audit-ci.jsonc",
+    "build": "npm run build:openapi; tsc -p ./tsconfig.build.json; cp -R config/*.json dist/config/; mkdir -p ./dist/src/interface; cp ./src/interface/*.yaml ./dist/src/interface/",
+    "build:openapi": "openapi bundle --output ./src/interface/api.yaml --ext yaml ./src/interface/api-template.yaml",
+    "dep:check": "npx ncu -e 2",
+    "dep:update": "npx ncu -u",
+    "docker:build": "docker build --build-arg NODE_VERSION=\"$(cat .nvmrc)-alpine\" -t als-msisdn-oracle-svc:local -f ./Dockerfile ./",
+    "docker:run": "docker run -p 3000:3000 als-msisdn-oracle-svc:local",
+    "docker:up": "docker-compose -f docker-compose.yml up",
+    "docker:stop": "docker-compose -f docker-compose.yml stop",
+    "docker:rm": "docker-compose -f docker-compose.yml rm -f -v",
+    "docker:down": "docker-compose -f docker-compose.yml down -v",
+    "docker:clean": "docker-compose -f docker-compose.yml down --rmi local",
+    "lint": "eslint --ext ts --ext js test src",
+    "lint:fix": "eslint --fix --ext ts --ext js test src",
+    "prepare": "husky install",
+    "pretest": "echo \"pretest - TODO...\"",
+    "release": "standard-version --releaseCommitMessageFormat 'chore(release): {{currentTag}} [skip ci]'",
+    "snapshot": "standard-version --no-verify --skip.changelog --prerelease snapshot --releaseCommitMessageFormat 'chore(snapshot): {{currentTag}}'",
+    "standard": "echo '\\033[1;33m  This project uses eslint instead of standard. Use `npm run lint` instead.'",
+    "start": "node ./dist/src/cli.js",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/cli.ts",
+    "test": "npm run test:unit test:integration",
+    "test:bdd": "jest --config './jest.bdd.config.js' --runInBand --testMatch '**/test/step-definitions/**/*.step.ts'",
+    "test:coverage": "jest --coverage --coverageThreshold='{}'",
+    "test:coverage-check": "jest --config './jest.coverage.config.js' --coverage",
+    "test:integration": "jest --config './jest.integration.config.js' --runInBand --testMatch '**/test/integration/**/*.(test|spec).ts'",
+    "test:junit": "jest --reporters=default --reporters=jest-junit",
+    "test:unit": "jest --testMatch '**/test/unit/**/*.(test|spec).ts'",
+    "watch": "tsc -w",
+    "migrate": "run-s migrate:latest seed:run",
+    "migrate:latest": "knex $npm_package_config_knex migrate:latest",
+    "migrate:rollback": "knex $npm_package_config_knex migrate:rollback",
+    "seed:run": "knex $npm_package_config_knex seed:run",
+    "wait-4-docker": "node ./scripts/_wait4_all.js"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --cache --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mojaloop/als-msisdn-oracle-svc.git"
+  },
+  "keywords": [
+    "metrics",
+    "central",
+    "services"
+  ],
+  "_moduleAliases": {
+    "~": "dist/src"
+  },
+  "author": "Vijay Kumar <vijaya.guthi@infitx.com",
+  "contributors": [
+    "Vijay Kumar Guthi <vijaya.guthi@infitx.com>"
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/mojaloop/als-msisdn-oracle-svc/issues"
+  },
+  "homepage": "https://github.com/mojaloop/als-msisdn-oracle-svc#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@redocly/openapi-cli": "^1.0.0-beta.94",
+    "@types/jest": "29.5.14",
+    "@typescript-eslint/eslint-plugin": "6.10.0",
+    "@typescript-eslint/parser": "6.10.0",
+    "add": "^2.0.6",
+    "audit-ci": "^7.1.0",
+    "axios": "^1.7.7",
+    "eslint": "8.53.0",
+    "eslint-config-prettier": "9.0.0",
+    "eslint-config-standard": "17.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-cucumber": "^2.0.0",
+    "eslint-plugin-import": "2.29.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "5.0.1",
+    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-standard": "4.1.0",
+    "husky": "^9.1.6",
+    "jest": "29.7.0",
+    "jest-cucumber": "^4.5.0",
+    "jest-junit": "16.0.0",
+    "lint-staged": "^15.2.10",
+    "multi-file-swagger": "^2.3.0",
+    "nodemon": "^3.1.7",
+    "npm-check-updates": "17.1.10",
+    "source-map-support": "0.5.21",
+    "standard-version": "^9.5.0",
+    "ts-jest": "^29.2.5"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@hapi/good": "^9.0.1",
+    "@hapi/hapi": "^21.3.12",
+    "@hapi/inert": "^7.1.0",
+    "@hapi/vision": "^7.0.3",
+    "@mojaloop/api-snippets": "^17.7.4",
+    "@mojaloop/central-services-health": "15.0.0",
+    "@mojaloop/central-services-shared": "18.11.0",
+    "@mojaloop/sdk-standard-components": "19.4.1",
+    "@types/convict": "^6.1.6",
+    "@types/node": "^22.9.0",
+    "@types/rc": "^1.2.4",
+    "ajv": "8.x.x",
+    "ajv-keywords": "5.x.x",
+    "babel-jest": "^29.7.0",
+    "blipp": "^4.0.2",
+    "commander": "^12.1.0",
+    "convict": "^6.2.4",
+    "dot-prop": "^9.0.0",
+    "hapi-openapi": "^3.0.0",
+    "hapi-swagger": "^17.3.0",
+    "knex": "3.1.0",
+    "module-alias": "^2.2.3",
+    "mysql": "^2.18.1",
+    "npm-run-all": "^4.1.5",
+    "parse-strings-in-object": "^2.0.0",
+    "path": "^0.12.7",
+    "rc": "^1.2.8",
+    "sqlite3": "^5.1.7",
+    "ts-node": "10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "5.6.3"
+  },
+  "peerDependencies": {
+    "@mojaloop/central-services-error-handling": ">=12.x.x",
+    "@mojaloop/central-services-logger": ">=11.x.x",
+    "@mojaloop/central-services-metrics": ">=12.x.x",
+    "@mojaloop/event-sdk": ">=14.x.x",
+    "ajv": "8.x.x",
+    "ajv-keywords": "5.x.x"
+  },
+  "peerDependenciesMeta": {
+    "@mojaloop/central-services-error-handling": {
+      "optional": false
+    },
+    "@mojaloop/central-services-logger": {
+      "optional": false
+    },
+    "@mojaloop/central-services-metrics": {
+      "optional": false
+    },
+    "@mojaloop/event-sdk": {
+      "optional": false
+    },
+    "ajv": {
+      "optional": false
+    },
+    "ajv-keyboards": {
+      "optional": false
+    }
+  }
+}

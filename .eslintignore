@@ -1,0 +1,6 @@
+node_modules/**/*.js
+coverage/*
+.circleci/*
+*.d.ts
+commitlint.config.js
+.eslintrc.js

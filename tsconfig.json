@@ -1,0 +1,58 @@
+{
+  "include": [
+    "src",
+    "test",
+    "migrations",
+    "seeds",
+    "ambient.d.ts",
+    "commitlint.config.js",
+    "jest.bdd.config.js",
+    "jest.config.js",
+    "jest.coverage.config.js",
+    "jest.integration.config.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "coverage"
+  ],
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "rootDirs": [
+      "src",
+      "test"
+    ],
+    "lib": [
+      "es2015"
+    ],
+    "importHelpers": true,
+    "declaration": true,
+    "sourceMap": true,
+    "rootDir": "./",
+    "outDir": "dist",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "~/*": [
+        "src/*"
+      ],
+      "test/*": [
+        "test/*"
+      ]
+    },
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "payload": {
+    "requestId": "b56b4406-c432-45d1-aae1-d8c00ec903b3",
+    "partyList": [
+      {
+        "partyIdType": "MSISDN",
+        "partyIdentifier": "256d5bbc-535c-4060-890b-ff7a06e781f4",
+        "fspId": "dfspa"
+      }
+    ]
+  }
+}

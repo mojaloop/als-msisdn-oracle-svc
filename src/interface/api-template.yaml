@@ -1,0 +1,337 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Interface for interaction between Mojaloop's Account Lookup Service(ALS) and
+    an Oracle Registry Service
+  description: Based on Mojaloop [API Definition](https://github.com/mojaloop/mojaloop-specification/blob/main/API%20Definition%20v1.1.pdf).
+    More information can be found at [mojaloop.io](http://mojaloop.io/)
+  contact: {}
+paths:
+  /health:
+    get:
+      tags:
+        - health
+      responses:
+        '200':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/200.yaml'
+        '400':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/400.yaml'
+        '401':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/401.yaml'
+        '403':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/403.yaml'
+        '404':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/404.yaml'
+        '405':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/405.yaml'
+        '406':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/406.yaml'
+        '501':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/501.yaml'
+        '503':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/503.yaml'
+      operationId: HealthGet
+      summary: Get Server
+      description: The HTTP request GET /health is used to return the current status of the API.
+  /metrics:
+    get:
+      tags:
+        - metrics
+      responses:
+        '200':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/200.yaml'
+        '400':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/400.yaml'
+        '401':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/401.yaml'
+        '403':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/403.yaml'
+        '404':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/404.yaml'
+        '405':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/405.yaml'
+        '406':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/406.yaml'
+        '501':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/501.yaml'
+        '503':
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/503.yaml'
+      operationId: MetricsGet
+      summary: Prometheus metrics endpoint
+      description: The HTTP request GET /metrics is used to return metrics for the API.
+  /participants/{Type}/{ID}:
+    parameters:
+      #Path
+      - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Type.yaml'
+      - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/ID.yaml'
+      #Headers
+      - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Content-Type.yaml'
+      - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Date.yaml'
+      - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/X-Forwarded-For.yaml'
+      - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-Source.yaml'
+      - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-Destination.yaml'
+      - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-Encryption.yaml'
+      - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-Signature.yaml'
+      - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-URI.yaml'
+      - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-HTTP-Method.yaml'
+    post:
+      description: |
+        The HTTP request `POST /participants/{Type}/{ID}`
+        (or `POST /participants/{Type}/{ID}/{SubId}`)
+        is used to create information in the server regarding the provided identity,
+        defined by `{Type}`, `{ID}`, and optionally `{SubId}`
+        (for example, `POST /participants/MSISDN/123456789` or
+        `POST /participants/BUSINESS/shoecompany/employee1`).
+        An ExtensionList element has been added to this request in version v1.1
+      summary: Create participant information
+      tags:
+        - participants
+      operationId: ParticipantsByTypeAndIDPost
+      parameters:
+        #Headers
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Accept.yaml'
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Content-Length.yaml'
+      requestBody:
+        description: Participant information to be created.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/schemas/ParticipantsTypeIDSubIDPostRequest.yaml'
+      responses:
+        201:
+          description: Created
+          headers: {}
+        400:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/400.yaml'
+        401:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/401.yaml'
+        403:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/403.yaml'
+        404:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/404.yaml'
+        405:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/405.yaml'
+        406:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/406.yaml'
+        501:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/501.yaml'
+        503:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/503.yaml'
+    get:
+      description: |
+        The HTTP request `GET /participants/{Type}/{ID}` (or `GET /participants/{Type}/{ID}/{SubId}`)
+        is used to find out in which FSP the requested Party, defined by `{Type}`, `{ID}` and optionally `{SubId}`,
+         is located (for example, `GET /participants/MSISDN/123456789`, or
+         `GET /participants/BUSINESS/shoecompany/employee1`).
+         This HTTP request should support a query string for filtering of currency.
+         To use filtering of currency, the HTTP request `GET /participants/{Type}/{ID}?currency=XYZ`
+         should be used, where `XYZ` is the requested currency.
+      summary: Look up participant information
+      tags:
+        - participants
+      operationId: ParticipantsByTypeAndIDGet
+      parameters:
+        #Headers
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Accept.yaml'
+      responses:
+        200:
+          description: OK
+          headers:
+            Content-Length:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParticipantsTypeIDGetResponse"
+        400:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/400.yaml'
+        401:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/401.yaml'
+        403:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/403.yaml'
+        404:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/404.yaml'
+        405:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/405.yaml'
+        406:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/406.yaml'
+        501:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/501.yaml'
+        503:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/503.yaml'
+    put:
+      description: |
+        The PUT /participants/{Type}/{ID} is used to update information in the
+        server regarding the provided identity, defined by {Type} and {ID}
+        (for example, PUT /participants/MSISDN/123456789).
+      summary: Update participant information
+      tags:
+        - participants
+      operationId: ParticipantsByTypeAndIDPut
+      parameters:
+        #Headers
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Content-Length.yaml'
+      requestBody:
+        description: Participant information returned.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantsTypeIDPutRequest'
+      responses:
+        200:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/200.yaml'
+        400:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/400.yaml'
+        401:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/401.yaml'
+        403:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/403.yaml'
+        404:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/404.yaml'
+        405:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/405.yaml'
+        406:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/406.yaml'
+        501:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/501.yaml'
+        503:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/503.yaml'
+    delete:
+      description: |
+        The HTTP request `DELETE /participants/{Type}/{ID}`
+        (or `DELETE /participants/{Type}/{ID}/{SubId}`) is used to delete
+        information in the server regarding the provided identity,
+        defined by `{Type}` and `{ID}`) (for example, `DELETE /participants/MSISDN/123456789`),
+        and optionally `{SubId}`. This HTTP request should support a query
+        string to delete FSP information regarding a specific currency only.
+        To delete a specific currency only, the HTTP request
+        `DELETE /participants/{Type}/{ID}?currency=XYZ`
+        should be used, where `XYZ` is the requested currency.
+
+
+        **Note:** The Account Lookup System should verify that it is the Party’s current FSP that is deleting the FSP information.
+      summary: Delete participant information
+      tags:
+        - participants
+      operationId: ParticipantsByTypeAndIDDelete
+      parameters:
+        #Headers
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Accept.yaml'
+      responses:
+        204:
+          description: No Content
+          headers: {}
+        400:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/400.yaml'
+        401:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/401.yaml'
+        403:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/403.yaml'
+        404:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/404.yaml'
+        405:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/405.yaml'
+        406:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/406.yaml'
+        501:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/501.yaml'
+        503:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/503.yaml'
+  /participants:
+    post:
+      description: The HTTP request `POST /participants` is used to create information in the server regarding the provided list of identities. This request should be used for bulk creation of FSP information for more than one Party. The optional currency parameter should indicate that each provided Party supports the currency.
+      summary: Create bulk participant information
+      tags:
+        - participants
+      operationId: ParticipantsPost
+      parameters:
+        #Headers
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Accept.yaml'
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Content-Length.yaml'
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Content-Type.yaml'
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Date.yaml'
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/X-Forwarded-For.yaml'
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-Source.yaml'
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-Destination.yaml'
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-Encryption.yaml'
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-Signature.yaml'
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-URI.yaml'
+        - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/FSPIOP-HTTP-Method.yaml'
+      requestBody:
+        description: Participant information to be created.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../../node_modules/@mojaloop/api-snippets/thirdparty/v1_0/openapi3/components/schemas/ParticipantsPostRequest.yaml'
+      responses:
+        201:
+          description: Created
+          headers: {}
+        400:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/400.yaml'
+        401:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/401.yaml'
+        403:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/403.yaml'
+        404:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/404.yaml'
+        405:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/405.yaml'
+        406:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/406.yaml'
+        501:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/501.yaml'
+        503:
+          $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/503.yaml'
+tags:
+  - name: participants
+    description: ''
+servers:
+  - url: /
+components:
+  schemas:
+    ParticipantsTypeIDPutRequest:
+      title: ParticipantsTypeIDPutRequest
+      description: PUT /participants/{Type}/{ID} object
+      type: object
+      properties:
+        fspId:
+          description: FSP Identifier that the Party belongs to.
+          type: string
+        currency:
+          description: Indicate that the provided Currency was set to be supported by each
+            successfully added PartyIdInfo.
+          type: string
+        partySubIdOrType:
+          description: A sub-identifier or sub-type for the Party.
+          type: string
+      required:
+        - fspId
+    ParticipantsTypeIDGetResponse:
+      title: ParticipantsTypeIDGetResponse
+      description: OK
+      type: object
+      properties:
+        partyList:
+          description: List of PartyTypeIdInfo elements that were either created or failed
+            to be created.
+          type: array
+          items:
+            $ref: "#/components/schemas/PartyTypeIdInfo"
+          minItems: 1
+          maxItems: 10000
+    PartyTypeIdInfo:
+      title: PartyTypeIdInfo
+      description: Data model for the complex type PartyIdInfo.
+      type: object
+      properties:
+        fspId:
+          $ref: '../../node_modules/@mojaloop/api-snippets/thirdparty/v1_0/openapi3/components/schemas/FspId.yaml'
+        partySubIdOrType:
+          $ref: '../../node_modules/@mojaloop/api-snippets/thirdparty/v1_0/openapi3/components/schemas/PartySubIdOrType.yaml'
+      required:
+        - fspId
