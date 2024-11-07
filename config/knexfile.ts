@@ -94,7 +94,7 @@ const KnexDatabaseConfig: DatabaseConfig = {
   migrations: {
     directory: migrationsDirectory,
     stub: `${migrationsDirectory}/migration.template`,
-    tableName: 'oracleMSISDN',
+    tableName: 'oracleMSISDN_migration',
     loadExtensions: ['.js']
   },
   seeds: {

@@ -36,9 +36,9 @@ services:
     volumes:
       - ./docker/sql-init/:/docker-entrypoint-initdb.d/
     environment:
-      - MYSQL_USER=${DBUSER:-als-msisdn-oracle-svc}
+      - MYSQL_USER=${DBUSER:-als-msisdn-oracle}
       - MYSQL_PASSWORD=${DBPASS:-password}
-      - MYSQL_DATABASE=${DBUSER:-als-msisdn-oracle-svc}
+      - MYSQL_DATABASE=${DBUSER:-als-msisdn-oracle}
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
     networks:
       - mojaloop-net
