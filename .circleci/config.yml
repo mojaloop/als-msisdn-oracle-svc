@@ -335,8 +335,8 @@ jobs:
           name: Migrate DB
           command: |
             docker run --network mojaloop-net \
-              -e ALS_CO_DATABASE_HOST='mysql' \
-              -e ALS_CO_DATABASE_PORT='3306' \
+              -e ALS_MSISDN_ORACLE_DATABASE_HOST='mysql' \
+              -e ALS_MSISDN_ORACLE_DATABASE_PORT='3306' \
               --rm mojaloop/als-msisdn-oracle-svc:local \
               sh -c 'npm run migrate'
       - run:

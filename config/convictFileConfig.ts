@@ -29,7 +29,7 @@
 import path from 'path'
 import Convict from 'convict'
 
-const ENV_PREFIX = 'ALS_CO_'
+const ENV_PREFIX = 'ALS_MSISDN_ORACLE_'
 
 export interface FileConfig {
   PORT: number
