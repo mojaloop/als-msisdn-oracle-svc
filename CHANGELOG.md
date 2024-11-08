@@ -1,4 +1,11 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.3](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.2...v0.0.3) (2024-11-08)
+
+
+### Chore
+
+* env name change ([85dd5a4](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/85dd5a4405aa252d1567ffebd5a1a62c4025c722))
+
 ### 0.0.2 (2024-11-07)
 
 
