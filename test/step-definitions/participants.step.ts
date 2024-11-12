@@ -48,7 +48,7 @@ defineFeature(feature, (test): void => {
 
     then('I respond with a 200 OK', (): void => {
       expect(response.statusCode).toBe(200)
-      expect(mockRetrievePartyMapItem).toBeCalledWith('fb2f2b12-5107-48f1-a93d-52b154270038')
+      expect(mockRetrievePartyMapItem).toBeCalledWith('fb2f2b12-5107-48f1-a93d-52b154270038', undefined)
     })
   })
 
