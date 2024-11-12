@@ -106,7 +106,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ParticipantsTypeIDSubIDPostRequest'
+              $ref: '#/components/schemas/ParticipantsTypeIDPostPutRequest'
       responses:
         '201':
           description: Created
@@ -190,7 +190,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ParticipantsTypeIDPutRequest'
+              $ref: '#/components/schemas/ParticipantsTypeIDPostPutRequest'
       responses:
         '200':
           $ref: '#/components/responses/200'
@@ -391,7 +391,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ParticipantsTypeIDPutRequest'
+              $ref: '#/components/schemas/ParticipantsTypeIDPostPutRequest'
       responses:
         '200':
           $ref: '#/components/responses/200'
@@ -676,8 +676,8 @@ components:
         A sub-identifier of the party identifier, or a sub-type of the party
         identifier's type. For example, `PASSPORT`, `DRIVING_LICENSE`.
   schemas:
-    ParticipantsTypeIDPutRequest:
-      title: ParticipantsTypeIDPutRequest
+    ParticipantsTypeIDPostPutRequest:
+      title: ParticipantsTypeIDPostPutRequest
       description: PUT /participants/{Type}/{ID} object
       type: object
       properties:

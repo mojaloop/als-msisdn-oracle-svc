@@ -42,7 +42,7 @@ export async function put(_context: Context, request: Request, h: ResponseToolki
 
   const partyId = request.params.ID
   const subId = request.params.SubId
-  const payload = request.payload as Types.ParticipantsTypeIDSubIDPut
+  const payload = request.payload as Types.ParticipantsTypeIDPostPutRequest
   const partyMapItem: PartyMapItem = {
     id: partyId,
     subId,

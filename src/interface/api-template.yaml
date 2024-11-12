@@ -97,7 +97,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/schemas/ParticipantsTypeIDSubIDPostRequest.yaml'
+              $ref: '#/components/schemas/ParticipantsTypeIDPostPutRequest'
       responses:
         201:
           description: Created
@@ -180,7 +180,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ParticipantsTypeIDPutRequest'
+              $ref: '#/components/schemas/ParticipantsTypeIDPostPutRequest'
       responses:
         200:
           $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/200.yaml'
@@ -362,7 +362,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ParticipantsTypeIDPutRequest'
+              $ref: '#/components/schemas/ParticipantsTypeIDPostPutRequest'
       responses:
         200:
           $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/200.yaml'
@@ -488,8 +488,8 @@ components:
         identifier's type. For example, `PASSPORT`, `DRIVING_LICENSE`.
 
   schemas:
-    ParticipantsTypeIDPutRequest:
-      title: ParticipantsTypeIDPutRequest
+    ParticipantsTypeIDPostPutRequest:
+      title: ParticipantsTypeIDPostPutRequest
       description: PUT /participants/{Type}/{ID} object
       type: object
       properties:

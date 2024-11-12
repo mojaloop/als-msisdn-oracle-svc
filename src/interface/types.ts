@@ -2,8 +2,8 @@
 
 import { Schemas } from '@mojaloop/api-snippets/lib/fspiop/v1_1'
 
-export interface ParticipantsTypeIDSubIDPut {
+export interface ParticipantsTypeIDPostPutRequest {
   fspId: Schemas.FspId
   currency?: Schemas.Currency
-  extensionList?: Schemas.ExtensionList
+  partySubIdOrType?: Schemas.PartySubIdOrType
 }

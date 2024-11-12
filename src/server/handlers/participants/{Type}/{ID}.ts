@@ -1,7 +1,6 @@
 import { Request, ResponseToolkit, ResponseObject } from '@hapi/hapi'
 import { Context } from '~/server/plugins'
 import { retrievePartyMapItem, createPartyMapItem, updatePartyMapItem, deletePartyMapItem } from '~/domain/participants'
-import { Schemas } from '@mojaloop/api-snippets/lib/fspiop/v1_1'
 import { PartyMapItem } from '~/model/MSISDN'
 import * as Types from '~/interface/types'
 import { IDTypeNotSupported } from '../../../../model/errors'
@@ -24,10 +23,11 @@ export async function post(_context: Context, request: Request, h: ResponseToolk
   }
 
   const partyId = request.params.ID
-  const payload = request.payload as Schemas.ParticipantsTypeIDSubIDPostRequest
+  const payload = request.payload as Types.ParticipantsTypeIDPostPutRequest
   const partyMapItem: PartyMapItem = {
     id: partyId,
-    fspId: payload.fspId
+    fspId: payload.fspId,
+    subId: payload.partySubIdOrType
   }
   await createPartyMapItem(partyMapItem)
   return h.response().code(201)
@@ -39,10 +39,11 @@ export async function put(_context: Context, request: Request, h: ResponseToolki
   }
 
   const partyId = request.params.ID
-  const payload = request.payload as Types.ParticipantsTypeIDSubIDPut
+  const payload = request.payload as Types.ParticipantsTypeIDPostPutRequest
   const partyMapItem: PartyMapItem = {
     id: partyId,
-    fspId: payload.fspId
+    fspId: payload.fspId,
+    subId: payload.partySubIdOrType
   }
   await updatePartyMapItem(partyMapItem)
   return h.response().code(200)
