@@ -13,7 +13,8 @@ export async function get(_context: Context, request: Request, h: ResponseToolki
   }
 
   const partyId = request.params.ID
-  const partyMapItem = await retrievePartyMapItem(partyId)
+  const subId = request.query?.partySubIdOrType
+  const partyMapItem = await retrievePartyMapItem(partyId, subId)
   return h.response({ partyList: [partyMapItem] }).code(200)
 }
 

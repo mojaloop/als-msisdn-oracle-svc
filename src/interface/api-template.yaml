@@ -134,6 +134,7 @@ paths:
       parameters:
         #Headers
         - $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/parameters/Accept.yaml'
+        - $ref: '#/components/parameters/partySubIdOrType'
       responses:
         200:
           description: OK
@@ -475,6 +476,17 @@ tags:
 servers:
   - url: /
 components:
+  parameters:
+    partySubIdOrType:
+      name: partySubIdOrType
+      in: query
+      required: false
+      schema:
+        type: string
+      description: >-
+        A sub-identifier of the party identifier, or a sub-type of the party
+        identifier's type. For example, `PASSPORT`, `DRIVING_LICENSE`.
+
   schemas:
     ParticipantsTypeIDPutRequest:
       title: ParticipantsTypeIDPutRequest
