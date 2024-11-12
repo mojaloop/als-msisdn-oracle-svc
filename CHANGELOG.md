@@ -1,4 +1,11 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.6](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.5...v0.0.6) (2024-11-12)
+
+
+### Bug Fixes
+
+* subid ([f063369](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/f063369716b78c8918368a309f75a92c1dfe0943))
+
 ### [0.0.5](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.4...v0.0.5) (2024-11-12)
 
 
