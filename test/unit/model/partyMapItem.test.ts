@@ -64,12 +64,31 @@ const examplePartyMapItem: PartyMapItem = {
 
 const expectedPartyMapItem: PartyMapItem = {
   id: '000000',
-  fspId: 'dfspa'
+  fspId: 'dfspa',
+  subId: ''
 }
 
 const updatedPartyMapItem: PartyMapItem = {
   id: '000000',
   fspId: 'dfspb'
+}
+
+const examplePartyMapItemWithSubId: PartyMapItem = {
+  id: '111111',
+  fspId: 'dfspa',
+  subId: 'HOME'
+}
+
+const updatedPartyMapItemWithSubId: PartyMapItem = {
+  id: '111111',
+  fspId: 'dfspb',
+  subId: 'HOME'
+}
+
+const expectedPartyMapItemWithSubId: PartyMapItem = {
+  id: '111111',
+  fspId: 'dfspa',
+  subId: 'HOME'
 }
 
 /*
@@ -108,6 +127,20 @@ describe('src/model/MSISDN', (): void => {
 
       expect(partyMapItems.length).toEqual(1)
       expect(partyMapItems[0]).toEqual(expectedPartyMapItem)
+    })
+
+    it('adds entry to the database with subId', async (): Promise<void> => {
+      const inserted: boolean = await oracleDB.insert(examplePartyMapItemWithSubId)
+
+      expect(inserted).toEqual(true)
+
+      const partyMapItems: PartyMapItem[] = await Db<PartyMapItem>('oracleMSISDN').select('*').where({
+        id: examplePartyMapItemWithSubId.id,
+        subId: examplePartyMapItemWithSubId.subId
+      })
+
+      expect(partyMapItems.length).toEqual(1)
+      expect(partyMapItems[0]).toEqual(expectedPartyMapItemWithSubId)
     })
 
     it('throws an error on adding a entry with existing Id', async (): Promise<void> => {
@@ -154,6 +187,24 @@ describe('src/model/MSISDN', (): void => {
       expect(partyMapItems[0]).toEqual(expect.objectContaining(updatedPartyMapItem))
     })
 
+    it('updates existing entry with subId from having only required fields', async (): Promise<void> => {
+      // Inserting record to update
+      await Db<PartyMapItem>('oracleMSISDN').insert(examplePartyMapItemWithSubId)
+
+      // Update only selected fields of inserted record
+      const updateCount: number = await oracleDB.update(updatedPartyMapItemWithSubId)
+
+      expect(updateCount).toEqual(1)
+
+      const partyMapItems: PartyMapItem[] = await Db<PartyMapItem>('oracleMSISDN').select('*').where({
+        id: updatedPartyMapItemWithSubId.id,
+        subId: updatedPartyMapItemWithSubId.subId
+      })
+
+      expect(partyMapItems[0].id).toEqual(updatedPartyMapItemWithSubId.id)
+      expect(partyMapItems[0]).toEqual(expect.objectContaining(updatedPartyMapItemWithSubId))
+    })
+
     it('throws an error on updating non-existent entry', async (): Promise<void> => {
       await expect(oracleDB.update(updatedPartyMapItem)).rejects.toThrowError(NotFoundError)
     })
@@ -166,6 +217,17 @@ describe('src/model/MSISDN', (): void => {
       const partyMapItem: PartyMapItem = await oracleDB.retrieve(examplePartyMapItem.id)
 
       expect(partyMapItem).toEqual(expect.objectContaining(examplePartyMapItem))
+    })
+
+    it('retrieves an existing entry with subId', async (): Promise<void> => {
+      await Db<PartyMapItem>('oracleMSISDN').insert(examplePartyMapItemWithSubId)
+
+      const partyMapItem: PartyMapItem = await oracleDB.retrieve(
+        examplePartyMapItemWithSubId.id,
+        examplePartyMapItemWithSubId.subId
+      )
+
+      expect(partyMapItem).toEqual(expect.objectContaining(examplePartyMapItemWithSubId))
     })
 
     it('throws an error on retrieving non-existent entry', async (): Promise<void> => {
@@ -190,6 +252,33 @@ describe('src/model/MSISDN', (): void => {
 
       partyMapItems = await Db<PartyMapItem>('oracleMSISDN').select('*').where({
         id: examplePartyMapItem.id
+      })
+
+      // Deleted properly
+      expect(partyMapItems.length).toEqual(0)
+    })
+
+    it('deletes an existing entry with subId', async (): Promise<void> => {
+      await Db<PartyMapItem>('oracleMSISDN').insert(examplePartyMapItemWithSubId)
+
+      let partyMapItems: PartyMapItem[] = await Db<PartyMapItem>('oracleMSISDN').select('*').where({
+        id: examplePartyMapItemWithSubId.id,
+        subId: examplePartyMapItemWithSubId.subId
+      })
+
+      // Inserted properly
+      expect(partyMapItems.length).toEqual(1)
+
+      const deleteCount: number = await oracleDB.delete(
+        examplePartyMapItemWithSubId.id,
+        examplePartyMapItemWithSubId.subId
+      )
+
+      expect(deleteCount).toEqual(1)
+
+      partyMapItems = await Db<PartyMapItem>('oracleMSISDN').select('*').where({
+        id: examplePartyMapItemWithSubId.id,
+        subId: examplePartyMapItemWithSubId.subId
       })
 
       // Deleted properly

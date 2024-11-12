@@ -26,6 +26,7 @@ import Health from './health'
 import Metrics from './metrics'
 import Participants from './participants'
 import ParticipantsTypeId from './participants/{Type}/{ID}'
+import ParticipantsTypeIdSubId from './participants/{Type}/{ID}/{SubId}'
 const OpenapiBackend = Util.OpenapiBackend
 
 export default {
@@ -38,5 +39,9 @@ export default {
   ParticipantsByTypeAndIDGet: ParticipantsTypeId.get,
   ParticipantsByTypeAndIDPost: ParticipantsTypeId.post,
   ParticipantsByTypeAndIDPut: ParticipantsTypeId.put,
-  ParticipantsByTypeAndIDDelete: ParticipantsTypeId.del
+  ParticipantsByTypeAndIDDelete: ParticipantsTypeId.del,
+  ParticipantsSubIdByTypeAndIDGet: ParticipantsTypeIdSubId.get,
+  ParticipantsSubIdByTypeAndIDPost: ParticipantsTypeIdSubId.post,
+  ParticipantsSubIdByTypeAndIDPut: ParticipantsTypeIdSubId.put,
+  ParticipantsSubIdByTypeAndIDDelete: ParticipantsTypeIdSubId.del
 }
