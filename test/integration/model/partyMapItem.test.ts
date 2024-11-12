@@ -13,7 +13,8 @@ const examplePartyMapItem: PartyMapItem = {
 
 const expectedPartyMapItem: PartyMapItem = {
   id: '000000',
-  fspId: 'dfspa'
+  fspId: 'dfspa',
+  subId: ''
 }
 
 const updatedPartyMapItem: PartyMapItem = {
