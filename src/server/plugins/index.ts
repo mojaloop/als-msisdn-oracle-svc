@@ -31,15 +31,29 @@ import ErrorHandling from '@mojaloop/central-services-error-handling'
 import { Util } from '@mojaloop/central-services-shared'
 import Good from './good'
 import OpenAPI from './openAPI'
+import HapiSwagger from 'hapi-swagger'
 
 async function register(server: Server): Promise<Server> {
   const openapiBackend = await OpenAPI.initialize()
+
+  const hapiSwaggerObj = {
+    plugin: HapiSwagger,
+    options: {
+      customSwaggerFile: openapiBackend.options.openapi.definition,
+      OAS: openapiBackend.options.openapi.api,
+      tryItOutEnabled: false,
+      uiOptions: {
+        tryItOutEnabled: false
+      }
+    }
+  }
 
   const plugins = [
     Util.Hapi.OpenapiBackendValidator,
     Good,
     openapiBackend,
     Inert,
+    hapiSwaggerObj,
     Vision,
     Blip,
     ErrorHandling,

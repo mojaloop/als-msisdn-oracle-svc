@@ -260,6 +260,207 @@ paths:
           $ref: '#/components/responses/501'
         '503':
           $ref: '#/components/responses/503'
+  /participants/{Type}/{ID}/{SubId}:
+    parameters:
+      - $ref: '#/components/parameters/Type'
+      - $ref: '#/components/parameters/ID'
+      - $ref: '#/components/parameters/SubId'
+      - $ref: '#/components/parameters/Content-Type'
+      - $ref: '#/components/parameters/Date'
+      - $ref: '#/components/parameters/X-Forwarded-For'
+      - $ref: '#/components/parameters/FSPIOP-Source'
+      - $ref: '#/components/parameters/FSPIOP-Destination'
+      - $ref: '#/components/parameters/FSPIOP-Encryption'
+      - $ref: '#/components/parameters/FSPIOP-Signature'
+      - $ref: '#/components/parameters/FSPIOP-URI'
+      - $ref: '#/components/parameters/FSPIOP-HTTP-Method'
+    post:
+      description: >
+        The HTTP request `POST /participants/{Type}/{ID}`
+
+        (or `POST /participants/{Type}/{ID}/{SubId}`)
+
+        is used to create information in the server regarding the provided
+        identity,
+
+        defined by `{Type}`, `{ID}`, and optionally `{SubId}`
+
+        (for example, `POST /participants/MSISDN/123456789` or
+
+        `POST /participants/BUSINESS/shoecompany/employee1`).
+
+        An ExtensionList element has been added to this request in version v1.1
+      summary: Create participant information
+      tags:
+        - participants
+      operationId: ParticipantsSubIdByTypeAndIDPost
+      parameters:
+        - $ref: '#/components/parameters/Accept'
+        - $ref: '#/components/parameters/Content-Length'
+      requestBody:
+        description: Participant information to be created.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantsTypeIDSubIDPostRequest'
+      responses:
+        '201':
+          description: Created
+          headers: {}
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '405':
+          $ref: '#/components/responses/405'
+        '406':
+          $ref: '#/components/responses/406'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+    get:
+      description: >
+        The HTTP request `GET /participants/{Type}/{ID}` (or `GET
+        /participants/{Type}/{ID}/{SubId}`)
+
+        is used to find out in which FSP the requested Party, defined by
+        `{Type}`, `{ID}` and optionally `{SubId}`,
+         is located (for example, `GET /participants/MSISDN/123456789`, or
+         `GET /participants/BUSINESS/shoecompany/employee1`).
+         This HTTP request should support a query string for filtering of currency.
+         To use filtering of currency, the HTTP request `GET /participants/{Type}/{ID}?currency=XYZ`
+         should be used, where `XYZ` is the requested currency.
+      summary: Look up participant information
+      tags:
+        - participants
+      operationId: ParticipantsSubIdByTypeAndIDGet
+      parameters:
+        - $ref: '#/components/parameters/Accept'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Length:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParticipantsTypeIDGetResponse'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '405':
+          $ref: '#/components/responses/405'
+        '406':
+          $ref: '#/components/responses/406'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+    put:
+      description: >
+        The PUT /participants/{Type}/{ID}/{SubId} is used to update information
+        in the
+
+        server regarding the provided identity, defined by {Type}, {ID} and
+        {SubId}
+
+        (for example, PUT /participants/MSISDN/123456789/PERSONAL).
+      summary: Update participant information
+      tags:
+        - participants
+      operationId: ParticipantsSubIdByTypeAndIDPut
+      parameters:
+        - $ref: '#/components/parameters/Content-Length'
+      requestBody:
+        description: Participant information returned.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantsTypeIDPutRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '405':
+          $ref: '#/components/responses/405'
+        '406':
+          $ref: '#/components/responses/406'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
+    delete:
+      description: >
+        The HTTP request `DELETE /participants/{Type}/{ID}`
+
+        (or `DELETE /participants/{Type}/{ID}/{SubId}`) is used to delete
+
+        information in the server regarding the provided identity,
+
+        defined by `{Type}` and `{ID}`) (for example, `DELETE
+        /participants/MSISDN/123456789`),
+
+        and optionally `{SubId}`. This HTTP request should support a query
+
+        string to delete FSP information regarding a specific currency only.
+
+        To delete a specific currency only, the HTTP request
+
+        `DELETE /participants/{Type}/{ID}?currency=XYZ`
+
+        should be used, where `XYZ` is the requested currency.
+
+
+
+        **Note:** The Account Lookup System should verify that it is the Party’s
+        current FSP that is deleting the FSP information.
+      summary: Delete participant information
+      tags:
+        - participants
+      operationId: ParticipantsSubIdByTypeAndIDDelete
+      parameters:
+        - $ref: '#/components/parameters/Accept'
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '405':
+          $ref: '#/components/responses/405'
+        '406':
+          $ref: '#/components/responses/406'
+        '501':
+          $ref: '#/components/responses/501'
+        '503':
+          $ref: '#/components/responses/503'
   /participants:
     post:
       description: >-
@@ -1079,3 +1280,12 @@ components:
 
         **Note:** The API supports a maximum size of 5242880 bytes (5
         Megabytes).
+    SubId:
+      name: SubId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: >-
+        A sub-identifier of the party identifier, or a sub-type of the party
+        identifier's type. For example, `PASSPORT`, `DRIVING_LICENSE`.

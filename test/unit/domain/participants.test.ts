@@ -37,7 +37,7 @@ describe('server/domain/participants', (): void => {
 
   it('retrievePartyMapItem should resolve successfully', async (): Promise<void> => {
     await expect(retrievePartyMapItem(mockPartyMapItem.id)).resolves.toBe(mockPartyMapItem)
-    expect(mockRetrievePartyMapItem).toHaveBeenCalledWith(mockPartyMapItem.id)
+    expect(mockRetrievePartyMapItem).toHaveBeenCalledWith(mockPartyMapItem.id, undefined)
   })
 
   it('updatePartyMapItem should resolve successfully', async (): Promise<void> => {
@@ -49,6 +49,6 @@ describe('server/domain/participants', (): void => {
   it('deletePartyMapItem should resolve successfully', async (): Promise<void> => {
     await expect(deletePartyMapItem(mockPartyMapItem.id)).resolves.toBe(undefined)
 
-    expect(mockDeletePartyMapItem).toHaveBeenCalledWith(mockPartyMapItem.id)
+    expect(mockDeletePartyMapItem).toHaveBeenCalledWith(mockPartyMapItem.id, undefined)
   })
 })
