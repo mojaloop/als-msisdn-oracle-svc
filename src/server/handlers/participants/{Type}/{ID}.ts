@@ -13,13 +13,17 @@ export async function get(_context: Context, request: Request, h: ResponseToolki
 
   const partyId = request.params.ID
   const subId = request.query?.partySubIdOrType
-  const partyMapItem = await retrievePartyMapItem(partyId, subId)
-  const responsePartyMapItem: any = { ...partyMapItem }
-  if (responsePartyMapItem.subId) {
-    responsePartyMapItem.partySubIdOrType = responsePartyMapItem.subId
-    delete responsePartyMapItem.subId
+  try {
+    const partyMapItem = await retrievePartyMapItem(partyId, subId)
+    const responsePartyMapItem: any = { ...partyMapItem }
+    if (responsePartyMapItem.subId) {
+      responsePartyMapItem.partySubIdOrType = responsePartyMapItem.subId
+      delete responsePartyMapItem.subId
+    }
+    return h.response({ partyList: [responsePartyMapItem] }).code(200)
+  } catch (error) {
+    return h.response({ partyList: [] }).code(200)
   }
-  return h.response({ partyList: [responsePartyMapItem] }).code(200)
 }
 
 export async function post(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {

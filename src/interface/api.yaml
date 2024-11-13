@@ -68,15 +68,6 @@ paths:
     parameters:
       - $ref: '#/components/parameters/Type'
       - $ref: '#/components/parameters/ID'
-      - $ref: '#/components/parameters/Content-Type'
-      - $ref: '#/components/parameters/Date'
-      - $ref: '#/components/parameters/X-Forwarded-For'
-      - $ref: '#/components/parameters/FSPIOP-Source'
-      - $ref: '#/components/parameters/FSPIOP-Destination'
-      - $ref: '#/components/parameters/FSPIOP-Encryption'
-      - $ref: '#/components/parameters/FSPIOP-Signature'
-      - $ref: '#/components/parameters/FSPIOP-URI'
-      - $ref: '#/components/parameters/FSPIOP-HTTP-Method'
     post:
       description: >
         The HTTP request `POST /participants/{Type}/{ID}`
@@ -97,9 +88,6 @@ paths:
       tags:
         - participants
       operationId: ParticipantsByTypeAndIDPost
-      parameters:
-        - $ref: '#/components/parameters/Accept'
-        - $ref: '#/components/parameters/Content-Length'
       requestBody:
         description: Participant information to be created.
         required: true
@@ -144,7 +132,6 @@ paths:
         - participants
       operationId: ParticipantsByTypeAndIDGet
       parameters:
-        - $ref: '#/components/parameters/Accept'
         - $ref: '#/components/parameters/partySubIdOrType'
       responses:
         '200':
@@ -182,8 +169,6 @@ paths:
       tags:
         - participants
       operationId: ParticipantsByTypeAndIDPut
-      parameters:
-        - $ref: '#/components/parameters/Content-Length'
       requestBody:
         description: Participant information returned.
         required: true
@@ -239,8 +224,6 @@ paths:
       tags:
         - participants
       operationId: ParticipantsByTypeAndIDDelete
-      parameters:
-        - $ref: '#/components/parameters/Accept'
       responses:
         '204':
           description: No Content
@@ -266,15 +249,6 @@ paths:
       - $ref: '#/components/parameters/Type'
       - $ref: '#/components/parameters/ID'
       - $ref: '#/components/parameters/SubId'
-      - $ref: '#/components/parameters/Content-Type'
-      - $ref: '#/components/parameters/Date'
-      - $ref: '#/components/parameters/X-Forwarded-For'
-      - $ref: '#/components/parameters/FSPIOP-Source'
-      - $ref: '#/components/parameters/FSPIOP-Destination'
-      - $ref: '#/components/parameters/FSPIOP-Encryption'
-      - $ref: '#/components/parameters/FSPIOP-Signature'
-      - $ref: '#/components/parameters/FSPIOP-URI'
-      - $ref: '#/components/parameters/FSPIOP-HTTP-Method'
     post:
       description: >
         The HTTP request `POST /participants/{Type}/{ID}`
@@ -295,9 +269,6 @@ paths:
       tags:
         - participants
       operationId: ParticipantsSubIdByTypeAndIDPost
-      parameters:
-        - $ref: '#/components/parameters/Accept'
-        - $ref: '#/components/parameters/Content-Length'
       requestBody:
         description: Participant information to be created.
         required: true
@@ -341,8 +312,6 @@ paths:
       tags:
         - participants
       operationId: ParticipantsSubIdByTypeAndIDGet
-      parameters:
-        - $ref: '#/components/parameters/Accept'
       responses:
         '200':
           description: OK
@@ -383,8 +352,6 @@ paths:
       tags:
         - participants
       operationId: ParticipantsSubIdByTypeAndIDPut
-      parameters:
-        - $ref: '#/components/parameters/Content-Length'
       requestBody:
         description: Participant information returned.
         required: true
@@ -440,8 +407,6 @@ paths:
       tags:
         - participants
       operationId: ParticipantsSubIdByTypeAndIDDelete
-      parameters:
-        - $ref: '#/components/parameters/Accept'
       responses:
         '204':
           description: No Content
@@ -474,18 +439,6 @@ paths:
       tags:
         - participants
       operationId: ParticipantsPost
-      parameters:
-        - $ref: '#/components/parameters/Accept'
-        - $ref: '#/components/parameters/Content-Length'
-        - $ref: '#/components/parameters/Content-Type'
-        - $ref: '#/components/parameters/Date'
-        - $ref: '#/components/parameters/X-Forwarded-For'
-        - $ref: '#/components/parameters/FSPIOP-Source'
-        - $ref: '#/components/parameters/FSPIOP-Destination'
-        - $ref: '#/components/parameters/FSPIOP-Encryption'
-        - $ref: '#/components/parameters/FSPIOP-Signature'
-        - $ref: '#/components/parameters/FSPIOP-URI'
-        - $ref: '#/components/parameters/FSPIOP-HTTP-Method'
       requestBody:
         description: Participant information to be created.
         required: true
@@ -543,129 +496,6 @@ components:
       schema:
         type: string
       description: The identifier value.
-    Content-Type:
-      name: Content-Type
-      in: header
-      schema:
-        type: string
-      required: true
-      description: >-
-        The `Content-Type` header indicates the specific version of the API used
-        to send the payload body.
-    Date:
-      name: Date
-      in: header
-      schema:
-        type: string
-      required: true
-      description: The `Date` header field indicates the date when the request was sent.
-    X-Forwarded-For:
-      name: X-Forwarded-For
-      in: header
-      schema:
-        type: string
-      required: false
-      description: >-
-        The `X-Forwarded-For` header field is an unofficially accepted standard
-        used for informational purposes of the originating client IP address, as
-        a request might pass multiple proxies, firewalls, and so on. Multiple
-        `X-Forwarded-For` values should be expected and supported by
-        implementers of the API.
-
-
-        **Note:** An alternative to `X-Forwarded-For` is defined in [RFC
-        7239](https://tools.ietf.org/html/rfc7239). However, to this point RFC
-        7239 is less-used and supported than `X-Forwarded-For`.
-    FSPIOP-Source:
-      name: FSPIOP-Source
-      in: header
-      schema:
-        type: string
-      required: true
-      description: >-
-        The `FSPIOP-Source` header field is a non-HTTP standard field used by
-        the API for identifying the sender of the HTTP request. The field should
-        be set by the original sender of the request. Required for routing and
-        signature verification (see header field `FSPIOP-Signature`).
-    FSPIOP-Destination:
-      name: FSPIOP-Destination
-      in: header
-      schema:
-        type: string
-      required: false
-      description: >-
-        The `FSPIOP-Destination` header field is a non-HTTP standard field used
-        by the API for HTTP header based routing of requests and responses to
-        the destination. The field must be set by the original sender of the
-        request if the destination is known (valid for all services except GET
-        /parties) so that any entities between the client and the server do not
-        need to parse the payload for routing purposes. If the destination is
-        not known (valid for service GET /parties), the field should be left
-        empty.
-    FSPIOP-Encryption:
-      name: FSPIOP-Encryption
-      in: header
-      schema:
-        type: string
-      required: false
-      description: >-
-        The `FSPIOP-Encryption` header field is a non-HTTP standard field used
-        by the API for applying end-to-end encryption of the request.
-    FSPIOP-Signature:
-      name: FSPIOP-Signature
-      in: header
-      schema:
-        type: string
-      required: false
-      description: >-
-        The `FSPIOP-Signature` header field is a non-HTTP standard field used by
-        the API for applying an end-to-end request signature.
-    FSPIOP-URI:
-      name: FSPIOP-URI
-      in: header
-      schema:
-        type: string
-      required: false
-      description: >-
-        The `FSPIOP-URI` header field is a non-HTTP standard field used by the
-        API for signature verification, should contain the service URI. Required
-        if signature verification is used, for more information, see [the API
-        Signature
-        document](https://github.com/mojaloop/docs/tree/main/Specification%20Document%20Set).
-    FSPIOP-HTTP-Method:
-      name: FSPIOP-HTTP-Method
-      in: header
-      schema:
-        type: string
-      required: false
-      description: >-
-        The `FSPIOP-HTTP-Method` header field is a non-HTTP standard field used
-        by the API for signature verification, should contain the service HTTP
-        method. Required if signature verification is used, for more
-        information, see [the API Signature
-        document](https://github.com/mojaloop/docs/tree/main/Specification%20Document%20Set).
-    Accept:
-      name: Accept
-      in: header
-      required: true
-      schema:
-        type: string
-      description: >-
-        The `Accept` header field indicates the version of the API the client
-        would like the server to use.
-    Content-Length:
-      name: Content-Length
-      in: header
-      required: false
-      schema:
-        type: integer
-      description: >-
-        The `Content-Length` header field indicates the anticipated size of the
-        payload body. Only sent if there is a body.
-
-
-        **Note:** The API supports a maximum size of 5242880 bytes (5
-        Megabytes).
     SubId:
       name: SubId
       in: path
