@@ -1,5 +1,5 @@
-import { NotFoundError } from '../errors'
 import { Knex } from 'knex'
+import { NotFoundError } from '../errors'
 
 /*
  * Interface for PartyMapItem resource type
