@@ -82,12 +82,16 @@
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^19.6.0",
     "@redocly/openapi-cli": "^1.0.0-beta.95",
+    "@types/convict": "^6.1.6",
     "@types/jest": "29.5.14",
+    "@types/node": "^22.10.1",
+    "@types/rc": "^1.2.4",
     "@typescript-eslint/eslint-plugin": "6.10.0",
     "@typescript-eslint/parser": "6.10.0",
     "add": "^2.0.6",
     "audit-ci": "^7.1.0",
     "axios": "^1.7.8",
+    "babel-jest": "^29.7.0",
     "eslint": "8.53.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-config-standard": "17.1.0",
@@ -107,8 +111,12 @@
     "nodemon": "^3.1.7",
     "npm-check-updates": "17.1.11",
     "source-map-support": "0.5.21",
+    "sqlite3": "^5.1.7",
     "standard-version": "^9.5.0",
-    "ts-jest": "^29.2.5"
+    "ts-jest": "^29.2.5",
+    "ts-node": "10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "5.7.2"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
@@ -120,16 +128,11 @@
     "@mojaloop/central-services-health": "15.0.0",
     "@mojaloop/central-services-shared": "18.12.0",
     "@mojaloop/sdk-standard-components": "19.6.1",
-    "@types/convict": "^6.1.6",
-    "@types/node": "^22.10.1",
-    "@types/rc": "^1.2.4",
     "ajv": "8.x.x",
     "ajv-keywords": "5.x.x",
-    "babel-jest": "^29.7.0",
     "blipp": "^4.0.2",
     "commander": "^12.1.0",
     "convict": "^6.2.4",
-    "dot-prop": "^9.0.0",
     "hapi-openapi": "^3.0.0",
     "hapi-swagger": "^17.3.1",
     "knex": "3.1.0",
@@ -137,39 +140,6 @@
     "mysql": "^2.18.1",
     "npm-run-all": "^4.1.5",
     "parse-strings-in-object": "^2.0.0",
-    "path": "^0.12.7",
-    "rc": "^1.2.8",
-    "sqlite3": "^5.1.7",
-    "ts-node": "10.9.2",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "5.7.2"
-  },
-  "peerDependencies": {
-    "@mojaloop/central-services-error-handling": ">=12.x.x",
-    "@mojaloop/central-services-logger": ">=11.x.x",
-    "@mojaloop/central-services-metrics": ">=12.x.x",
-    "@mojaloop/event-sdk": ">=14.x.x",
-    "ajv": "8.x.x",
-    "ajv-keywords": "5.x.x"
-  },
-  "peerDependenciesMeta": {
-    "@mojaloop/central-services-error-handling": {
-      "optional": false
-    },
-    "@mojaloop/central-services-logger": {
-      "optional": false
-    },
-    "@mojaloop/central-services-metrics": {
-      "optional": false
-    },
-    "@mojaloop/event-sdk": {
-      "optional": false
-    },
-    "ajv": {
-      "optional": false
-    },
-    "ajv-keyboards": {
-      "optional": false
-    }
+    "rc": "^1.2.8"
   }
 }
