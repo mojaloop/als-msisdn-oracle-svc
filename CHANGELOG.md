@@ -1,4 +1,13 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.9](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.8...v0.0.9) (2024-12-02)
+
+
+### Features
+
+* **csi-968:** added bulk participants create logic; added tests ([1f675ec](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/1f675ecc0bd127ee29c001bd5e6228fff3c3a234))
+* **csi-968:** package.json cleaned up ([00646c3](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/00646c38d0f6d56f7d3a39b69aa8e60c0aa158bc))
+* **csi-968:** updated deps ([a5210b7](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/a5210b7e5360c75423c6c745da4d3a5bae769c56))
+
 ### [0.0.8](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.7...v0.0.8) (2024-11-13)
 
 
