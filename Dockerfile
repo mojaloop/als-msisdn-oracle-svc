@@ -6,12 +6,12 @@ ARG NODE_VERSION=lts-alpine
 #  export NODE_VERSION="$(cat .nvmrc)-alpine" \
 #  docker build \
 #    --build-arg NODE_VERSION=$NODE_VERSION \
-#    -t mojaloop/sdk-scheme-adapter:local \
+#    -t mojaloop/als-msisdn-oracle-svc:local \
 #    . \
 #
 
 # Build Image
-FROM node:${NODE_VERSION} as builder
+FROM node:${NODE_VERSION} AS builder
 USER root
 
 WORKDIR /opt/app/

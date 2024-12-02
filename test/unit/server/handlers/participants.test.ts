@@ -1,15 +1,19 @@
 import { Request, ResponseToolkit } from '@hapi/hapi'
-import * as Handler from '~/server/handlers/participants'
-import Boom from '@hapi/boom'
+import { handlePostBulk } from '~/server/handlers/participants'
+
 import { h, postParticipantsRequest } from 'test/data/data'
+import { createMockHapiServer } from '../../__mocks__/util'
 
-jest.mock('~/shared/logger')
+const createMockRequest = () => ({
+  ...postParticipantsRequest,
+  server: createMockHapiServer()
+})
 
-describe('server/handler/participants', (): void => {
-  describe('POST Handler', (): void => {
-    it('should return a not implemented error.', async (): Promise<void> => {
-      const req = postParticipantsRequest as unknown as Request
-      const response = await Handler.post(
+describe('server/handler/participants', () => {
+  describe('POST Handler', () => {
+    it('should return proper statusCode is party was created', async (): Promise<void> => {
+      const req = createMockRequest() as unknown as Request
+      const response = await handlePostBulk(
         {
           method: req.method,
           path: req.path,
@@ -20,7 +24,7 @@ describe('server/handler/participants', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(Boom.notImplemented())
+      expect(response.statusCode).toBe(201)
     })
   })
 })

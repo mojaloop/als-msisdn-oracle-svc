@@ -170,5 +170,5 @@ const ConvictFileConfig = Convict<FileConfig>({
 const ConfigFile = path.join(__dirname, 'default.json')
 ConvictFileConfig.loadFile(ConfigFile)
 ConvictFileConfig.validate({ allowed: 'strict' })
+
 export default ConvictFileConfig
-module.exports = ConvictFileConfig

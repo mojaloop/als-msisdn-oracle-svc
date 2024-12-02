@@ -28,9 +28,10 @@
 // the js `require()` can resolve the '~' paths
 require('module-alias/register')
 
-import Config, { PACKAGE } from './shared/config'
-import ServiceServer from './server'
 import { Command } from 'commander'
+import ServiceServer from './server'
+import Config, { PACKAGE } from './shared/config'
+import { logger } from './shared/logger'
 
 // handle script parameters
 const program = new Command(PACKAGE.name)
@@ -45,7 +46,7 @@ try {
     .option('-H, --host <string>', 'listen on host', Config.HOST)
     .parse(process.argv)
 } catch (err) {
-  console.error(err)
+  logger.push({ err }).error('error on program parsing process.argv')
 }
 
 // overload Config with script parameters

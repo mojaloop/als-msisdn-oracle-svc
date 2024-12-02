@@ -26,8 +26,10 @@
  - Vijay Kumar Guthi <vijaya.guthi@infitx.com>
  --------------
  ******/
+
 import path from 'path'
 import ConvictFileConfig from './convictFileConfig'
+
 const migrationsDirectory = path.join(__dirname, '../migrations')
 const seedsDirectory = path.join(__dirname, '../seeds')
 
@@ -104,4 +106,3 @@ const KnexDatabaseConfig: DatabaseConfig = {
 }
 
 export default KnexDatabaseConfig
-module.exports = KnexDatabaseConfig

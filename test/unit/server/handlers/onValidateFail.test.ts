@@ -28,17 +28,16 @@
  --------------
  ******/
 import Boom from '@hapi/boom'
-import { Request, ResponseToolkit } from '@hapi/hapi'
-
 import onValidateFail from '~/server/handlers/onValidateFail'
+import { logger } from '~/shared/logger'
 
 describe('server/handlers/onValidateFail', (): void => {
   it('should throw error from Boom.boomify', (): void => {
     const spyBoomify = jest.spyOn(Boom, 'boomify')
     const err = new Error('sample error')
-    expect((): void => {
-      onValidateFail(null as unknown as Request, null as unknown as ResponseToolkit, err)
-    }).toThrowError(err)
-    expect(spyBoomify).toBeCalledWith(err)
+    expect(() => {
+      onValidateFail(logger, err)
+    }).toThrow(err)
+    expect(spyBoomify).toHaveBeenCalledWith(err)
   })
 })

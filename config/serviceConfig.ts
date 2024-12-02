@@ -46,4 +46,3 @@ const ServiceConfig: ServiceConfig = {
 }
 
 export default ServiceConfig
-module.exports = ServiceConfig

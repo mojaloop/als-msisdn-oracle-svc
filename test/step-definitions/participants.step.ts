@@ -24,9 +24,8 @@ defineFeature(feature, (test): void => {
   let server: Server
   let response: ServerInjectResponse
 
-  afterEach((done): void => {
-    server.events.on('stop', done)
-    server.stop()
+  afterEach(async () => {
+    await server.stop()
   })
 
   test('GET participants/{Type}/{ID} request', ({ given, when, then }): void => {

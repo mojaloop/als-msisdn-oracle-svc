@@ -22,9 +22,39 @@
  --------------
  ******/
 
+import { Logger } from '@mojaloop/sdk-standard-components'
+import { IOracleDb } from '~/domain/types'
+import { mockPartyMapItem } from '../../data/data'
+
 export default (): object => ({
   inspect: jest.fn((): string => {
     console.error('inspect-mock is used')
     return 'inspected-object'
   })
+})
+
+export const createMockOracleDb = ({
+  insert = jest.fn(async () => true),
+  update = jest.fn(async () => 1),
+  retrieve = jest.fn(async () => mockPartyMapItem),
+  deleteFn = jest.fn(async () => 1)
+} = {}): IOracleDb => ({
+  insert,
+  update,
+  retrieve,
+  delete: deleteFn
+})
+// todo: add in-memory db for testing
+
+/* prettier-ignore */
+export const createMockHapiServer = ({
+   oracleDB = createMockOracleDb(),
+   logger = new Logger.Logger()
+} = {}) => ({
+  app: {
+    oracleDB,
+    logger
+  },
+  start: jest.fn(),
+  stop: jest.fn(),
 })
