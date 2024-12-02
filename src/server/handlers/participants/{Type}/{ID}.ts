@@ -1,10 +1,10 @@
 import { Request, ResponseToolkit, ResponseObject } from '@hapi/hapi'
+import { boomify } from '@hapi/boom'
 import { Context } from '~/server/plugins'
 import { retrievePartyMapItem, createPartyMapItem, updatePartyMapItem, deletePartyMapItem } from '~/domain/participants'
 import { PartyMapItem } from '~/model/MSISDN'
+import { IDTypeNotSupported } from '~/model/errors'
 import * as Types from '~/interface/types'
-import { IDTypeNotSupported } from '../../../../model/errors'
-import { boomify } from '@hapi/boom'
 
 export async function get(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
   if (request.params.Type !== 'MSISDN') {

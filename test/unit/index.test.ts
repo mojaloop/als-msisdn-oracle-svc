@@ -35,7 +35,7 @@ import MockParticipantPostData from '../data/mockParticipantsPost.json'
 import MockParticipantsByTypeAndIDPost from '../data/mockParticipantsByTypeAndIDPost.json'
 import MockParticipantsByTypeAndIDPut from '../data/mockParticipantsByTypeAndIDPut.json'
 import { getParticipantsByTypeAndIDResponse } from '../data/data'
-jest.mock('~/shared/logger')
+
 jest.mock('~/server/handlers', () => ({
   HealthGet: jest.fn((_context: Context, _req: Request, h: ResponseToolkit) =>
     Promise.resolve(h.response({ status: 'OK', uptime: 1.23 }).code(200))

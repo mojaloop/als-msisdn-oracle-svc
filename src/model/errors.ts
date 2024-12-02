@@ -28,6 +28,8 @@
  ******/
 
 export class NotFoundError extends Error {
+  public readonly statusCode = 404
+
   public constructor(resource: string, id: string) {
     super(`NotFoundError: ${resource} for MSISDN Id ${id}`)
     this.name = 'NotFoundError'
@@ -35,6 +37,8 @@ export class NotFoundError extends Error {
 }
 
 export class IDTypeNotSupported extends Error {
+  public readonly statusCode = 400
+
   public constructor() {
     super('This service supports only MSISDN ID types')
     this.name = 'IDTypeNotSupported'

@@ -4,3 +4,4 @@ coverage/*
 *.d.ts
 commitlint.config.js
 .eslintrc.js
+scripts/*

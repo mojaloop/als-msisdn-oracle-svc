@@ -27,21 +27,26 @@
 // eslint-disable-next-line
 /// <reference path="../../ambient.d.ts"/>
 import { validateRoutes } from '@mojaloop/central-services-error-handling'
-import { Server } from '@hapi/hapi'
+import { Request, ResponseToolkit, Server } from '@hapi/hapi'
+import { ParticipantServiceDeps } from '../domain/types'
 import { ServiceConfig } from '../shared/config'
 import onValidateFail from './handlers/onValidateFail'
 
-export default async function create(config: ServiceConfig): Promise<Server> {
-  const server: Server = await new Server({
+export default async function create(config: ServiceConfig, deps: ParticipantServiceDeps): Promise<Server> {
+  const server: Server = new Server({
     host: config.HOST,
     port: config.PORT,
     routes: {
       validate: {
         options: validateRoutes(),
-        failAction: onValidateFail
+        failAction: (_req: Request, _h: ResponseToolkit, err?: Error) => {
+          return onValidateFail(deps.logger, err)
+        }
       }
     }
   })
+
+  Object.assign(server.app, deps)
 
   return server
 }

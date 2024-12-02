@@ -23,7 +23,7 @@
  --------------
  ******/
 
-import Path from 'path'
+import Path from 'node:path'
 import { Server, ServerRegisterPluginObject } from '@hapi/hapi'
 import { Util } from '@mojaloop/central-services-shared'
 import Handlers from '../handlers'

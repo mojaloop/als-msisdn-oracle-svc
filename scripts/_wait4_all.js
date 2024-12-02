@@ -11,7 +11,7 @@ const { execSync } = require('child_process')
 const expectedContainers = ['co_als-msisdn-oracle-svc']
 
 let retries = 40
-const waitTimeMs = 60000
+const waitTimeMs = 20_000
 
 async function main() {
   const waitingMap = {}

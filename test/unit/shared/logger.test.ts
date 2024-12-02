@@ -25,13 +25,7 @@
  --------------
  ******/
 
-import { RequestLogged, logResponse, logger, createLogger } from '~/shared/logger'
-// import { Logger as SDKLogger } from '@mojaloop/sdk-standard-components'
-import inspect from '~/shared/inspect'
-// import { Logger as SDKLogger } from '@mojaloop/sdk-standard-components'
-
-// import SDK from '@mojaloop/sdk-standard-components'
-// import { mocked } from 'ts-jest'
+import { logger, createLogger } from '~/shared/logger'
 
 jest.mock(
   '@mojaloop/sdk-standard-components',
@@ -59,47 +53,6 @@ jest.mock(
 )
 
 describe('shared/logger', (): void => {
-  it('should do nothing if no request', (): void => {
-    logResponse(null as unknown as RequestLogged)
-    expect(logger.info).not.toBeCalled()
-  })
-
-  it('should log response via JSON.stringify', (): void => {
-    const spyStringify = jest.spyOn(JSON, 'stringify')
-    const request = { response: { source: 'abc', statusCode: 200 } }
-    logResponse(request as RequestLogged)
-    expect(spyStringify).toBeCalledWith('abc')
-    expect(logger.info).toBeCalledWith(
-      `AS-Trace - Response: ${JSON.stringify(request.response.source)} Status: ${request.response.statusCode}`
-    )
-  })
-
-  it('should log response via inspect', (): void => {
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    jest.mock('~/shared/inspect', () => jest.fn())
-
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    const spyStringify = jest.spyOn(JSON, 'stringify').mockImplementationOnce(() => {
-      throw new Error('parse-error')
-    })
-
-    const request = { response: { source: 'abc', statusCode: 200 } }
-    logResponse(request as RequestLogged)
-    expect(spyStringify).toBeCalled()
-    expect(logger.info).toBeCalledWith(
-      `AS-Trace - Response: ${inspect(request.response.source)} Status: ${request.response.statusCode}`
-    )
-  })
-
-  it('should log if there is no request.response', (): void => {
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    const spyStringify = jest.spyOn(JSON, 'stringify').mockImplementationOnce(() => null as unknown as string)
-    const request = { response: { source: 'abc', statusCode: 200 } }
-    logResponse(request as RequestLogged)
-    expect(spyStringify).toBeCalled()
-    expect(logger.info).toBeCalledWith(`AS-Trace - Response: ${request.response.toString()}`)
-  })
-
   describe('Logger class', () => {
     it('should be able to create default logger', () => {
       const log = createLogger()

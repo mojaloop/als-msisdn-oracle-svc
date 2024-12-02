@@ -21,10 +21,10 @@
  ******/
 
 import { Server } from '@hapi/hapi'
-import { logger } from '../shared/logger'
+import { name, version } from '../../package.json'
 
 export default async function start(server: Server): Promise<Server> {
   await server.start()
-  logger.info(`als-msisdn-oracle-svc is running @ ${server.info.uri}`)
+  server.app.logger.info(`${name}@${version} is running on ${server.info.uri}`)
   return server
 }

@@ -24,14 +24,15 @@
 
 import Inert from '@hapi/inert'
 import Vision from '@hapi/vision'
+import HapiSwagger from 'hapi-swagger'
 import Blip from 'blipp'
 import { Server, ServerRoute, Utils as HapiUtil, RequestQuery } from '@hapi/hapi'
 import { Readable as StreamReadable } from 'stream'
-import ErrorHandling from '@mojaloop/central-services-error-handling'
 import { Util } from '@mojaloop/central-services-shared'
+import ErrorHandling from '@mojaloop/central-services-error-handling'
 import Good from './good'
 import OpenAPI from './openAPI'
-import HapiSwagger from 'hapi-swagger'
+import { loggingPlugin } from './loggingPlugin'
 
 async function register(server: Server): Promise<Server> {
   const openapiBackend = await OpenAPI.initialize()
@@ -57,7 +58,8 @@ async function register(server: Server): Promise<Server> {
     Vision,
     Blip,
     ErrorHandling,
-    Util.Hapi.HapiEventPlugin
+    Util.Hapi.HapiEventPlugin,
+    loggingPlugin
     // TODO: ALS is sending incorrect headers (vnd.application.parties instead of vnd.interoperability.participants)
     // So we need to disable this validation for now
     // Util.Hapi.FSPIOPHeaderValidation

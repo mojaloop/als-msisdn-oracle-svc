@@ -28,10 +28,10 @@
  ******/
 
 import { knex, Knex } from 'knex'
-import Config, { DatabaseConfig } from '../shared/config'
+import Config from '../shared/config'
 import OracleDB from '../model/MSISDN'
 
-const Db: Knex = knex(Config.DATABASE as DatabaseConfig)
+const Db: Knex = knex(Config.DATABASE)
 const oracleDB: OracleDB = new OracleDB(Db)
 const closeKnexConnection = async () => {
   await Db.destroy()
