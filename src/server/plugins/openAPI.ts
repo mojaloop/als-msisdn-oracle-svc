@@ -23,12 +23,12 @@
  --------------
  ******/
 
-import Path from 'node:path'
+import path from 'node:path'
 import { Server, ServerRegisterPluginObject } from '@hapi/hapi'
 import { Util } from '@mojaloop/central-services-shared'
 import Handlers from '../handlers'
 
-const OpenapiBackend = Util.OpenapiBackend
+const openapiDefinitionPath = path.resolve(__dirname, '../../interface/api.yaml')
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function initialize(): Promise<ServerRegisterPluginObject<any>> {
@@ -42,7 +42,7 @@ async function initialize(): Promise<ServerRegisterPluginObject<any>> {
       }
     },
     options: {
-      openapi: await OpenapiBackend.initialise(Path.resolve(__dirname, '../../interface/api.yaml'), Handlers)
+      openapi: await Util.OpenapiBackend.initialise(openapiDefinitionPath, Handlers)
     }
   }
 }
