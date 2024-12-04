@@ -1,4 +1,11 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.11](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.10...v0.0.11) (2024-12-04)
+
+
+### Bug Fixes
+
+* **csi-977:** fixed api-template.yaml link to api-snippets; regenerated api.yaml ([6cf11d9](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/6cf11d9fa58b4404d7e7a2b800d3998521277d99))
+
 ### [0.0.10](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.9...v0.0.10) (2024-12-04)
 
 
