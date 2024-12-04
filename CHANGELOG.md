@@ -1,4 +1,11 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.10](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.9...v0.0.10) (2024-12-04)
+
+
+### Bug Fixes
+
+* **csi-977:** updated CorrelationId to allow UUID and ULID ([d6d44a6](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/d6d44a668adcb96f1b0b393b19f8fc0f14de2e8c))
+
 ### [0.0.9](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.8...v0.0.9) (2024-12-02)
 
 
