@@ -20,9 +20,9 @@
  --------------
  ******/
 
+import { Server, Request, ResponseToolkit } from '@hapi/hapi'
 import index from '~/index'
 import Config from '~/shared/config'
-import { Server, Request, ResponseToolkit } from '@hapi/hapi'
 import { Context } from '~/server/plugins'
 
 // Import handlers for mocking
@@ -33,20 +33,21 @@ import Headers from '../../../data/headers.json'
 import MockParticipantPostData from '../../../data/mockParticipantsPost.json'
 import MockParticipantsByTypeAndIDPost from '../../../data/mockParticipantsByTypeAndIDPost.json'
 import MockParticipantsByTypeAndIDPut from '../../../data/mockParticipantsByTypeAndIDPut.json'
+import * as fixtures from 'test/fixtures'
 
-jest.mock('~/shared/logger')
+jest.mock('~/lib/db')
 
 describe('openAPI', () => {
   let server: Server
 
   beforeAll(async (): Promise<void> => {
     // Override the port to allow parallel tests
-    Config.PORT = 33290
+    Config.PORT = 33390
     server = await index.server.run(Config)
   })
 
   afterAll(async (): Promise<void> => {
-    await server.stop()
+    await server.stop({ timeout: 100 })
   })
 
   it('schema validation - missing fields', async (): Promise<void> => {
@@ -101,6 +102,18 @@ describe('openAPI', () => {
     const response = await server.inject(request)
     expect(response.statusCode).toBe(400)
     expect(response.result).toStrictEqual(expected)
+  })
+
+  it('should pass validation with requestID as ULID', async () => {
+    const request = {
+      method: 'POST',
+      url: '/participants',
+      headers: Headers,
+      payload: fixtures.mockPostParticipantsBulkRequest({ requestId: '01JE9A8X3GDF9N07T0T4ZZQCTZ' })
+    }
+
+    const response = await server.inject(request)
+    expect(response.statusCode).toBe(201)
   })
 
   it('PUT schema validation - missing fields', async (): Promise<void> => {
