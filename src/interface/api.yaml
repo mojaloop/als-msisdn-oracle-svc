@@ -449,7 +449,14 @@ paths:
       responses:
         '201':
           description: Created
-          headers: {}
+          headers:
+            Content-Length:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParticipantsIDPutResponse'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -839,12 +846,13 @@ components:
     CorrelationId:
       title: CorrelationId
       type: string
-      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-7][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$|^[0-9A-HJKMNP-TV-Z]{26}$
+      pattern: >-
+        ^[0-9a-f]{8}-[0-9a-f]{4}-[1-7][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$|^[0-9A-HJKMNP-TV-Z]{26}$
       description: >-
-        Identifier that correlates all messages of the same sequence.
-        The supported identifiers formats are for
-        lowercase [UUID](https://datatracker.ietf.org/doc/html/rfc9562) and
-        uppercase [ULID](https://github.com/ulid/spec)
+        Identifier that correlates all messages of the same sequence. The
+        supported identifiers formats are for lowercase
+        [UUID](https://datatracker.ietf.org/doc/html/rfc9562) and uppercase
+        [ULID](https://github.com/ulid/spec)
       example: b51ec534-ee48-4575-b6a9-ead2955b8069
     PartyIdType:
       title: PartyIdType
@@ -951,6 +959,35 @@ components:
           $ref: '#/components/schemas/Currency'
       required:
         - requestId
+        - partyList
+    PartyResult:
+      title: PartyResult
+      type: object
+      description: Data model for the complex type PartyResult.
+      properties:
+        partyId:
+          $ref: '#/components/schemas/PartyIdInfo'
+        errorInformation:
+          $ref: '#/components/schemas/ErrorInformation'
+      required:
+        - partyId
+    ParticipantsIDPutResponse:
+      title: ParticipantsIDPutResponse
+      type: object
+      description: The object sent in the PUT /participants/{ID} callback.
+      properties:
+        partyList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartyResult'
+          minItems: 1
+          maxItems: 10000
+          description: >-
+            List of PartyResult elements that were either created or failed to
+            be created.
+        currency:
+          $ref: '#/components/schemas/Currency'
+      required:
         - partyList
   responses:
     '200':

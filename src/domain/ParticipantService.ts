@@ -23,51 +23,75 @@
  --------------
  **********/
 
-import Boom from '@hapi/boom'
-import { PostParticipantsBulkRequest } from '../interface/types'
-import { ParticipantServiceDeps, PartyMapItem } from './types'
+import { Enums } from '@mojaloop/central-services-error-handling'
+import {
+  PartyIdInfo,
+  PostParticipantsBulkRequest,
+  PostParticipantsBulkResponse,
+  PartyResult,
+  ErrorInformation
+} from '../interface/types'
+import { ParticipantServiceDeps, PartyMapItem, ILogger } from './types'
 import { ERROR_MESSAGES } from '~/constants'
-import { IDTypeNotSupported } from '~/model/errors'
 
 export class ParticipantService {
-  constructor(private readonly deps: ParticipantServiceDeps) {}
+  private readonly log: ILogger
 
-  async bulkCreate(payload: PostParticipantsBulkRequest, source: string): Promise<boolean> {
-    const { logger, oracleDB } = this.deps
+  constructor(private readonly deps: ParticipantServiceDeps) {
+    this.log = deps.logger.push({ component: ParticipantService.name })
+  }
+
+  async bulkCreate(payload: PostParticipantsBulkRequest, source: string): Promise<PostParticipantsBulkResponse> {
     try {
-      const partyItems: PartyMapItem[] = this.mapPayloadToPartyItems(payload, source)
-      const result = await oracleDB.insert(partyItems)
-      logger.push({ result, partyItems }).verbose('bulkCreate is done')
-      return true
+      const inserting = payload.partyList.map((party) => this.createOneParty(party, source))
+      const partyList = await Promise.all(inserting)
+      this.log.push({ partyList }).verbose('bulkCreate is done')
+      return { partyList }
     } catch (err: unknown) {
-      logger.push({ err }).error('error in bulkCreate')
+      this.log.push({ err }).error('error in bulkCreate')
       throw err
     }
   }
 
-  mapPayloadToPartyItems(payload: PostParticipantsBulkRequest, source: string): PartyMapItem[] {
-    const { logger } = this.deps
+  async createOneParty(partyId: PartyIdInfo, source: string): Promise<PartyResult> {
+    const log = this.log.push({ partyId, source })
 
-    return payload.partyList.map((party) => {
-      if (party.partyIdType !== 'MSISDN') {
-        const err = new IDTypeNotSupported()
-        logger.push({ party, err }).warn(err.message)
-        throw Boom.badRequest(err)
+    try {
+      if (partyId.partyIdType !== 'MSISDN') {
+        const errMessage = ERROR_MESSAGES.unsupportedPartyIdType
+        log.warn(`${errMessage}, but got ${partyId.partyIdType}`)
+        throw new Error(errMessage)
       }
 
       const item: PartyMapItem = {
-        id: party.partyIdentifier,
-        subId: party.partySubIdOrType || '',
-        fspId: party.fspId || source
+        id: partyId.partyIdentifier,
+        subId: partyId.partySubIdOrType || '',
+        fspId: partyId.fspId || source
       }
       if (!item.fspId) {
         const errMessage = ERROR_MESSAGES.noPartyFspId
-        logger.push({ item }).warn(errMessage)
-        throw Boom.badRequest(errMessage)
+        log.push({ item }).warn(errMessage)
+        throw new Error(errMessage)
       }
 
-      return item
-    })
+      await this.deps.oracleDB.insert(item)
+      log.debug('createOneParty is done')
+
+      return { partyId }
+    } catch (err: unknown) {
+      const errorInformation = this.formatErrorInfo()
+      log.push({ err, errorInformation }).error('error in createOneParty')
+      return { partyId, errorInformation }
+    }
+  }
+
+  formatErrorInfo(): ErrorInformation {
+    // todo: think, if we need to get some details from actual error
+    const { code, message } = Enums.FSPIOPErrorCodes['ADD_PARTY_INFO_ERROR']
+    return {
+      errorCode: code,
+      errorDescription: message
+    }
   }
 
   // todo: move all methods from  /.participants here

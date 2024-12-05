@@ -10,7 +10,7 @@ export const handlePostBulk = async (_context: Context, req: Request, h: Respons
   const { oracleDB, logger } = req.server.app
 
   const service = new ParticipantService({ oracleDB, logger })
-  await service.bulkCreate(req.payload as PostParticipantsBulkRequest, req.headers[FSPIOP.SOURCE])
+  const result = await service.bulkCreate(req.payload as PostParticipantsBulkRequest, req.headers[FSPIOP.SOURCE])
 
-  return h.response().code(201)
+  return h.response(result).code(201)
 }

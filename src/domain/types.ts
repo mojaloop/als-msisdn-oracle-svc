@@ -21,4 +21,5 @@ export type IOracleDb = {
   update(partyMapItem: PartyMapItem): Promise<number>
   retrieve(id: string, subId?: string): Promise<PartyMapItem>
   delete(id: string, subId?: string): Promise<number>
+  isConnected(): Promise<boolean>
 }

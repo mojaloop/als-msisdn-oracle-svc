@@ -22,7 +22,8 @@ export class OracleDB implements IOracleDb {
   public async insert(item: PartyMapItem | Array<PartyMapItem>): Promise<boolean> {
     try {
       // Returns [0] for MySQL-Knex and [Row Count] for SQLite-Knex
-      await this.Db<PartyMapItem>('oracleMSISDN').insert(item)
+      const inserted = await this.Db<PartyMapItem>('oracleMSISDN').insert(item)
+      this.log.push({ inserted }).debug('db.insert is done')
 
       return true
     } catch (err: unknown) {
@@ -119,6 +120,17 @@ export class OracleDB implements IOracleDb {
     } catch (err: unknown) {
       this.log.push({ err }).warn('error in db.delete')
       throw err
+    }
+  }
+
+  public async isConnected(): Promise<boolean> {
+    try {
+      await this.Db.raw('SELECT 1')
+      this.log.verbose('db connection is ok')
+      return true
+    } catch (err: unknown) {
+      this.log.push({ err }).warn('db connection check failed')
+      return false
     }
   }
 }
