@@ -18,16 +18,9 @@ export interface ParticipantsTypeIDPostPutRequest {
   partySubIdOrType?: Schemas.PartySubIdOrType
 }
 
-export type PostParticipantsBulkRequest = {
-  requestId: string
-  partyList: PostParticipantsBulkItem[]
-  currency?: Schemas.Currency
-}
+export type PostParticipantsBulkRequest = Schemas.ParticipantsPostRequest
+export type PostParticipantsBulkResponse = Schemas.ParticipantsIDPutResponse
+export type PartyIdInfo = Schemas.PartyIdInfo
+export type PartyResult = Schemas.PartyResult
 
-export type PostParticipantsBulkItem = {
-  partyIdType: Schemas.PartyIdType
-  partyIdentifier: Schemas.PartyIdentifier
-  partySubIdOrType?: Schemas.PartySubIdOrType
-  fspId?: Schemas.FspId
-  extensionList?: Schemas.ExtensionList
-}
+export type ErrorInformation = Schemas.ErrorInformation

@@ -26,6 +26,9 @@
 // to stop typescript complains, we have to declare some modules here
 declare module '@mojaloop/central-services-error-handling'{
   export function validateRoutes(options?: object): object;
+  export const Enums: {
+    FSPIOPErrorCodes: Record<Uppercase<string>, { code: string, message: string }>;
+  };
 }
 declare module '@mojaloop/central-services-shared'
 declare module '@mojaloop/central-services-shared/src/util/hapi'

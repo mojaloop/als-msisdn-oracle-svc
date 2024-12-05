@@ -37,12 +37,14 @@ export const createMockOracleDb = ({
   insert = jest.fn(async () => true),
   update = jest.fn(async () => 1),
   retrieve = jest.fn(async () => mockPartyMapItem),
-  deleteFn = jest.fn(async () => 1)
+  deleteFn = jest.fn(async () => 1),
+  isConnected = jest.fn(async () => true)
 } = {}): IOracleDb => ({
   insert,
   update,
   retrieve,
-  delete: deleteFn
+  delete: deleteFn,
+  isConnected
 })
 // todo: add in-memory db for testing
 

@@ -26,17 +26,14 @@
 import { randomUUID } from 'node:crypto'
 import { ParticipantService } from '~/domain/ParticipantService'
 import { IOracleDb, PartyMapItem } from '~/domain/types'
-import { IDTypeNotSupported } from '~/model/errors'
 import { logger } from '~/shared/logger'
-import { ERROR_MESSAGES } from '~/constants'
 
 import { createMockOracleDb } from '../__mocks__/util'
 import * as fixtures from '../../fixtures'
 
-const isPartyItemList = (data: unknown): PartyMapItem[] => {
-  const isPartyArray = Array.isArray(data) && data.every((_) => typeof _.id === 'string' && typeof _.fspId === 'string')
-  if (isPartyArray) return data as PartyMapItem[]
-  throw new TypeError('Not a PartyItemList')
+const isSinglePartyItem = (data: PartyMapItem | PartyMapItem[]): PartyMapItem => {
+  if (!Array.isArray(data)) return data as PartyMapItem
+  else throw new TypeError('Not a PartyItem')
 }
 
 describe('ParticipantService Tests -->', () => {
@@ -49,48 +46,46 @@ describe('ParticipantService Tests -->', () => {
   })
 
   describe('bulkCreate method Tests', () => {
-    test('should throw error if any of parties have wrong partyIdType', async () => {
-      const partyList = [fixtures.mockPostParticipantsBulkItem({ partyIdType: 'EMAIL' })]
+    test('should add errorInformation if any of parties have wrong partyIdType', async () => {
+      const partyList = [fixtures.mockPartyIdInfo({ partyIdType: 'EMAIL' })]
       const payload = fixtures.mockPostParticipantsBulkRequest({ partyList })
-      /* prettier-ignore */
-      await expect(() => service.bulkCreate(payload, 'source'))
-        .rejects.toThrow(IDTypeNotSupported)
+      const result = await service.bulkCreate(payload, 'source')
+      expect(result.partyList[0].errorInformation).toBeDefined()
+      expect(result.partyList[0].partyId).toEqual(partyList[0])
     })
 
-    test('should throw error if fspId is not set, and no source-header', async () => {
-      const partyList = [fixtures.mockPostParticipantsBulkItem({ fspId: '' })]
+    test('should add errorInformation if fspId is not set, and no source-header', async () => {
+      const partyList = [fixtures.mockPartyIdInfo({ fspId: '' })]
       const payload = fixtures.mockPostParticipantsBulkRequest({ partyList })
-      /* prettier-ignore */
-      await expect(() => service.bulkCreate(payload, ''))
-        .rejects.toThrow(ERROR_MESSAGES.noPartyFspId)
+      const result = await service.bulkCreate(payload, '')
+      expect(result.partyList[0].errorInformation).toBeDefined()
     })
 
     test('should create a party with empty subId', async () => {
       const payload = fixtures.mockPostParticipantsBulkRequest()
-      const isOk = await service.bulkCreate(payload, 'source')
+      const result = await service.bulkCreate(payload, 'sourceFsp')
 
-      expect(isOk).toBe(true)
+      expect(result.partyList[0].errorInformation).toBeUndefined()
+      expect(result.partyList[0].partyId).toEqual(payload.partyList[0])
       expect(oracleDB.insert).toHaveBeenCalledTimes(1)
 
       const args = (oracleDB as jest.Mocked<IOracleDb>).insert.mock.calls[0][0]
-      const items = isPartyItemList(args)
-      expect(items.length).toBe(1)
-      expect(items[0].id).toBe(payload.partyList[0].partyIdentifier)
-      expect(items[0].fspId).toBe(payload.partyList[0].fspId)
-      expect(items[0].subId).toBe('')
+      const item = isSinglePartyItem(args)
+      expect(item.id).toBe(payload.partyList[0].partyIdentifier)
+      expect(item.fspId).toBe(payload.partyList[0].fspId)
+      expect(item.subId).toBe('')
     })
 
     test('should create a party, and use source-header as fspId if it is not in a payload', async () => {
-      const partyList = [fixtures.mockPostParticipantsBulkItem({ fspId: '' })]
+      const partyList = [fixtures.mockPartyIdInfo({ fspId: '' })]
       const payload = fixtures.mockPostParticipantsBulkRequest({ partyList })
       const source = `source-${randomUUID()}`
-      const isOk = await service.bulkCreate(payload, source)
 
-      expect(isOk).toBe(true)
+      await service.bulkCreate(payload, source)
       expect(oracleDB.insert).toHaveBeenCalledTimes(1)
       const args = (oracleDB as jest.Mocked<IOracleDb>).insert.mock.calls[0][0]
-      const items = isPartyItemList(args)
-      expect(items[0].fspId).toBe(source)
+      const item = isSinglePartyItem(args)
+      expect(item.fspId).toBe(source)
     })
   })
 })

@@ -1,14 +1,14 @@
 import { randomUUID } from 'node:crypto'
-import { PostParticipantsBulkItem, PostParticipantsBulkRequest } from '~/interface/types'
+import { PartyIdInfo, PostParticipantsBulkRequest } from '~/interface/types'
 
 /* prettier-ignore */
-export const mockPostParticipantsBulkItem = ({
+export const mockPartyIdInfo = ({
   partyIdType = 'MSISDN',
   partyIdentifier = `partyId-${Date.now()}`,
   partySubIdOrType = '',
   fspId = 'sourceFspId',
   extensionList
-}: Partial<PostParticipantsBulkItem> = {}): PostParticipantsBulkItem => ({
+}: Partial<PartyIdInfo> = {}): PartyIdInfo => ({
   partyIdType,
   partyIdentifier,
   ...(partySubIdOrType && { partySubIdOrType }),
@@ -19,7 +19,7 @@ export const mockPostParticipantsBulkItem = ({
 /* prettier-ignore */
 export const mockPostParticipantsBulkRequest = ({
   requestId = randomUUID(),
-  partyList = [mockPostParticipantsBulkItem()],
+  partyList = [mockPartyIdInfo()],
   currency = 'XXX'
 }: Partial<PostParticipantsBulkRequest> = {}): PostParticipantsBulkRequest => ({
   requestId,

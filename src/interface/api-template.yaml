@@ -395,7 +395,14 @@ paths:
       responses:
         201:
           description: Created
-          headers: {}
+          headers:
+            Content-Length:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "../../node_modules/@mojaloop/api-snippets/fspiop/v2_0/openapi3/components/schemas/ParticipantsIDPutResponse.yaml"
         400:
           $ref: '../../node_modules/@mojaloop/api-snippets/fspiop/v1_1/openapi3/components/responses/400.yaml'
         401:
