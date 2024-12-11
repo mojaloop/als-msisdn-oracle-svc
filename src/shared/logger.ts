@@ -28,6 +28,7 @@
  ******/
 
 import { Logger as SDKLogger } from '@mojaloop/sdk-standard-components'
+// todo: switch logger to use ContextLogger from '@mojaloop/central-services-logger/src/contextLogger'
 
 // default SDKLogger instance
 export const logger = new SDKLogger.Logger()

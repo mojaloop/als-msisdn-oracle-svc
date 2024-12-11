@@ -32,7 +32,6 @@ import { Util } from '@mojaloop/central-services-shared'
 import ErrorHandling from '@mojaloop/central-services-error-handling'
 import Good from './good'
 import OpenAPI from './openAPI'
-import { loggingPlugin } from './loggingPlugin'
 
 async function register(server: Server): Promise<Server> {
   const openapiBackend = await OpenAPI.initialize()
@@ -59,7 +58,7 @@ async function register(server: Server): Promise<Server> {
     Blip,
     ErrorHandling,
     Util.Hapi.HapiEventPlugin,
-    loggingPlugin
+    Util.Hapi.loggingPlugin
     // TODO: ALS is sending incorrect headers (vnd.application.parties instead of vnd.interoperability.participants)
     // So we need to disable this validation for now
     // Util.Hapi.FSPIOPHeaderValidation
