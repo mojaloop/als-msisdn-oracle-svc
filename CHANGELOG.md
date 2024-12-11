@@ -1,4 +1,14 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.13](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.12...v0.0.13) (2024-12-11)
+
+
+### Features
+
+* **csi-927:** added pre-commit hook ([4e8b490](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/4e8b490f892a38fe1bda2085565c2fe478627cbf))
+* **csi-927:** added pre-commit hook ([9972f44](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/9972f44489c98fc378bab529a884f75c5f275674))
+* **csi-927:** added pre-commit hook ([3567657](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/3567657fdf3dcb70f55e208d86b4c1e650e6ca05))
+* **csi-927:** used common loggingPlugin ([e4c10d0](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/e4c10d03a35395e25eb16e6b4e64748b6e413ec3))
+
 ### [0.0.12](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.11...v0.0.12) (2024-12-05)
 
 
