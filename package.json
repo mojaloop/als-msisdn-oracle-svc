@@ -2,8 +2,8 @@
   "name": "@mojaloop/als-msisdn-oracle-svc",
   "version": "0.0.14",
   "description": "An Account Lookup Service Oracle for MSISDN identifiers",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
   "files": [
     "dist"
   ],
@@ -16,7 +16,7 @@
   "scripts": {
     "audit:fix": "npm audit fix",
     "audit:check": "npx audit-ci --config ./audit-ci.jsonc",
-    "build": "npm run build:openapi; tsc -p ./tsconfig.build.json; cp -R config/*.json dist/config/; mkdir -p ./dist/src/interface; cp ./src/interface/*.yaml ./dist/src/interface/",
+    "build": "npm run build:openapi; tsc -p ./tsconfig.build.json; tsc-alias -p ./tsconfig.build.json; cp -R config/*.json dist/config/; mkdir -p ./dist/src/interface; cp ./src/interface/*.yaml ./dist/src/interface/",
     "build:openapi": "openapi bundle --output ./src/interface/api.yaml --ext yaml ./src/interface/api-template.yaml",
     "dep:check": "npx ncu -e 2",
     "dep:update": "npx ncu -u",
@@ -112,6 +112,8 @@
     "standard-version": "^9.5.0",
     "ts-jest": "^29.2.5",
     "ts-node": "10.9.2",
+    "tsc-alias": "1.8.10",
+    "tslib": "^2.8.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "5.7.2"
   },
@@ -124,8 +126,9 @@
     "@mojaloop/api-snippets": "^17.7.5",
     "@mojaloop/central-services-error-handling": "13.0.2",
     "@mojaloop/central-services-health": "15.0.0",
-    "@mojaloop/central-services-shared": "18.13.0",
-    "@mojaloop/sdk-standard-components": "19.6.2",
+    "@mojaloop/central-services-metrics": "12.4.2",
+    "@mojaloop/central-services-shared": "workspace:*",
+    "@mojaloop/sdk-standard-components": "workspace:*",
     "ajv": "8.x.x",
     "ajv-keywords": "5.x.x",
     "blipp": "^4.0.2",
