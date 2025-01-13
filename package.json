@@ -14,6 +14,7 @@
     "knex": "--knexfile ./dist/config/knexfile.ts"
   },
   "scripts": {
+    "_phase:build": "npm run build",
     "audit:fix": "npm audit fix",
     "audit:check": "npx audit-ci --config ./audit-ci.jsonc",
     "build": "npm run build:openapi; tsc -p ./tsconfig.build.json; tsc-alias -p ./tsconfig.build.json; cp -R config/*.json dist/config/; mkdir -p ./dist/src/interface; cp ./src/interface/*.yaml ./dist/src/interface/",
