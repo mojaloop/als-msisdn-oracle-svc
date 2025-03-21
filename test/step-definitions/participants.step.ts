@@ -58,7 +58,7 @@ defineFeature(feature, (test): void => {
     })
 
     when('an ALS requests a valid POST /participants/{Type}/{ID} request', async (): Promise<ServerInjectResponse> => {
-      mockCreatePartyMapItem.mockResolvedValueOnce()
+      mockCreatePartyMapItem.mockResolvedValueOnce(undefined)
       const request = {
         method: 'POST',
         url: '/participants/MSISDN/fb2f2b12-5107-48f1-a93d-52b154270038',

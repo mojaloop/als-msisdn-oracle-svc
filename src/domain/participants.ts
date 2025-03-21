@@ -14,7 +14,7 @@ export async function createPartyMapItem(item: PartyMapItem): Promise<undefined 
     return
   } catch (err: unknown) {
     const isDuplication = oracleDB.isDuplicationError(err)
-    logger[isDuplication ? 'warn' : 'error']('error in createPartyMapItem', err) // todo: add error
+    logger[isDuplication ? 'warn' : 'error']('error in createPartyMapItem', err)
     return dto.addPartyErrorResponseDto(isDuplication ? 400 : 500)
   }
 }
