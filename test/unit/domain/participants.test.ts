@@ -5,8 +5,6 @@ import { retrievePartyMapItem, createPartyMapItem, updatePartyMapItem, deletePar
 import { logger } from '~/shared/logger'
 import { PartyMapItem } from '~/model/MSISDN'
 
-jest.mock('~/shared/logger')
-
 // Declare Mocks
 const mockInsertPartyMapItem = jest.spyOn(oracleDB, 'insert')
 const mockUpdatePartyMapItem = jest.spyOn(oracleDB, 'update')
@@ -33,6 +31,20 @@ describe('server/domain/participants', (): void => {
   it('createPartyMapItem should resolve successfully', async (): Promise<void> => {
     await expect(createPartyMapItem(mockPartyMapItem)).resolves.toBe(undefined)
     expect(mockInsertPartyMapItem).toHaveBeenCalledWith(mockPartyMapItem)
+  })
+
+  it('should fail to create existing party with statusCode 400', async (): Promise<void> => {
+    mockInsertPartyMapItem.mockRejectedValueOnce({ code: 'ER_DUP_ENTRY' })
+    const errResult = await createPartyMapItem(mockPartyMapItem)
+    expect(errResult?.statusCode).toBe(400)
+    expect(errResult?.errorInformation.errorCode).toBe('3003')
+  })
+
+  it('should return statusCode 500 in case of any other DB errors', async (): Promise<void> => {
+    mockInsertPartyMapItem.mockRejectedValueOnce(new Error('DB error'))
+    const errResult = await createPartyMapItem(mockPartyMapItem)
+    expect(errResult?.statusCode).toBe(500)
+    expect(errResult?.errorInformation.errorCode).toBe('3003')
   })
 
   it('retrievePartyMapItem should resolve successfully', async (): Promise<void> => {

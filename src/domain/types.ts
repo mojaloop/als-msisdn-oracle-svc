@@ -22,4 +22,5 @@ export type IOracleDb = {
   retrieve(id: string, subId?: string): Promise<PartyMapItem>
   delete(id: string, subId?: string): Promise<number>
   isConnected(): Promise<boolean>
+  isDuplicationError(error: unknown): boolean
 }

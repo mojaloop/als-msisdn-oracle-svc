@@ -65,7 +65,7 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
 
   describe('POST Handler', (): void => {
     beforeAll((): void => {
-      mockCreatePartyMapItem.mockResolvedValue()
+      mockCreatePartyMapItem.mockResolvedValue(undefined)
     })
 
     it('should return a 201 success code.', async (): Promise<void> => {

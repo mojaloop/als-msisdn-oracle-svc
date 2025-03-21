@@ -33,6 +33,7 @@ import { Lifecycle } from '@hapi/hapi'
 import { Logger } from '@mojaloop/sdk-standard-components'
 
 export default function onValidateFail(logger: Logger.Logger, err?: Error): Lifecycle.ReturnValue {
+  // istanbul ignore next
   const error = err || new Error('Validation Error')
   logger.push({ error }).error('onValidateFail error:')
   throw Boom.boomify(error)

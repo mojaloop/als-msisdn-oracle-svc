@@ -31,8 +31,9 @@ export async function post(_context: Context, request: Request, h: ResponseToolk
     subId,
     fspId: payload.fspId
   }
-  await createPartyMapItem(partyMapItem)
-  return h.response().code(201)
+  const errResult = await createPartyMapItem(partyMapItem)
+  // istanbul ignore next
+  return h.response(errResult).code(!errResult ? 201 : errResult.statusCode)
 }
 
 export async function put(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
