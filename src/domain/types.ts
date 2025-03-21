@@ -1,6 +1,6 @@
 import { Logger } from '@mojaloop/sdk-standard-components'
 
-export type ILogger = Logger.Logger // add type alias for Logger
+export type ILogger = Logger.SdkLogger // add type alias for Logger
 
 export type ParticipantServiceDeps = {
   oracleDB: IOracleDb
@@ -22,4 +22,5 @@ export type IOracleDb = {
   retrieve(id: string, subId?: string): Promise<PartyMapItem>
   delete(id: string, subId?: string): Promise<number>
   isConnected(): Promise<boolean>
+  isDuplicationError(error: unknown): boolean
 }

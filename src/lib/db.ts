@@ -33,6 +33,7 @@ import OracleDB from '../model/MSISDN'
 
 const Db: Knex = knex(Config.DATABASE)
 const oracleDB: OracleDB = new OracleDB(Db)
+
 const closeKnexConnection = async () => {
   await Db.destroy()
 }

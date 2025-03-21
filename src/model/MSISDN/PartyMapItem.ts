@@ -27,7 +27,7 @@ export class OracleDB implements IOracleDb {
 
       return true
     } catch (err: unknown) {
-      this.log.push({ err }).warn('error in db.insert')
+      this.log.warn('error in db.insert', err)
       throw err
     }
   }
@@ -68,7 +68,7 @@ export class OracleDB implements IOracleDb {
         return updateQuery
       })
     } catch (err: unknown) {
-      this.log.push({ err }).warn('error in db.update')
+      this.log.warn('error in db.update', err)
       throw err
     }
   }
@@ -95,7 +95,7 @@ export class OracleDB implements IOracleDb {
 
       return returnItem
     } catch (err: unknown) {
-      this.log.push({ err }).warn('error in db.retrieve')
+      this.log.warn('error in db.retrieve: ', err)
       throw err
     }
   }
@@ -118,7 +118,7 @@ export class OracleDB implements IOracleDb {
 
       return deleteCount
     } catch (err: unknown) {
-      this.log.push({ err }).warn('error in db.delete')
+      this.log.warn('error in db.delete: ', err)
       throw err
     }
   }
@@ -129,8 +129,12 @@ export class OracleDB implements IOracleDb {
       this.log.verbose('db connection is ok')
       return true
     } catch (err: unknown) {
-      this.log.push({ err }).warn('db connection check failed')
+      this.log.warn('db connection check failed', err)
       return false
     }
+  }
+
+  public isDuplicationError(error: unknown): boolean {
+    return typeof error === 'object' && error !== null && 'code' in error && error.code === 'ER_DUP_ENTRY'
   }
 }

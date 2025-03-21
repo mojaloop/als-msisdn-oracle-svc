@@ -25,40 +25,14 @@
  --------------
  ******/
 
-import { logger, createLogger } from '~/shared/logger'
-
-jest.mock(
-  '@mojaloop/sdk-standard-components',
-  jest.fn(() => ({
-    Logger: {
-      Logger: jest.fn(() => ({
-        push: jest.fn(),
-        configure: jest.fn(),
-
-        // log methods
-        log: jest.fn(),
-
-        // generated methods from default levels
-        verbose: jest.fn(),
-        debug: jest.fn(),
-        warn: jest.fn(),
-        error: jest.fn(),
-        trace: jest.fn(),
-        info: jest.fn(),
-        fatal: jest.fn()
-      })),
-      buildStringify: jest.fn()
-    }
-  }))
-)
+import { logger } from '~/shared/logger'
 
 describe('shared/logger', (): void => {
   describe('Logger class', () => {
     it('should be able to create default logger', () => {
-      const log = createLogger()
+      const log = logger
       // basic methods
       expect(typeof log.push).toEqual('function')
-      expect(typeof log.configure).toEqual('function')
 
       // log methods
       expect(typeof log.log).toEqual('function')
@@ -70,7 +44,6 @@ describe('shared/logger', (): void => {
       expect(typeof log.error).toEqual('function')
       expect(typeof log.trace).toEqual('function')
       expect(typeof log.info).toEqual('function')
-      expect(typeof log.fatal).toEqual('function')
     })
   })
 
@@ -78,7 +51,6 @@ describe('shared/logger', (): void => {
     it('should have proper layout', () => {
       // basic methods
       expect(typeof logger.push).toEqual('function')
-      expect(typeof logger.configure).toEqual('function')
 
       // log methods
       expect(typeof logger.log).toEqual('function')
@@ -90,7 +62,6 @@ describe('shared/logger', (): void => {
       expect(typeof logger.error).toEqual('function')
       expect(typeof logger.trace).toEqual('function')
       expect(typeof logger.info).toEqual('function')
-      expect(typeof logger.fatal).toEqual('function')
     })
   })
 })
