@@ -46,7 +46,7 @@ try {
     .option('-H, --host <string>', 'listen on host', Config.HOST)
     .parse(process.argv)
 } catch (err) {
-  logger.push({ err }).error('error on program parsing process.argv')
+  logger.error('error on program parsing process.argv', err)
 }
 
 // overload Config with script parameters

@@ -48,7 +48,7 @@ export class ParticipantService {
       this.log.push({ partyList }).verbose('bulkCreate is done')
       return { partyList }
     } catch (err: unknown) {
-      this.log.push({ err }).error('error in bulkCreate')
+      this.log.error('error in bulkCreate: ', err)
       throw err
     }
   }
@@ -70,7 +70,7 @@ export class ParticipantService {
       }
       if (!item.fspId) {
         const errMessage = ERROR_MESSAGES.noPartyFspId
-        log.push({ item }).warn(errMessage)
+        log.warn(errMessage, { item })
         throw new Error(errMessage)
       }
 
@@ -80,7 +80,7 @@ export class ParticipantService {
       return { partyId }
     } catch (err: unknown) {
       const errorInformation = this.formatErrorInfo()
-      log.push({ err, errorInformation }).error('error in createOneParty')
+      log.error('error in createOneParty', err)
       return { partyId, errorInformation }
     }
   }

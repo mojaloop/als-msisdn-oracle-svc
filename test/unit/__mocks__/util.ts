@@ -22,8 +22,8 @@
  --------------
  ******/
 
-import { Logger } from '@mojaloop/sdk-standard-components'
 import { IOracleDb } from '~/domain/types'
+import { logger } from '~/shared/logger'
 import { mockPartyMapItem } from '../../data/data'
 
 export default (): object => ({
@@ -53,7 +53,6 @@ export const createMockOracleDb = ({
 /* prettier-ignore */
 export const createMockHapiServer = ({
    oracleDB = createMockOracleDb(),
-   logger = new Logger.Logger()
 } = {}) => ({
   app: {
     oracleDB,

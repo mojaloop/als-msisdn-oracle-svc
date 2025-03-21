@@ -1,6 +1,6 @@
 import { Logger } from '@mojaloop/sdk-standard-components'
 
-export type ILogger = Logger.Logger // add type alias for Logger
+export type ILogger = Logger.SdkLogger // add type alias for Logger
 
 export type ParticipantServiceDeps = {
   oracleDB: IOracleDb
