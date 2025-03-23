@@ -27,12 +27,7 @@
  --------------
  ******/
 
-import { Logger as SDKLogger } from '@mojaloop/sdk-standard-components'
-// todo: switch logger to use ContextLogger from '@mojaloop/central-services-logger/src/contextLogger'
+import { Logger } from '@mojaloop/sdk-standard-components'
 
 // default SDKLogger instance
-export const logger = new SDKLogger.Logger()
-
-export function createLogger(params?: SDKLogger.LoggerConstructorParams): SDKLogger.Logger {
-  return new SDKLogger.Logger(params)
-}
+export const logger = Logger.loggerFactory({ context: 'ALS Oracle' })

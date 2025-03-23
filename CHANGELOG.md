@@ -1,4 +1,15 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.15](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.14...v0.0.15) (2025-03-21)
+
+
+### Features
+
+* **csi-1290:** fixed test:bdd ([f4659e9](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/f4659e96275ff13ae4dfff53d3fe4dedf2e06562))
+* **csi-1290:** updated deps ([7bc45e9](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/7bc45e9e52beab6a015e6c0748a1471521112d37))
+* **csi-1290:** updated deps ([64a68be](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/64a68be65c35b63f9f136fd934789ce69ab33fdc))
+* **csi-1290:** updated husky scripts ([2c74af6](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/2c74af636961d1f940a6984858c365b04c529abf))
+* **csi-1290:** updated logic to handle DB duplication error ([dbb72b5](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/dbb72b55361877b954243b81f4c8cce85f2948dc))
+
 ### [0.0.14](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.13...v0.0.14) (2024-12-13)
 
 ### [0.0.13](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.12...v0.0.13) (2024-12-11)

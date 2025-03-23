@@ -22,8 +22,8 @@
  --------------
  ******/
 
-import { Logger } from '@mojaloop/sdk-standard-components'
 import { IOracleDb } from '~/domain/types'
+import { logger } from '~/shared/logger'
 import { mockPartyMapItem } from '../../data/data'
 
 export default (): object => ({
@@ -38,20 +38,21 @@ export const createMockOracleDb = ({
   update = jest.fn(async () => 1),
   retrieve = jest.fn(async () => mockPartyMapItem),
   deleteFn = jest.fn(async () => 1),
-  isConnected = jest.fn(async () => true)
+  isConnected = jest.fn(async () => true),
+  isDuplicationError = jest.fn(() => false)
 } = {}): IOracleDb => ({
   insert,
   update,
   retrieve,
   delete: deleteFn,
-  isConnected
+  isConnected,
+  isDuplicationError
 })
 // todo: add in-memory db for testing
 
 /* prettier-ignore */
 export const createMockHapiServer = ({
    oracleDB = createMockOracleDb(),
-   logger = new Logger.Logger()
 } = {}) => ({
   app: {
     oracleDB,
