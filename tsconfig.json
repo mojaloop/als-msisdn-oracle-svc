@@ -17,6 +17,7 @@
     "coverage"
   ],
   "compilerOptions": {
+    "skipLibCheck": true,
     "target": "es2018",
     "module": "commonjs",
     "rootDirs": [

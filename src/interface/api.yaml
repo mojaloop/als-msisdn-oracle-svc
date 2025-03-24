@@ -1,14 +1,14 @@
 openapi: 3.0.0
 info:
   version: '1.0'
-  title: >-
-    Interface for interaction between Mojaloop's Account Lookup Service(ALS) and
-    an Oracle Registry Service
-  description: >-
-    Based on Mojaloop [API
-    Definition](https://github.com/mojaloop/mojaloop-specification/blob/main/API%20Definition%20v1.1.pdf).
-    More information can be found at [mojaloop.io](http://mojaloop.io/)
+  title: Interface for interaction between Mojaloop's Account Lookup Service(ALS) and an Oracle Registry Service
+  description: Based on Mojaloop [API Definition](https://github.com/mojaloop/mojaloop-specification/blob/main/API%20Definition%20v1.1.pdf). More information can be found at [mojaloop.io](http://mojaloop.io/)
   contact: {}
+servers:
+  - url: /
+tags:
+  - name: participants
+    description: ''
 paths:
   /health:
     get:
@@ -35,9 +35,7 @@ paths:
           $ref: '#/components/responses/503'
       operationId: HealthGet
       summary: Get Server
-      description: >-
-        The HTTP request GET /health is used to return the current status of the
-        API.
+      description: The HTTP request GET /health is used to return the current status of the API.
   /metrics:
     get:
       tags:
@@ -69,20 +67,13 @@ paths:
       - $ref: '#/components/parameters/Type'
       - $ref: '#/components/parameters/ID'
     post:
-      description: >
+      description: |
         The HTTP request `POST /participants/{Type}/{ID}`
-
         (or `POST /participants/{Type}/{ID}/{SubId}`)
-
-        is used to create information in the server regarding the provided
-        identity,
-
+        is used to create information in the server regarding the provided identity,
         defined by `{Type}`, `{ID}`, and optionally `{SubId}`
-
         (for example, `POST /participants/MSISDN/123456789` or
-
         `POST /participants/BUSINESS/shoecompany/employee1`).
-
         An ExtensionList element has been added to this request in version v1.1
       summary: Create participant information
       tags:
@@ -116,12 +107,9 @@ paths:
         '503':
           $ref: '#/components/responses/503'
     get:
-      description: >
-        The HTTP request `GET /participants/{Type}/{ID}` (or `GET
-        /participants/{Type}/{ID}/{SubId}`)
-
-        is used to find out in which FSP the requested Party, defined by
-        `{Type}`, `{ID}` and optionally `{SubId}`,
+      description: |
+        The HTTP request `GET /participants/{Type}/{ID}` (or `GET /participants/{Type}/{ID}/{SubId}`)
+        is used to find out in which FSP the requested Party, defined by `{Type}`, `{ID}` and optionally `{SubId}`,
          is located (for example, `GET /participants/MSISDN/123456789`, or
          `GET /participants/BUSINESS/shoecompany/employee1`).
          This HTTP request should support a query string for filtering of currency.
@@ -196,30 +184,19 @@ paths:
         '503':
           $ref: '#/components/responses/503'
     delete:
-      description: >
+      description: |
         The HTTP request `DELETE /participants/{Type}/{ID}`
-
         (or `DELETE /participants/{Type}/{ID}/{SubId}`) is used to delete
-
         information in the server regarding the provided identity,
-
-        defined by `{Type}` and `{ID}`) (for example, `DELETE
-        /participants/MSISDN/123456789`),
-
+        defined by `{Type}` and `{ID}`) (for example, `DELETE /participants/MSISDN/123456789`),
         and optionally `{SubId}`. This HTTP request should support a query
-
         string to delete FSP information regarding a specific currency only.
-
         To delete a specific currency only, the HTTP request
-
         `DELETE /participants/{Type}/{ID}?currency=XYZ`
-
         should be used, where `XYZ` is the requested currency.
 
 
-
-        **Note:** The Account Lookup System should verify that it is the Party’s
-        current FSP that is deleting the FSP information.
+        **Note:** The Account Lookup System should verify that it is the Party’s current FSP that is deleting the FSP information.
       summary: Delete participant information
       tags:
         - participants
@@ -250,20 +227,13 @@ paths:
       - $ref: '#/components/parameters/ID'
       - $ref: '#/components/parameters/SubId'
     post:
-      description: >
+      description: |
         The HTTP request `POST /participants/{Type}/{ID}`
-
         (or `POST /participants/{Type}/{ID}/{SubId}`)
-
-        is used to create information in the server regarding the provided
-        identity,
-
+        is used to create information in the server regarding the provided identity,
         defined by `{Type}`, `{ID}`, and optionally `{SubId}`
-
         (for example, `POST /participants/MSISDN/123456789` or
-
         `POST /participants/BUSINESS/shoecompany/employee1`).
-
         An ExtensionList element has been added to this request in version v1.1
       summary: Create participant information
       tags:
@@ -297,12 +267,9 @@ paths:
         '503':
           $ref: '#/components/responses/503'
     get:
-      description: >
-        The HTTP request `GET /participants/{Type}/{ID}` (or `GET
-        /participants/{Type}/{ID}/{SubId}`)
-
-        is used to find out in which FSP the requested Party, defined by
-        `{Type}`, `{ID}` and optionally `{SubId}`,
+      description: |
+        The HTTP request `GET /participants/{Type}/{ID}` (or `GET /participants/{Type}/{ID}/{SubId}`)
+        is used to find out in which FSP the requested Party, defined by `{Type}`, `{ID}` and optionally `{SubId}`,
          is located (for example, `GET /participants/MSISDN/123456789`, or
          `GET /participants/BUSINESS/shoecompany/employee1`).
          This HTTP request should support a query string for filtering of currency.
@@ -340,13 +307,9 @@ paths:
         '503':
           $ref: '#/components/responses/503'
     put:
-      description: >
-        The PUT /participants/{Type}/{ID}/{SubId} is used to update information
-        in the
-
-        server regarding the provided identity, defined by {Type}, {ID} and
-        {SubId}
-
+      description: |
+        The PUT /participants/{Type}/{ID}/{SubId} is used to update information in the
+        server regarding the provided identity, defined by {Type}, {ID} and {SubId}
         (for example, PUT /participants/MSISDN/123456789/PERSONAL).
       summary: Update participant information
       tags:
@@ -379,30 +342,19 @@ paths:
         '503':
           $ref: '#/components/responses/503'
     delete:
-      description: >
+      description: |
         The HTTP request `DELETE /participants/{Type}/{ID}`
-
         (or `DELETE /participants/{Type}/{ID}/{SubId}`) is used to delete
-
         information in the server regarding the provided identity,
-
-        defined by `{Type}` and `{ID}`) (for example, `DELETE
-        /participants/MSISDN/123456789`),
-
+        defined by `{Type}` and `{ID}`) (for example, `DELETE /participants/MSISDN/123456789`),
         and optionally `{SubId}`. This HTTP request should support a query
-
         string to delete FSP information regarding a specific currency only.
-
         To delete a specific currency only, the HTTP request
-
         `DELETE /participants/{Type}/{ID}?currency=XYZ`
-
         should be used, where `XYZ` is the requested currency.
 
 
-
-        **Note:** The Account Lookup System should verify that it is the Party’s
-        current FSP that is deleting the FSP information.
+        **Note:** The Account Lookup System should verify that it is the Party’s current FSP that is deleting the FSP information.
       summary: Delete participant information
       tags:
         - participants
@@ -429,12 +381,7 @@ paths:
           $ref: '#/components/responses/503'
   /participants:
     post:
-      description: >-
-        The HTTP request `POST /participants` is used to create information in
-        the server regarding the provided list of identities. This request
-        should be used for bulk creation of FSP information for more than one
-        Party. The optional currency parameter should indicate that each
-        provided Party supports the currency.
+      description: The HTTP request `POST /participants` is used to create information in the server regarding the provided list of identities. This request should be used for bulk creation of FSP information for more than one Party. The optional currency parameter should indicate that each provided Party supports the currency.
       summary: Create bulk participant information
       tags:
         - participants
@@ -473,11 +420,6 @@ paths:
           $ref: '#/components/responses/501'
         '503':
           $ref: '#/components/responses/503'
-tags:
-  - name: participants
-    description: ''
-servers:
-  - url: /
 components:
   parameters:
     partySubIdOrType:
@@ -486,9 +428,7 @@ components:
       required: false
       schema:
         type: string
-      description: >-
-        A sub-identifier of the party identifier, or a sub-type of the party
-        identifier's type. For example, `PASSPORT`, `DRIVING_LICENSE`.
+      description: A sub-identifier of the party identifier, or a sub-type of the party identifier's type. For example, `PASSPORT`, `DRIVING_LICENSE`.
     Type:
       name: Type
       in: path
@@ -509,9 +449,7 @@ components:
       required: true
       schema:
         type: string
-      description: >-
-        A sub-identifier of the party identifier, or a sub-type of the party
-        identifier's type. For example, `PASSPORT`, `DRIVING_LICENSE`.
+      description: A sub-identifier of the party identifier, or a sub-type of the party identifier's type. For example, `PASSPORT`, `DRIVING_LICENSE`.
   schemas:
     ParticipantsTypeIDPostPutRequest:
       title: ParticipantsTypeIDPostPutRequest
@@ -522,9 +460,7 @@ components:
           description: FSP Identifier that the Party belongs to.
           type: string
         currency:
-          description: >-
-            Indicate that the provided Currency was set to be supported by each
-            successfully added PartyIdInfo.
+          description: Indicate that the provided Currency was set to be supported by each successfully added PartyIdInfo.
           type: string
         partySubIdOrType:
           description: A sub-identifier or sub-type for the Party.
@@ -537,9 +473,7 @@ components:
       type: object
       properties:
         partyList:
-          description: >-
-            List of PartyTypeIdInfo elements that were either created or failed
-            to be created.
+          description: List of PartyTypeIdInfo elements that were either created or failed to be created.
           type: array
           items:
             $ref: '#/components/schemas/PartyTypeIdInfo'
@@ -560,14 +494,7 @@ components:
       title: ErrorCode
       type: string
       pattern: ^[1-9]\d{3}$
-      description: >-
-        The API data type ErrorCode is a JSON String of four characters,
-        consisting of digits only. Negative numbers are not allowed. A leading
-        zero is not allowed. Each error code in the API is a four-digit number,
-        for example, 1234, where the first number (1 in the example) represents
-        the high-level error category, the second number (2 in the example)
-        represents the low-level error category, and the last two numbers (34 in
-        the example) represent the specific error.
+      description: The API data type ErrorCode is a JSON String of four characters, consisting of digits only. Negative numbers are not allowed. A leading zero is not allowed. Each error code in the API is a four-digit number, for example, 1234, where the first number (1 in the example) represents the high-level error category, the second number (2 in the example) represents the low-level error category, and the last two numbers (34 in the example) represent the specific error.
       example: '5100'
     ErrorDescription:
       title: ErrorDescription
@@ -602,9 +529,7 @@ components:
     ExtensionList:
       title: ExtensionList
       type: object
-      description: >-
-        Data model for the complex type ExtensionList. An optional list of
-        extensions, specific to deployment.
+      description: Data model for the complex type ExtensionList. An optional list of extensions, specific to deployment.
       properties:
         extension:
           type: array
@@ -632,9 +557,7 @@ components:
     ErrorInformationResponse:
       title: ErrorInformationResponse
       type: object
-      description: >-
-        Data model for the complex type object that contains an optional element
-        ErrorInformation used along with 4xx and 5xx responses.
+      description: Data model for the complex type object that contains an optional element ErrorInformation used along with 4xx and 5xx responses.
       properties:
         errorInformation:
           $ref: '#/components/schemas/ErrorInformation'
@@ -649,16 +572,10 @@ components:
       type: string
       minLength: 1
       maxLength: 128
-      description: >-
-        Either a sub-identifier of a PartyIdentifier, or a sub-type of the
-        PartyIdType, normally a PersonalIdentifierType.
+      description: Either a sub-identifier of a PartyIdentifier, or a sub-type of the PartyIdType, normally a PersonalIdentifierType.
     Currency:
       title: Currency
-      description: >-
-        The currency codes defined in [ISO
-        4217](https://www.iso.org/iso-4217-currency-codes.html) as three-letter
-        alphabetic codes are used as the standard naming representation for
-        currencies.
+      description: The currency codes defined in [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) as three-letter alphabetic codes are used as the standard naming representation for currencies.
       type: string
       minLength: 3
       maxLength: 3
@@ -830,10 +747,7 @@ components:
     ParticipantsTypeIDSubIDPostRequest:
       title: ParticipantsTypeIDSubIDPostRequest
       type: object
-      description: >-
-        The object sent in the POST /participants/{Type}/{ID}/{SubId} and
-        /participants/{Type}/{ID} requests. An additional optional ExtensionList
-        element has been added as part of v1.1 changes.
+      description: The object sent in the POST /participants/{Type}/{ID}/{SubId} and /participants/{Type}/{ID} requests. An additional optional ExtensionList element has been added as part of v1.1 changes.
       properties:
         fspId:
           $ref: '#/components/schemas/FspId'
@@ -846,13 +760,8 @@ components:
     CorrelationId:
       title: CorrelationId
       type: string
-      pattern: >-
-        ^[0-9a-f]{8}-[0-9a-f]{4}-[1-7][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$|^[0-9A-HJKMNP-TV-Z]{26}$
-      description: >-
-        Identifier that correlates all messages of the same sequence. The
-        supported identifiers formats are for lowercase
-        [UUID](https://datatracker.ietf.org/doc/html/rfc9562) and uppercase
-        [ULID](https://github.com/ulid/spec)
+      pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[1-7][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$|^[0-9A-HJKMNP-TV-Z]{26}$
+      description: Identifier that correlates all messages of the same sequence. The supported identifiers formats are for lowercase [UUID](https://datatracker.ietf.org/doc/html/rfc9562) and uppercase [ULID](https://github.com/ulid/spec)
       example: b51ec534-ee48-4575-b6a9-ead2955b8069
     PartyIdType:
       title: PartyIdType
@@ -866,52 +775,16 @@ components:
         - ACCOUNT_ID
         - IBAN
         - ALIAS
-      description: >-
+      description: |-
         Below are the allowed values for the enumeration.
-
-        - MSISDN - An MSISDN (Mobile Station International Subscriber Directory
-        Number, that is, the phone number) is used as reference to a
-        participant. The MSISDN identifier should be in international format
-        according to the [ITU-T E.164
-        standard](https://www.itu.int/rec/T-REC-E.164/en). Optionally, the
-        MSISDN may be prefixed by a single plus sign, indicating the
-        international prefix.
-
-        - EMAIL - An email is used as reference to a participant. The format of
-        the email should be according to the informational [RFC
-        3696](https://tools.ietf.org/html/rfc3696).
-
-        - PERSONAL_ID - A personal identifier is used as reference to a
-        participant. Examples of personal identification are passport number,
-        birth certificate number, and national registration number. The
-        identifier number is added in the PartyIdentifier element. The personal
-        identifier type is added in the PartySubIdOrType element.
-
-        - BUSINESS - A specific Business (for example, an organization or a
-        company) is used as reference to a participant. The BUSINESS identifier
-        can be in any format. To make a transaction connected to a specific
-        username or bill number in a Business, the PartySubIdOrType element
-        should be used.
-
-        - DEVICE - A specific device (for example, a POS or ATM) ID connected to
-        a specific business or organization is used as reference to a Party. For
-        referencing a specific device under a specific business or organization,
-        use the PartySubIdOrType element.
-
-        - ACCOUNT_ID - A bank account number or FSP account ID should be used as
-        reference to a participant. The ACCOUNT_ID identifier can be in any
-        format, as formats can greatly differ depending on country and FSP.
-
-        - IBAN - A bank account number or FSP account ID is used as reference to
-        a participant. The IBAN identifier can consist of up to 34 alphanumeric
-        characters and should be entered without whitespace.
-
-        - ALIAS An alias is used as reference to a participant. The alias should
-        be created in the FSP as an alternative reference to an account owner.
-        Another example of an alias is a username in the FSP system. The ALIAS
-        identifier can be in any format. It is also possible to use the
-        PartySubIdOrType element for identifying an account under an Alias
-        defined by the PartyIdentifier.
+        - MSISDN - An MSISDN (Mobile Station International Subscriber Directory Number, that is, the phone number) is used as reference to a participant. The MSISDN identifier should be in international format according to the [ITU-T E.164 standard](https://www.itu.int/rec/T-REC-E.164/en). Optionally, the MSISDN may be prefixed by a single plus sign, indicating the international prefix.
+        - EMAIL - An email is used as reference to a participant. The format of the email should be according to the informational [RFC 3696](https://tools.ietf.org/html/rfc3696).
+        - PERSONAL_ID - A personal identifier is used as reference to a participant. Examples of personal identification are passport number, birth certificate number, and national registration number. The identifier number is added in the PartyIdentifier element. The personal identifier type is added in the PartySubIdOrType element.
+        - BUSINESS - A specific Business (for example, an organization or a company) is used as reference to a participant. The BUSINESS identifier can be in any format. To make a transaction connected to a specific username or bill number in a Business, the PartySubIdOrType element should be used.
+        - DEVICE - A specific device (for example, a POS or ATM) ID connected to a specific business or organization is used as reference to a Party. For referencing a specific device under a specific business or organization, use the PartySubIdOrType element.
+        - ACCOUNT_ID - A bank account number or FSP account ID should be used as reference to a participant. The ACCOUNT_ID identifier can be in any format, as formats can greatly differ depending on country and FSP.
+        - IBAN - A bank account number or FSP account ID is used as reference to a participant. The IBAN identifier can consist of up to 34 alphanumeric characters and should be entered without whitespace.
+        - ALIAS An alias is used as reference to a participant. The alias should be created in the FSP as an alternative reference to an account owner. Another example of an alias is a username in the FSP system. The ALIAS identifier can be in any format. It is also possible to use the PartySubIdOrType element for identifying an account under an Alias defined by the PartyIdentifier.
     PartyIdentifier:
       title: PartyIdentifier
       type: string
@@ -922,9 +795,7 @@ components:
     PartyIdInfo:
       title: PartyIdInfo
       type: object
-      description: >-
-        Data model for the complex type PartyIdInfo. An ExtensionList element
-        has been added to this reqeust in version v1.1
+      description: Data model for the complex type PartyIdInfo. An ExtensionList element has been added to this reqeust in version v1.1
       properties:
         partyIdType:
           $ref: '#/components/schemas/PartyIdType'
@@ -952,9 +823,7 @@ components:
             $ref: '#/components/schemas/PartyIdInfo'
           minItems: 1
           maxItems: 10000
-          description: >-
-            List of PartyIdInfo elements that the client would like to update or
-            create FSP information about.
+          description: List of PartyIdInfo elements that the client would like to update or create FSP information about.
         currency:
           $ref: '#/components/schemas/Currency'
       required:
@@ -982,9 +851,7 @@ components:
             $ref: '#/components/schemas/PartyResult'
           minItems: 1
           maxItems: 10000
-          description: >-
-            List of PartyResult elements that were either created or failed to
-            be created.
+          description: List of PartyResult elements that were either created or failed to be created.
         currency:
           $ref: '#/components/schemas/Currency'
       required:
@@ -1085,17 +952,12 @@ components:
       required: false
       schema:
         type: integer
-      description: >-
-        The `Content-Length` header field indicates the anticipated size of the
-        payload body. Only sent if there is a body.
+      description: |-
+        The `Content-Length` header field indicates the anticipated size of the payload body. Only sent if there is a body.
 
-
-        **Note:** The API supports a maximum size of 5242880 bytes (5
-        Megabytes).
+        **Note:** The API supports a maximum size of 5242880 bytes (5 Megabytes).
     Content-Type:
       schema:
         type: string
       required: true
-      description: >-
-        The `Content-Type` header indicates the specific version of the API used
-        to send the payload body.
+      description: The `Content-Type` header indicates the specific version of the API used to send the payload body.
