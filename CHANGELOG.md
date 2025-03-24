@@ -1,4 +1,17 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.16](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.15...v0.0.16) (2025-03-24)
+
+
+### Chore
+
+* add build phase script to package.json ([caba6f4](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/caba6f448816641754d66f99875ff7ac009ca06e))
+* deps ([7068030](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/70680302168b20c41d2436be324dc69df4fb23aa))
+* deps ([cf7fb93](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/cf7fb93b68920cd9c642d8a7562de9d7176d8b0b))
+* deps ([5420d01](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/5420d011bd10943d3ae403d94351f39f361d7e40))
+* monorepo ([643289e](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/643289e167fb34ff47871e46dd1551bc6b4bc5a6))
+* update @mojaloop/central-services-metrics to version 12.4.3 ([96ff81f](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/96ff81f78df558be6a48cd37e005e31428b39916))
+* update openapi bundler and related dependency ([7036363](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/703636330e58d8091dc6a7a5ca6153fa5a13e6cb))
+
 ### [0.0.15](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.14...v0.0.15) (2025-03-21)
 
 
