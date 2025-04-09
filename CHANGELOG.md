@@ -1,4 +1,11 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.18](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.17...v0.0.18) (2025-04-09)
+
+
+### Bug Fixes
+
+* do not use space in context to allow expected errors handling ([a28f190](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/a28f190b3266f465baa38c18cbd9d73baaa76c39))
+
 ### [0.0.17](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.16...v0.0.17) (2025-03-28)
 
 
