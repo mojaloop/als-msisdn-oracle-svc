@@ -206,7 +206,7 @@ describe('src/model/MSISDN', (): void => {
     })
 
     it('throws an error on updating non-existent entry', async (): Promise<void> => {
-      await expect(oracleDB.update(updatedPartyMapItem)).rejects.toThrowError(NotFoundError)
+      await expect(oracleDB.update(updatedPartyMapItem)).rejects.toThrow(NotFoundError)
     })
   })
 
@@ -231,7 +231,7 @@ describe('src/model/MSISDN', (): void => {
     })
 
     it('throws an error on retrieving non-existent entry', async (): Promise<void> => {
-      await expect(oracleDB.retrieve(examplePartyMapItem.id)).rejects.toThrowError(NotFoundError)
+      await expect(oracleDB.retrieve(examplePartyMapItem.id)).rejects.toThrow(NotFoundError)
     })
   })
 
@@ -286,7 +286,7 @@ describe('src/model/MSISDN', (): void => {
     })
 
     it('throws an error on deleting non-existent entry', async (): Promise<void> => {
-      await expect(oracleDB.delete(examplePartyMapItem.id)).rejects.toThrowError(NotFoundError)
+      await expect(oracleDB.delete(examplePartyMapItem.id)).rejects.toThrow(NotFoundError)
     })
   })
 })
