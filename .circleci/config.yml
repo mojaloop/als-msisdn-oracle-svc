@@ -63,38 +63,36 @@ defaults_configure_nvmrc: &defaults_configure_nvmrc
     echo "NVMRC_VERSION=$NVMRC_VERSION"
 
 defaults_configure_nvm: &defaults_configure_nvm
-  name: Configure NVM for Alpine with musl support
+  name: Configure NVM with musl override (Alpine-safe)
   command: |
-    export NVM_DIR="$HOME/.nvm"
-    mkdir -p "$NVM_DIR"
+    apk add --no-cache bash curl
 
-    # Define the musl-compatible architecture override
-    echo 'nvm_get_arch() { echo "x64-musl"; }' > /tmp/nvm-arch-override.sh
-    echo 'export NVM_NODEJS_ORG_MIRROR="https://unofficial-builds.nodejs.org/download/release"' >> /tmp/nvm-arch-override.sh
+    bash -c "
+      set -e
+      export HOME=/home/circleci
+      export NVM_DIR=\$HOME/.nvm
+      mkdir -p \$NVM_DIR
 
-    # Source the override before sourcing nvm
-    . /tmp/nvm-arch-override.sh
+      if [ ! -s \"\$NVM_DIR/nvm.sh\" ]; then
+        echo 'Installing NVM...'
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+      fi
 
-    # Install nvm (only if not already installed)
-    if [ ! -d "$NVM_DIR" ]; then
-      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-    fi
+      source \"\$NVM_DIR/nvm.sh\"
 
-    # Source nvm and override again (some shells forget)
-    . /tmp/nvm-arch-override.sh
-    . "$NVM_DIR/nvm.sh"
+      # Override arch and mirror
+      nvm_get_arch() { echo 'x64-musl'; }
+      export NVM_NODEJS_ORG_MIRROR='https://unofficial-builds.nodejs.org/download/release'
 
-    # Determine desired Node version
-    if [ -z "$NVMRC_VERSION" ]; then
-      export NVMRC_VERSION=$(cat $CIRCLE_WORKING_DIRECTORY/.nvmrc)
-    fi
+      export NVMRC_VERSION=\$(cat \"$CIRCLE_WORKING_DIRECTORY/.nvmrc\")
+      echo \"Installing Node.js \$NVMRC_VERSION (musl)...\"
+      nvm install \"\$NVMRC_VERSION\"
+      nvm alias default \"\$NVMRC_VERSION\"
+      nvm use default
 
-    echo "Installing musl-compatible Node.js version $NVMRC_VERSION"
-    nvm install "$NVMRC_VERSION"
-    nvm alias default "$NVMRC_VERSION"
-    nvm use default
+      echo 'Installed Node:' \$(node --version)
+    "
 
-    echo "Installed Node version: $(node --version)"
 
 defaults_display_versions: &defaults_display_versions
   name: Display Versions
@@ -121,6 +119,7 @@ executors:
     working_directory: &WORKING_DIR /home/circleci/project
     shell: "/bin/sh -leo pipefail" ## Ref: https://circleci.com/docs/env-vars/#alpine-linux
     environment:
+      HOME: /home/circleci
       BASH_ENV: /etc/profile ## Ref: https://circleci.com/docs/env-vars/#alpine-linux
       NVM_ARCH_UNOFFICIAL_OVERRIDE: x64-musl ## Ref: https://github.com/nvm-sh/nvm/issues/1102#issuecomment-550572252
     docker:
