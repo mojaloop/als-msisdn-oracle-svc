@@ -47,7 +47,7 @@ defineFeature(feature, (test): void => {
 
     then('I respond with a 200 OK', (): void => {
       expect(response.statusCode).toBe(200)
-      expect(mockRetrievePartyMapItem).toBeCalledWith('fb2f2b12-5107-48f1-a93d-52b154270038', undefined)
+      expect(mockRetrievePartyMapItem).toHaveBeenCalledWith('fb2f2b12-5107-48f1-a93d-52b154270038', undefined)
     })
   })
 
@@ -74,7 +74,10 @@ defineFeature(feature, (test): void => {
 
     then('I respond with a 201 Created', (): void => {
       expect(response.statusCode).toBe(201)
-      expect(mockCreatePartyMapItem).toBeCalledWith({ fspId: 'dfspa', id: 'fb2f2b12-5107-48f1-a93d-52b154270038' })
+      expect(mockCreatePartyMapItem).toHaveBeenCalledWith({
+        fspId: 'dfspa',
+        id: 'fb2f2b12-5107-48f1-a93d-52b154270038'
+      })
     })
   })
 
@@ -101,7 +104,10 @@ defineFeature(feature, (test): void => {
 
     then('I respond with a 200 OK', (): void => {
       expect(response.statusCode).toBe(200)
-      expect(mockUpdatePartyMapItem).toBeCalledWith({ fspId: 'dfspa', id: 'fb2f2b12-5107-48f1-a93d-52b154270038' })
+      expect(mockUpdatePartyMapItem).toHaveBeenCalledWith({
+        fspId: 'dfspa',
+        id: 'fb2f2b12-5107-48f1-a93d-52b154270038'
+      })
     })
   })
 
@@ -127,7 +133,7 @@ defineFeature(feature, (test): void => {
 
     then('I respond with a 204 No Content', (): void => {
       expect(response.statusCode).toBe(204)
-      expect(mockDeletePartyMapItem).toBeCalledWith('fb2f2b12-5107-48f1-a93d-52b154270038')
+      expect(mockDeletePartyMapItem).toHaveBeenCalledWith('fb2f2b12-5107-48f1-a93d-52b154270038')
     })
   })
 })

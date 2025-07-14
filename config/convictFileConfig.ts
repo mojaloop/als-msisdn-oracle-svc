@@ -86,7 +86,7 @@ const ConvictFileConfig = Convict<FileConfig>({
   DATABASE: {
     DIALECT: {
       doc: 'Which database client should we use',
-      format: ['mysql', 'sqlite3'],
+      format: ['mysql', 'mysql2', 'sqlite3'],
       default: null
     },
     HOST: {

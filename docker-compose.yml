@@ -29,7 +29,7 @@ services:
     user: root
 
   mysql:
-    image: mysql/mysql-server
+    image: mysql:9
     container_name: co_mysql
     ports:
       - "3306:3306"
