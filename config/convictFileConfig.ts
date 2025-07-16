@@ -175,6 +175,12 @@ const ConvictFileConfig = Convict<FileConfig>({
 
 const ConfigFile = path.join(__dirname, 'default.json')
 ConvictFileConfig.loadFile(ConfigFile)
+// Add CA certificate if environment variable is set
+const sslCa = process.env[ENV_PREFIX + 'DATABASE_SSL_CA']
+if (sslCa) {
+  ConvictFileConfig.set('DATABASE.ADDITIONAL_CONNECTION_OPTIONS.ssl.ca', sslCa)
+}
+
 ConvictFileConfig.validate({ allowed: 'strict' })
 
 export default ConvictFileConfig
