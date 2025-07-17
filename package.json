@@ -129,7 +129,7 @@
     "@mojaloop/central-services-error-handling": "13.1.0",
     "@mojaloop/central-services-health": "15.1.0",
     "@mojaloop/central-services-metrics": "12.6.0",
-    "@mojaloop/central-services-shared": "18.30.0",
+    "@mojaloop/central-services-shared": "18.30.1",
     "@mojaloop/sdk-standard-components": "19.16.0",
     "ajv": "8.x.x",
     "ajv-keywords": "5.x.x",
