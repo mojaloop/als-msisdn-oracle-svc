@@ -39,6 +39,7 @@ export interface DbConnection {
   user: string
   password: string
   database: string
+  [key: string]: unknown // Allow additional dynamic options
 }
 
 export interface DbPool {
@@ -80,7 +81,8 @@ const KnexDatabaseConfig: DatabaseConfig = {
     port: ConfigFileProperties.DATABASE.PORT,
     user: ConfigFileProperties.DATABASE.USER,
     password: ConfigFileProperties.DATABASE.PASSWORD,
-    database: ConfigFileProperties.DATABASE.DATABASE
+    database: ConfigFileProperties.DATABASE.DATABASE,
+    ...(ConfigFileProperties.DATABASE.ADDITIONAL_CONNECTION_OPTIONS || {})
   },
   useNullAsDefault: ConfigFileProperties.DATABASE.USE_NULL_AS_DEFAULT,
   pool: {
