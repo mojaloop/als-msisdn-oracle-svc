@@ -89,7 +89,7 @@
     "@typescript-eslint/parser": "6.10.0",
     "add": "^2.0.6",
     "audit-ci": "^7.1.0",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "babel-jest": "^30.0.4",
     "eslint": "8.53.0",
     "eslint-config-prettier": "9.0.0",
