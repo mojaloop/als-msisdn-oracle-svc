@@ -55,6 +55,7 @@ export interface FileConfig {
     REAP_INTERVAL_MILLIS: number
     CREATE_RETRY_INTERVAL_MILLIS: number
     USE_NULL_AS_DEFAULT?: boolean
+    ADDITIONAL_CONNECTION_OPTIONS?: Record<string, unknown>
   }
 }
 
@@ -163,12 +164,23 @@ const ConvictFileConfig = Convict<FileConfig>({
       doc: 'Whether or not to use null for everything not specified',
       format: Boolean,
       default: false
+    },
+    ADDITIONAL_CONNECTION_OPTIONS: {
+      doc: 'Additional options to pass to the database connection',
+      format: Object,
+      default: {}
     }
   }
 })
 
 const ConfigFile = path.join(__dirname, 'default.json')
 ConvictFileConfig.loadFile(ConfigFile)
+// Add CA certificate if environment variable is set
+const sslCa = process.env[ENV_PREFIX + 'DATABASE_SSL_CA']
+if (sslCa) {
+  ConvictFileConfig.set('DATABASE.ADDITIONAL_CONNECTION_OPTIONS.ssl.ca', sslCa)
+}
+
 ConvictFileConfig.validate({ allowed: 'strict' })
 
 export default ConvictFileConfig
