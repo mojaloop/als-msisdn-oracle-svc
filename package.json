@@ -146,8 +146,9 @@
     "rc": "^1.2.8"
   },
   "overrides": {
-    "@eslint/plugin-kit": "3.0.0",
+    "@eslint/plugin-kit": "0.3.4",
     "form-data": "4.0.4",
+    "on-headers": "1.1.0",
     "shins": {
       "ajv": "6.12.3",
       "ejs": "3.1.10",
