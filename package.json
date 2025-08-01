@@ -8,7 +8,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=18.x"
+    "node": ">=22.15.1"
   },
   "config": {
     "knex": "--knexfile ./dist/config/knexfile.ts"
