@@ -27,4 +27,4 @@
  --------------
  ******/
 
-export { PartyMapItem, OracleDB as default } from './PartyMapItem'
+export { PartyMapItem, OracleDB as default } from './PartyMapItem';

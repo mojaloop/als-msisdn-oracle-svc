@@ -23,12 +23,12 @@
  --------------
  ******/
 
-import Shared from '@mojaloop/central-services-shared'
-import { PACKAGE } from '../../shared/config'
-import { Context } from '../plugins'
-import { Request, ResponseToolkit, ResponseObject } from '@hapi/hapi'
+import Shared from '@mojaloop/central-services-shared';
+import { PACKAGE } from '../../shared/config';
+import { Context } from '../plugins';
+import { Request, ResponseToolkit, ResponseObject } from '@hapi/hapi';
 
-const healthCheck = new Shared.HealthCheck.HealthCheck(PACKAGE, [])
+const healthCheck = new Shared.HealthCheck.HealthCheck(PACKAGE, []);
 
 /**
  * Operations on /health
@@ -42,9 +42,9 @@ const healthCheck = new Shared.HealthCheck.HealthCheck(PACKAGE, [])
  * responses: 200, 400, 401, 403, 404, 405, 406, 501, 503
  */
 export const get = async (_context: Context, _request: Request, h: ResponseToolkit): Promise<ResponseObject> => {
-  return h.response(await healthCheck.getHealth()).code(200)
-}
+    return h.response(await healthCheck.getHealth()).code(200);
+};
 
 export default {
-  get
-}
+    get
+};
