@@ -1,4 +1,29 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.22](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.21...v0.0.22) (2025-08-01)
+
+
+### Features
+
+* add sbom-generation to ci ([8de4ef9](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/8de4ef97fe6493addbde137ce68e6f7cfd494f9f))
+
+
+### Bug Fixes
+
+* add grypte ([70bf573](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/70bf5739b0017c1244e3afc48f11fce02cd82c29))
+* correct indentation ([26bd495](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/26bd495eb754cf50d11133e357b4fac0f4beaf84))
+* integration tests script ([a8db5c3](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/a8db5c3c4d5014f89d8b82cbb593195ca983bf14))
+* junit tests script ([a307172](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/a30717203d3fe799608242c4eeb04b5e91978445))
+* vulnerability ([6807e1f](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/6807e1f1f7ba4e5c0433d75c38e47fd6fa23e977))
+* vulnerability ([e581473](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/e5814737a43fd6f811c9baf09c62468f703cdf81))
+* vulnerability for form-data ([3946b2d](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/3946b2dde76aa2b77c11e3e7a89a0d9366c59e80))
+* vulnerability for form-data ([61f25fa](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/61f25fa76723150c4c7600a0d299d9b64897ac07))
+* vulnerability for form-data ([bb83171](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/bb83171a14a110c72a236ec9cadcf84f0dae3756))
+
+
+### Chore
+
+* add initial sbom ([d3e0d5c](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/d3e0d5cf03ad3296ead1f00a1c71e3f93af98bd8))
+
 ### [0.0.21](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.21-snapshot.1...v0.0.21) (2025-07-17)
 
 
