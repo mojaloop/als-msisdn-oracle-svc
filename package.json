@@ -41,7 +41,7 @@
     "test:bdd": "jest --config './jest.bdd.config.js' --runInBand --testMatch '**/test/step-definitions/**/*.step.ts'",
     "test:coverage": "jest --coverage --coverageThreshold='{}'",
     "test:coverage-check": "jest --config './jest.coverage.config.js' --coverage",
-    "test:integration": "sh test/scripts/run-integration-test.sh",
+    "test:integration": "./test/scripts/run-integration-test.sh",
     "test:int": "jest --config './jest.integration.config.js' --runInBand --testMatch '**/test/integration/**/*.(test|spec).ts'",
     "test:junit": "jest --testMatch '**/test/unit/**/*.(test|spec).ts' --reporters=default --reporters=jest-junit",
     "test:unit": "jest --testMatch '**/test/unit/**/*.(test|spec).ts'",
