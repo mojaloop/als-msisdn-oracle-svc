@@ -25,75 +25,75 @@ optionally within square brackets <email>.
 * Eugen Klymniuk <eugen.klymniuk@infitx.com>
 *****/
 
-import { Enums } from '@mojaloop/central-services-error-handling'
+import { Enums } from '@mojaloop/central-services-error-handling';
 import {
   PartyIdInfo,
   PostParticipantsBulkRequest,
   PostParticipantsBulkResponse,
   PartyResult,
   ErrorInformation
-} from '../interface/types'
-import { ParticipantServiceDeps, PartyMapItem, ILogger } from './types'
-import { ERROR_MESSAGES } from '~/constants'
+} from '../interface/types';
+import { ParticipantServiceDeps, PartyMapItem, ILogger } from './types';
+import { ERROR_MESSAGES } from '~/constants';
 
 export class ParticipantService {
-  private readonly log: ILogger
+  private readonly log: ILogger;
 
   constructor(private readonly deps: ParticipantServiceDeps) {
-    this.log = deps.logger.push({ component: ParticipantService.name })
+    this.log = deps.logger.push({ component: ParticipantService.name });
   }
 
   async bulkCreate(payload: PostParticipantsBulkRequest, source: string): Promise<PostParticipantsBulkResponse> {
     try {
-      const inserting = payload.partyList.map((party) => this.createOneParty(party, source))
-      const partyList = await Promise.all(inserting)
-      this.log.push({ partyList }).verbose('bulkCreate is done')
-      return { partyList }
+      const inserting = payload.partyList.map((party) => this.createOneParty(party, source));
+      const partyList = await Promise.all(inserting);
+      this.log.push({ partyList }).verbose('bulkCreate is done');
+      return { partyList };
     } catch (err: unknown) {
-      this.log.error('error in bulkCreate: ', err)
-      throw err
+      this.log.error('error in bulkCreate: ', err);
+      throw err;
     }
   }
 
   async createOneParty(partyId: PartyIdInfo, source: string): Promise<PartyResult> {
-    const log = this.log.push({ partyId, source })
+    const log = this.log.push({ partyId, source });
 
     try {
       if (partyId.partyIdType !== 'MSISDN') {
-        const errMessage = ERROR_MESSAGES.unsupportedPartyIdType
-        log.warn(`${errMessage}, but got ${partyId.partyIdType}`)
-        throw new Error(errMessage)
+        const errMessage = ERROR_MESSAGES.unsupportedPartyIdType;
+        log.warn(`${errMessage}, but got ${partyId.partyIdType}`);
+        throw new Error(errMessage);
       }
 
       const item: PartyMapItem = {
         id: partyId.partyIdentifier,
         subId: partyId.partySubIdOrType || '',
         fspId: partyId.fspId || source
-      }
+      };
       if (!item.fspId) {
-        const errMessage = ERROR_MESSAGES.noPartyFspId
-        log.warn(errMessage, { item })
-        throw new Error(errMessage)
+        const errMessage = ERROR_MESSAGES.noPartyFspId;
+        log.warn(errMessage, { item });
+        throw new Error(errMessage);
       }
 
-      await this.deps.oracleDB.insert(item)
-      log.debug('createOneParty is done')
+      await this.deps.oracleDB.insert(item);
+      log.debug('createOneParty is done');
 
-      return { partyId }
+      return { partyId };
     } catch (err: unknown) {
-      const errorInformation = this.formatErrorInfo()
-      log.error('error in createOneParty', err)
-      return { partyId, errorInformation }
+      const errorInformation = this.formatErrorInfo();
+      log.error('error in createOneParty', err);
+      return { partyId, errorInformation };
     }
   }
 
   formatErrorInfo(): ErrorInformation {
     // todo: think, if we need to get some details from actual error
-    const { code, message } = Enums.FSPIOPErrorCodes['ADD_PARTY_INFO_ERROR']
+    const { code, message } = Enums.FSPIOPErrorCodes['ADD_PARTY_INFO_ERROR'];
     return {
       errorCode: code,
       errorDescription: message
-    }
+    };
   }
 
   // todo: move all methods from  /.participants here

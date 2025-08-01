@@ -27,15 +27,15 @@
  --------------
  ******/
 
-import { knex, Knex } from 'knex'
-import Config from '../shared/config'
-import OracleDB from '../model/MSISDN'
+import { knex, Knex } from 'knex';
+import Config from '../shared/config';
+import OracleDB from '../model/MSISDN';
 
-const Db: Knex = knex(Config.DATABASE)
-const oracleDB: OracleDB = new OracleDB(Db)
+const Db: Knex = knex(Config.DATABASE);
+const oracleDB: OracleDB = new OracleDB(Db);
 
 const closeKnexConnection = async () => {
-  await Db.destroy()
-}
+  await Db.destroy();
+};
 
-export { oracleDB, closeKnexConnection }
+export { oracleDB, closeKnexConnection };

@@ -24,13 +24,13 @@
  ******/
 
 // https://hapi.dev/module/good/api/?v=9.0.0
-import HapiGood from '@hapi/good'
+import HapiGood from '@hapi/good';
 
 export default {
-  plugin: HapiGood,
-  options: {
-    ops: {
-      interval: 1000
+    plugin: HapiGood,
+    options: {
+        ops: {
+            interval: 1000
+        }
     }
-  }
-}
+};

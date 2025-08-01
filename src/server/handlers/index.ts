@@ -21,28 +21,28 @@
  - Vijay Kumar Guthi <vijaya.guthi@infitx.com>
  --------------
  ******/
-import { Util } from '@mojaloop/central-services-shared'
-import Health from './health'
-import Metrics from './metrics'
-import { handlePostBulk } from './participants'
-import ParticipantsTypeId from './participants/{Type}/{ID}'
-import ParticipantsTypeIdSubId from './participants/{Type}/{ID}/{SubId}'
+import { Util } from '@mojaloop/central-services-shared';
+import Health from './health';
+import Metrics from './metrics';
+import { handlePostBulk } from './participants';
+import ParticipantsTypeId from './participants/{Type}/{ID}';
+import ParticipantsTypeIdSubId from './participants/{Type}/{ID}/{SubId}';
 
-const OpenapiBackend = Util.OpenapiBackend
+const OpenapiBackend = Util.OpenapiBackend;
 
 export default {
-  HealthGet: Health.get,
-  MetricsGet: Metrics.get,
-  validationFail: OpenapiBackend.validationFail,
-  notFound: OpenapiBackend.notFound,
-  methodNotAllowed: OpenapiBackend.methodNotAllowed,
-  ParticipantsPost: handlePostBulk,
-  ParticipantsByTypeAndIDGet: ParticipantsTypeId.get,
-  ParticipantsByTypeAndIDPost: ParticipantsTypeId.post,
-  ParticipantsByTypeAndIDPut: ParticipantsTypeId.put,
-  ParticipantsByTypeAndIDDelete: ParticipantsTypeId.del,
-  ParticipantsSubIdByTypeAndIDGet: ParticipantsTypeIdSubId.get,
-  ParticipantsSubIdByTypeAndIDPost: ParticipantsTypeIdSubId.post,
-  ParticipantsSubIdByTypeAndIDPut: ParticipantsTypeIdSubId.put,
-  ParticipantsSubIdByTypeAndIDDelete: ParticipantsTypeIdSubId.del
-}
+    HealthGet: Health.get,
+    MetricsGet: Metrics.get,
+    validationFail: OpenapiBackend.validationFail,
+    notFound: OpenapiBackend.notFound,
+    methodNotAllowed: OpenapiBackend.methodNotAllowed,
+    ParticipantsPost: handlePostBulk,
+    ParticipantsByTypeAndIDGet: ParticipantsTypeId.get,
+    ParticipantsByTypeAndIDPost: ParticipantsTypeId.post,
+    ParticipantsByTypeAndIDPut: ParticipantsTypeId.put,
+    ParticipantsByTypeAndIDDelete: ParticipantsTypeId.del,
+    ParticipantsSubIdByTypeAndIDGet: ParticipantsTypeIdSubId.get,
+    ParticipantsSubIdByTypeAndIDPost: ParticipantsTypeIdSubId.post,
+    ParticipantsSubIdByTypeAndIDPut: ParticipantsTypeIdSubId.put,
+    ParticipantsSubIdByTypeAndIDDelete: ParticipantsTypeIdSubId.del
+};

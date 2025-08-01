@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
-docker load -i /tmp/docker-image.tar
+# docker load -i /tmp/docker-image.tar
 
 echo "Building docker image..."
 docker compose build

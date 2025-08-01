@@ -1,4 +1,4 @@
-import { Logger } from '@mojaloop/sdk-standard-components'
+import { Logger } from '@mojaloop/sdk-standard-components';
 
 export type ILogger = Logger.SdkLogger // add type alias for Logger
 

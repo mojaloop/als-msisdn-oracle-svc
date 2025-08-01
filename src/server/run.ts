@@ -23,17 +23,17 @@
  --------------
  ******/
 
-import { Server } from '@hapi/hapi'
-import { oracleDB } from '../lib/db'
-import { logger } from '../shared/logger'
-import { ServiceConfig } from '../shared/config'
-import create from './create'
-import start from './start'
-import plugins from './plugins'
+import { Server } from '@hapi/hapi';
+import { oracleDB } from '../lib/db';
+import { logger } from '../shared/logger';
+import { ServiceConfig } from '../shared/config';
+import create from './create';
+import start from './start';
+import plugins from './plugins';
 
 export default async function run(config: ServiceConfig): Promise<Server> {
   // todo: pass logger and oracleDB to run-fn (to avoid hardcoded deps)
-  const server = await create(config, { oracleDB, logger })
-  await plugins.register(server)
-  return start(server)
+  const server = await create(config, { oracleDB, logger });
+  await plugins.register(server);
+  return start(server);
 }
