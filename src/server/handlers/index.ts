@@ -31,18 +31,18 @@ import ParticipantsTypeIdSubId from './participants/{Type}/{ID}/{SubId}';
 const OpenapiBackend = Util.OpenapiBackend;
 
 export default {
-    HealthGet: Health.get,
-    MetricsGet: Metrics.get,
-    validationFail: OpenapiBackend.validationFail,
-    notFound: OpenapiBackend.notFound,
-    methodNotAllowed: OpenapiBackend.methodNotAllowed,
-    ParticipantsPost: handlePostBulk,
-    ParticipantsByTypeAndIDGet: ParticipantsTypeId.get,
-    ParticipantsByTypeAndIDPost: ParticipantsTypeId.post,
-    ParticipantsByTypeAndIDPut: ParticipantsTypeId.put,
-    ParticipantsByTypeAndIDDelete: ParticipantsTypeId.del,
-    ParticipantsSubIdByTypeAndIDGet: ParticipantsTypeIdSubId.get,
-    ParticipantsSubIdByTypeAndIDPost: ParticipantsTypeIdSubId.post,
-    ParticipantsSubIdByTypeAndIDPut: ParticipantsTypeIdSubId.put,
-    ParticipantsSubIdByTypeAndIDDelete: ParticipantsTypeIdSubId.del
+  HealthGet: Health.get,
+  MetricsGet: Metrics.get,
+  validationFail: OpenapiBackend.validationFail,
+  notFound: OpenapiBackend.notFound,
+  methodNotAllowed: OpenapiBackend.methodNotAllowed,
+  ParticipantsPost: handlePostBulk,
+  ParticipantsByTypeAndIDGet: ParticipantsTypeId.get,
+  ParticipantsByTypeAndIDPost: ParticipantsTypeId.post,
+  ParticipantsByTypeAndIDPut: ParticipantsTypeId.put,
+  ParticipantsByTypeAndIDDelete: ParticipantsTypeId.del,
+  ParticipantsSubIdByTypeAndIDGet: ParticipantsTypeIdSubId.get,
+  ParticipantsSubIdByTypeAndIDPost: ParticipantsTypeIdSubId.post,
+  ParticipantsSubIdByTypeAndIDPut: ParticipantsTypeIdSubId.put,
+  ParticipantsSubIdByTypeAndIDDelete: ParticipantsTypeIdSubId.del
 };

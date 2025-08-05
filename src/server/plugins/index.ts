@@ -34,56 +34,56 @@ import Good from './good';
 import OpenAPI from './openAPI';
 
 async function register(server: Server): Promise<Server> {
-    const openapiBackend = await OpenAPI.initialize();
+  const openapiBackend = await OpenAPI.initialize();
 
-    const hapiSwaggerObj = {
-        plugin: HapiSwagger,
-        options: {
-            customSwaggerFile: openapiBackend.options.openapi.definition,
-            OAS: openapiBackend.options.openapi.api,
-            tryItOutEnabled: false,
-            uiOptions: {
-                tryItOutEnabled: false
-            }
-        }
-    };
+  const hapiSwaggerObj = {
+    plugin: HapiSwagger,
+    options: {
+      customSwaggerFile: openapiBackend.options.openapi.definition,
+      OAS: openapiBackend.options.openapi.api,
+      tryItOutEnabled: false,
+      uiOptions: {
+        tryItOutEnabled: false
+      }
+    }
+  };
 
-    const plugins = [
-        Util.Hapi.OpenapiBackendValidator,
-        Good,
-        openapiBackend,
-        Inert,
-        hapiSwaggerObj,
-        Vision,
-        Blip,
-        ErrorHandling,
-        Util.Hapi.HapiEventPlugin,
-        Util.Hapi.loggingPlugin
+  const plugins = [
+    Util.Hapi.OpenapiBackendValidator,
+    Good,
+    openapiBackend,
+    Inert,
+    hapiSwaggerObj,
+    Vision,
+    Blip,
+    ErrorHandling,
+    Util.Hapi.HapiEventPlugin,
+    Util.Hapi.loggingPlugin
     // TODO: ALS is sending incorrect headers (vnd.application.parties instead of vnd.interoperability.participants)
     // So we need to disable this validation for now
     // Util.Hapi.FSPIOPHeaderValidation
-    ];
+  ];
 
-    await server.register(plugins);
+  await server.register(plugins);
 
-    // use as a catch-all handler
-    server.route({
-        method: ['GET', 'POST', 'PUT', 'DELETE'],
-        path: '/{path*}',
-        handler: (req, h): ServerRoute =>
-            openapiBackend.options.openapi.handleRequest(
-                {
-                    method: req.method,
-                    path: req.path,
-                    body: req.payload,
-                    query: req.query,
-                    headers: req.headers
-                },
-                req,
-                h
-            )
-    });
-    return server;
+  // use as a catch-all handler
+  server.route({
+    method: ['GET', 'POST', 'PUT', 'DELETE'],
+    path: '/{path*}',
+    handler: (req, h): ServerRoute =>
+      openapiBackend.options.openapi.handleRequest(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h
+      )
+  });
+  return server;
 }
 
 // Context is required for OpenAPI
@@ -96,5 +96,5 @@ export interface Context {
 }
 
 export default {
-    register
+  register
 };
