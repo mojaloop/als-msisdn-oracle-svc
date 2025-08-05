@@ -4,10 +4,13 @@ describe('health', () => {
   it('performs a health check', async () => {
     // Arrange
     const expected = expect.objectContaining({
-      versionNumber: expect.stringMatching('.*'),
       status: 'OK',
+      services: [{
+        service: 'datastore',
+        status: 'OK'
+      }],
       startTime: expect.stringMatching('.*'),
-      services: []
+      versionNumber: expect.stringMatching('.*')
     })
 
     // Act

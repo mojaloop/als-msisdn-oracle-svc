@@ -32,6 +32,7 @@ import { Context } from '../plugins';
 
 const { statusEnum, serviceName } = HealthCheck.HealthCheckEnums
 
+// istanbul ignore next
 export const getSubServiceHealthDatastore = async (oracleDB: ParticipantServiceDeps['oracleDB']) => {
   let status;
 
