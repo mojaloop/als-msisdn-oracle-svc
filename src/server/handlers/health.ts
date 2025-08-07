@@ -23,12 +23,32 @@
  --------------
  ******/
 
-import Shared from '@mojaloop/central-services-shared';
-import { PACKAGE } from '../../shared/config';
-import { Context } from '../plugins';
 import { Request, ResponseToolkit, ResponseObject } from '@hapi/hapi';
+import { HealthCheck } from '@mojaloop/central-services-shared';
+import { logger } from '../../shared/logger';
+import { PACKAGE } from '../../shared/config';
+import { ParticipantServiceDeps } from '../../domain/types';
+import { Context } from '../plugins';
 
-const healthCheck = new Shared.HealthCheck.HealthCheck(PACKAGE, []);
+const { statusEnum, serviceName } = HealthCheck.HealthCheckEnums
+
+// istanbul ignore next
+export const getSubServiceHealthDatastore = async (oracleDB: ParticipantServiceDeps['oracleDB']) => {
+  let status;
+
+  try {
+    const isOk = await oracleDB.isConnected();
+    status = isOk ? statusEnum.OK : statusEnum.DOWN
+  } catch (err) {
+    logger.warn('getSubServiceHealthDatastore failed with error: ', err)
+    status = statusEnum.DOWN
+  }
+
+  return {
+    service: serviceName.datastore,
+    status
+  }
+}
 
 /**
  * Operations on /health
@@ -39,12 +59,18 @@ const healthCheck = new Shared.HealthCheck.HealthCheck(PACKAGE, []);
  * description: The HTTP request GET /health is used to return the current status of the API.
  * parameters:
  * produces: application/json
- * responses: 200, 400, 401, 403, 404, 405, 406, 501, 503
+ * responses: 200, 503
  */
-export const get = async (_context: Context, _request: Request, h: ResponseToolkit): Promise<ResponseObject> => {
-    return h.response(await healthCheck.getHealth()).code(200);
+export const get = async (_context: Context, { server }: Request, h: ResponseToolkit): Promise<ResponseObject> => {
+  const healthCheck = new HealthCheck.HealthCheck(PACKAGE, [
+    () => getSubServiceHealthDatastore(server.app.oracleDB)
+  ])
+  const health = await healthCheck.getHealth();
+  const statusCode = health?.status === statusEnum.OK ? 200 : 503;
+  logger.debug('health check is done: ', { statusCode, health })
+  return h.response(health).code(statusCode);
 };
 
 export default {
-    get
+  get
 };

@@ -1,6 +1,5 @@
 import { Request, ResponseToolkit } from '@hapi/hapi'
 import * as Handler from '~/server/handlers/health'
-import { Enum } from '@mojaloop/central-services-shared'
 import { h, getHealthRequest } from 'test/data/data'
 
 jest.mock('~/shared/logger')
@@ -20,7 +19,7 @@ describe('server/handler/health', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response.statusCode).toBe(Enum.Http.ReturnCodes.OK.CODE)
+      expect(response.statusCode).toBe(503)
     })
   })
 })
