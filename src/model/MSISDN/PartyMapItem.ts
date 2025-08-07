@@ -129,7 +129,7 @@ export class OracleDB implements IOracleDb {
       this.log.verbose('db connection is ok');
       return true;
     } catch (err: unknown) {
-      this.log.warn('db connection check failed', err);
+      this.log.warn('db connection check failed: ', err);
       return false;
     }
   }
