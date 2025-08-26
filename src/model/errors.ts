@@ -44,3 +44,12 @@ export class IDTypeNotSupported extends Error {
     this.name = 'IDTypeNotSupported';
   }
 }
+
+export class MalformedParameterError extends Error {
+  public readonly statusCode = 400;
+
+  public constructor(parameter: string, value: string) {
+    super(`Invalid ${parameter} parameter: ${value}. ${parameter} must not be a placeholder value`);
+    this.name = 'MalformedParameterError';
+  }
+}

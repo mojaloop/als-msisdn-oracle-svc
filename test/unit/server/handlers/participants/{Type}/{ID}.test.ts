@@ -13,7 +13,7 @@ import {
   getParticipantsByTypeAndIDRequest,
   mockPartyMapItem
 } from 'test/data/data'
-import { IDTypeNotSupported } from '~/model/errors'
+import { IDTypeNotSupported, MalformedParameterError } from '~/model/errors'
 
 jest.mock('~/shared/logger')
 
@@ -26,6 +26,27 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
   describe('GET Handler', (): void => {
     beforeAll((): void => {
       mockRetrievePartyMapItem.mockResolvedValue(mockPartyMapItem)
+    })
+
+    it('should return 404 if ID is empty string', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequest,
+        params: { ...(getParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = ''
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
     })
 
     it('should return a 200 success code.', async (): Promise<void> => {
@@ -60,6 +81,48 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         h as unknown as ResponseToolkit
       )
       expect(response).toStrictEqual(new IDTypeNotSupported())
+    })
+
+    it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequest,
+        params: { ...(getParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = '{ID}'
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response).toStrictEqual(new MalformedParameterError('ID', '{ID}'))
+    })
+
+    it('should fail if ID contains curly braces', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequest,
+        params: { ...(getParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = 'some{value}'
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response).toStrictEqual(new MalformedParameterError('ID', 'some{value}'))
     })
   })
 
@@ -101,6 +164,27 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
       )
       expect(response).toStrictEqual(new IDTypeNotSupported())
     })
+
+    it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
+      const req = { 
+        ...postParticipantsByTypeAndIDRequest,
+        params: { ...(postParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = '{ID}'
+
+      const response = await Handler.post(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response).toStrictEqual(new MalformedParameterError('ID', '{ID}'))
+    })
   })
 
   describe('PUT Handler', (): void => {
@@ -141,6 +225,27 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
       )
       expect(response).toStrictEqual(new IDTypeNotSupported())
     })
+
+    it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
+      const req = { 
+        ...putParticipantsByTypeAndIDRequest,
+        params: { ...(putParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = '{ID}'
+
+      const response = await Handler.put(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response).toStrictEqual(new MalformedParameterError('ID', '{ID}'))
+    })
   })
 
   describe('DELETE Handler', (): void => {
@@ -179,6 +284,27 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         h as unknown as ResponseToolkit
       )
       expect(response).toStrictEqual(new IDTypeNotSupported())
+    })
+
+    it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
+      const req = { 
+        ...deleteParticipantsByTypeAndIDRequest,
+        params: { ...(deleteParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = '{ID}'
+
+      const response = await Handler.del(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response).toStrictEqual(new MalformedParameterError('ID', '{ID}'))
     })
   })
 })
