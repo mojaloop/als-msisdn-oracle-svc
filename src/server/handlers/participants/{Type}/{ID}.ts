@@ -13,8 +13,8 @@ export async function get(_context: Context, request: Request, h: ResponseToolki
 
     const partyId = request.params.ID;
     
-    // Validate that ID is present and not empty
-    if (!partyId || partyId === '') {
+    // Validate that ID is present
+    if (!partyId) {
         return h.response({ errorInformation: { errorCode: '3002', errorDescription: 'Unknown URI - ID parameter is missing' } }).code(404);
     }
     
@@ -44,8 +44,8 @@ export async function post(_context: Context, request: Request, h: ResponseToolk
 
     const partyId = request.params.ID;
     
-    // Validate that ID is present and not empty
-    if (!partyId || partyId === '') {
+    // Validate that ID is present
+    if (!partyId) {
         return h.response({ errorInformation: { errorCode: '3002', errorDescription: 'Unknown URI - ID parameter is missing' } }).code(404);
     }
     
@@ -71,8 +71,8 @@ export async function put(_context: Context, request: Request, h: ResponseToolki
 
     const partyId = request.params.ID;
     
-    // Validate that ID is present and not empty
-    if (!partyId || partyId === '') {
+    // Validate that ID is present
+    if (!partyId) {
         return h.response({ errorInformation: { errorCode: '3002', errorDescription: 'Unknown URI - ID parameter is missing' } }).code(404);
     }
     
@@ -97,8 +97,8 @@ export async function del(_context: Context, request: Request, h: ResponseToolki
 
     const partyId = request.params.ID;
     
-    // Validate that ID is present and not empty
-    if (!partyId || partyId === '') {
+    // Validate that ID is present
+    if (!partyId) {
         return h.response({ errorInformation: { errorCode: '3002', errorDescription: 'Unknown URI - ID parameter is missing' } }).code(404);
     }
     

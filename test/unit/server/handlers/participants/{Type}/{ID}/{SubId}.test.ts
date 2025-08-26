@@ -83,6 +83,27 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
       expect(response).toStrictEqual(new MalformedParameterError('ID', '{ID}'))
     })
 
+    it('should fail if SubId is undefined', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequestSubId,
+        params: { ...(getParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      delete req.params.SubId
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
+    })
+
     it('should fail if SubId is a placeholder value {SubId}', async (): Promise<void> => {
       const req = { 
         ...getParticipantsByTypeAndIDRequestSubId,
@@ -108,6 +129,27 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
   describe('POST Handler', (): void => {
     beforeAll((): void => {
       mockCreatePartyMapItem.mockResolvedValue(undefined)
+    })
+
+    it('should fail if ID is empty', async (): Promise<void> => {
+      const req = { 
+        ...postParticipantsByTypeAndIDRequestSubId,
+        params: { ...(postParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = ''
+
+      const response = await Handler.post(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
     })
 
     it('should return a 201 success code.', async (): Promise<void> => {
@@ -150,6 +192,48 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
       mockUpdatePartyMapItem.mockResolvedValue()
     })
 
+    it('should fail if ID is empty', async (): Promise<void> => {
+      const req = { 
+        ...putParticipantsByTypeAndIDRequestSubId,
+        params: { ...(putParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = ''
+
+      const response = await Handler.put(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
+    })
+
+    it('should fail if SubId is empty', async (): Promise<void> => {
+      const req = { 
+        ...putParticipantsByTypeAndIDRequestSubId,
+        params: { ...(putParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.SubId = ''
+
+      const response = await Handler.put(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
+    })
+
     it('should return a 200 success code.', async (): Promise<void> => {
       const req = putParticipantsByTypeAndIDRequestSubId as unknown as Request
       const response = await Handler.put(
@@ -188,6 +272,27 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
   describe('DELETE Handler', (): void => {
     beforeAll((): void => {
       mockDeletePartyMapItem.mockResolvedValue()
+    })
+
+    it('should fail if ID is empty', async (): Promise<void> => {
+      const req = { 
+        ...deleteParticipantsByTypeAndIDRequestSubId,
+        params: { ...(deleteParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = ''
+
+      const response = await Handler.del(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
     })
 
     it('should return a 204 no content code.', async (): Promise<void> => {

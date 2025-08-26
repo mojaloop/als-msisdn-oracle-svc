@@ -49,7 +49,45 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
       expect(response.statusCode).toBe(404)
     })
 
+    it('should return 404 if ID is undefined', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequest,
+        params: { ...(getParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      delete req.params.ID
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
+    })
+
     it('should return a 200 success code.', async (): Promise<void> => {
+      const req = getParticipantsByTypeAndIDRequest as unknown as Request
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(Enum.Http.ReturnCodes.OK.CODE)
+    })
+
+    it('should return empty partyList when retrievePartyMapItem throws error', async (): Promise<void> => {
+      mockRetrievePartyMapItem.mockRejectedValueOnce(new Error('Not found'))
       const req = getParticipantsByTypeAndIDRequest as unknown as Request
       const response = await Handler.get(
         {
