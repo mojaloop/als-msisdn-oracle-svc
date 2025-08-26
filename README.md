@@ -1,4 +1,4 @@
-# ALS MSISDN Oracle (Work in Progress)
+# ALS MSISDN Oracle
 
 Code is based on the [Mojaloop ALS Consent Oracle](https://github.com/mojaloop/als-consent-oracle)
 
@@ -50,7 +50,7 @@ npm run start
 ```
 
 
-### Updating the OpenApi (Swagger) Spec
+### Updating the OpenAPI (Swagger) Spec
 
 We use `multi-file-swagger` to make our swagger files more manageable.
 
