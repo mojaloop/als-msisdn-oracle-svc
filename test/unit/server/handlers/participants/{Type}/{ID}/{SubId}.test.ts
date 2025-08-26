@@ -13,7 +13,7 @@ import {
   getParticipantsByTypeAndIDRequestSubId,
   mockPartyMapItemSubId
 } from 'test/data/data'
-import { IDTypeNotSupported } from '~/model/errors'
+import { IDTypeNotSupported, MalformedParameterError } from '~/model/errors'
 
 jest.mock('~/shared/logger')
 
@@ -60,6 +60,48 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         h as unknown as ResponseToolkit
       )
       expect(response).toStrictEqual(new IDTypeNotSupported())
+    })
+
+    it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequestSubId,
+        params: { ...(getParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = '{ID}'
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response).toStrictEqual(new MalformedParameterError('ID', '{ID}'))
+    })
+
+    it('should fail if SubId is a placeholder value {SubId}', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequestSubId,
+        params: { ...(getParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.SubId = '{SubId}'
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response).toStrictEqual(new MalformedParameterError('SubId', '{SubId}'))
     })
   })
 

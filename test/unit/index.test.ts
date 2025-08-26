@@ -141,6 +141,63 @@ describe('api routes', (): void => {
   })
 
   describe('Endpoint: /participants/{Type}/{ID}', (): void => {
+    it('should return 500 for GET /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+      const request = {
+        method: 'GET',
+        url: '/participants/MSISDN/',
+        headers: Headers
+      }
+
+      const response = await server.inject(request)
+      expect(response.statusCode).toBe(500) // OpenAPI validation error
+    })
+
+    it('should return 200 for GET /participants/MSISDN/9998887777/ (trailing slash stripped by Hapi)', async (): Promise<void> => {
+      const request = {
+        method: 'GET',
+        url: '/participants/MSISDN/9998887777/',
+        headers: Headers
+      }
+
+      const response = await server.inject(request)
+      expect(response.statusCode).toBe(200) // Hapi strips trailing slash, request succeeds
+    })
+
+    it('should return 500 for POST /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+      const request = {
+        method: 'POST',
+        url: '/participants/MSISDN/',
+        headers: Headers,
+        payload: MockParticipantsByTypeAndIDPost.payload
+      }
+
+      const response = await server.inject(request)
+      expect(response.statusCode).toBe(500) // OpenAPI validation error
+    })
+
+    it('should return 500 for PUT /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+      const request = {
+        method: 'PUT',
+        url: '/participants/MSISDN/',
+        headers: Headers,
+        payload: MockParticipantsByTypeAndIDPut.payload
+      }
+
+      const response = await server.inject(request)
+      expect(response.statusCode).toBe(500) // OpenAPI validation error
+    })
+
+    it('should return 500 for DELETE /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+      const request = {
+        method: 'DELETE',
+        url: '/participants/MSISDN/',
+        headers: Headers
+      }
+
+      const response = await server.inject(request)
+      expect(response.statusCode).toBe(500) // OpenAPI validation error
+    })
+
     it('GET', async (): Promise<void> => {
       const ParticipantsByTypeAndIDGet = jest.spyOn(Handlers, 'ParticipantsByTypeAndIDGet')
       ParticipantsByTypeAndIDGet.mockImplementationOnce((_context: Context, _req: Request, h: ResponseToolkit) =>
