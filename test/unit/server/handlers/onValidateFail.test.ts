@@ -32,12 +32,64 @@ import onValidateFail from '~/server/handlers/onValidateFail'
 import { logger } from '~/shared/logger'
 
 describe('server/handlers/onValidateFail', (): void => {
-  it('should throw error from Boom.boomify', (): void => {
-    const spyBoomify = jest.spyOn(Boom, 'boomify')
-    const err = new Error('sample error')
+  it('should throw 404 error for Invalid request path', (): void => {
+    const err = new Error('Invalid request path')
     expect(() => {
       onValidateFail(logger, err)
-    }).toThrow(err)
-    expect(spyBoomify).toHaveBeenCalledWith(err)
+    }).toThrow(Boom.notFound('Unknown URI', { 
+      errorInformation: { 
+        errorCode: '3002', 
+        errorDescription: 'Unknown URI' 
+      } 
+    }))
+  })
+
+  it('should throw 404 error for Missing required parameter', (): void => {
+    const err = new Error('Missing required parameter')
+    expect(() => {
+      onValidateFail(logger, err)
+    }).toThrow(Boom.notFound('Unknown URI', { 
+      errorInformation: { 
+        errorCode: '3002', 
+        errorDescription: 'Unknown URI' 
+      } 
+    }))
+  })
+
+  it('should throw 404 error for Unknown route', (): void => {
+    const err = new Error('Unknown route')
+    expect(() => {
+      onValidateFail(logger, err)
+    }).toThrow(Boom.notFound('Unknown URI', { 
+      errorInformation: { 
+        errorCode: '3002', 
+        errorDescription: 'Unknown URI' 
+      } 
+    }))
+  })
+
+  it('should throw 404 error for no route matches request', (): void => {
+    const err = new Error('404-notFound: no route matches request')
+    expect(() => {
+      onValidateFail(logger, err)
+    }).toThrow(Boom.notFound('Unknown URI', { 
+      errorInformation: { 
+        errorCode: '3002', 
+        errorDescription: 'Unknown URI' 
+      } 
+    }))
+  })
+
+  it('should throw 400 error for other validation errors', (): void => {
+    const err = new Error('Some other validation error')
+    expect(() => {
+      onValidateFail(logger, err)
+    }).toThrow(Boom.badRequest('Some other validation error'))
+  })
+
+  it('should throw 400 error when no error is provided', (): void => {
+    expect(() => {
+      onValidateFail(logger)
+    }).toThrow(Boom.badRequest('Validation Error'))
   })
 })

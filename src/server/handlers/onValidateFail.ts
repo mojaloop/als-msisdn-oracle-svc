@@ -36,5 +36,21 @@ export default function onValidateFail(logger: Logger.SdkLogger, err?: Error): L
     // istanbul ignore next
     const error = err || new Error('Validation Error');
     logger.error('onValidateFail error: ', error);
-    throw Boom.boomify(error);
+    
+    // Check if this is a route/path validation error (missing required path parameters)
+    // These should return 404 to be consistent with account-lookup-service
+    if (error.message && (error.message.includes('Invalid request path') || 
+                          error.message.includes('Missing required') ||
+                          error.message.includes('Unknown route') ||
+                          error.message.includes('no route matches request'))) {
+        throw Boom.notFound('Unknown URI', { 
+            errorInformation: { 
+                errorCode: '3002', 
+                errorDescription: 'Unknown URI' 
+            } 
+        });
+    }
+    
+    // For other validation errors, return 400 Bad Request
+    throw Boom.badRequest(error.message);
 }

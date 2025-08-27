@@ -141,7 +141,7 @@ describe('api routes', (): void => {
   })
 
   describe('Endpoint: /participants/{Type}/{ID}', (): void => {
-    it('should return 500 for GET /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+    it('should return 404 for GET /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
       const request = {
         method: 'GET',
         url: '/participants/MSISDN/',
@@ -149,7 +149,7 @@ describe('api routes', (): void => {
       }
 
       const response = await server.inject(request)
-      expect(response.statusCode).toBe(500) // OpenAPI validation error
+      expect(response.statusCode).toBe(404) // Now returns 404 for consistency with account-lookup-service
     })
 
     it('should return 200 for GET /participants/MSISDN/9998887777/ (trailing slash stripped by Hapi)', async (): Promise<void> => {
@@ -163,7 +163,7 @@ describe('api routes', (): void => {
       expect(response.statusCode).toBe(200) // Hapi strips trailing slash, request succeeds
     })
 
-    it('should return 500 for POST /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+    it('should return 404 for POST /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
       const request = {
         method: 'POST',
         url: '/participants/MSISDN/',
@@ -172,10 +172,10 @@ describe('api routes', (): void => {
       }
 
       const response = await server.inject(request)
-      expect(response.statusCode).toBe(500) // OpenAPI validation error
+      expect(response.statusCode).toBe(404) // Now returns 404 for consistency with account-lookup-service
     })
 
-    it('should return 500 for PUT /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+    it('should return 404 for PUT /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
       const request = {
         method: 'PUT',
         url: '/participants/MSISDN/',
@@ -184,10 +184,10 @@ describe('api routes', (): void => {
       }
 
       const response = await server.inject(request)
-      expect(response.statusCode).toBe(500) // OpenAPI validation error
+      expect(response.statusCode).toBe(404) // Now returns 404 for consistency with account-lookup-service
     })
 
-    it('should return 500 for DELETE /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+    it('should return 404 for DELETE /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
       const request = {
         method: 'DELETE',
         url: '/participants/MSISDN/',
@@ -195,7 +195,7 @@ describe('api routes', (): void => {
       }
 
       const response = await server.inject(request)
-      expect(response.statusCode).toBe(500) // OpenAPI validation error
+      expect(response.statusCode).toBe(404) // Now returns 404 for consistency with account-lookup-service
     })
 
     it('GET', async (): Promise<void> => {
