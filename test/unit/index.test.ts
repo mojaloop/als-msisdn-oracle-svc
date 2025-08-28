@@ -59,7 +59,19 @@ jest.mock('~/server/handlers', () => ({
   ),
   ParticipantsByTypeAndIDDelete: jest.fn((_context: Context, _req: Request, h: ResponseToolkit) =>
     Promise.resolve(h.response({}).code(204))
-  )
+  ),
+  // Include the custom notFound handler that returns 404
+  notFound: jest.fn((_context: Context, _req: Request, h: ResponseToolkit) =>
+    Promise.resolve(h.response({
+      errorInformation: {
+        errorCode: '3002',
+        errorDescription: 'Unknown URI'
+      }
+    }).code(404))
+  ),
+  // Include other default handlers from central-services-shared
+  validationFail: jest.fn(),
+  methodNotAllowed: jest.fn()
 }))
 
 describe('index', (): void => {
