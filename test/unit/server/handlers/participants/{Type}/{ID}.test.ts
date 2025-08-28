@@ -13,7 +13,7 @@ import {
   getParticipantsByTypeAndIDRequest,
   mockPartyMapItem
 } from 'test/data/data'
-import { IDTypeNotSupported, MalformedParameterError } from '~/model/errors'
+// Error imports removed - now testing response format directly
 
 jest.mock('~/shared/logger')
 
@@ -118,7 +118,11 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
     })
 
     it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
@@ -139,7 +143,11 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new MalformedParameterError('ID', '{ID}'))
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: {ID}'
+      })
     })
 
     it('should fail if ID contains curly braces', async (): Promise<void> => {
@@ -160,7 +168,11 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new MalformedParameterError('ID', 'some{value}'))
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: some{value}'
+      })
     })
   })
 
@@ -200,7 +212,11 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
     })
 
     it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
@@ -221,7 +237,11 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new MalformedParameterError('ID', '{ID}'))
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: {ID}'
+      })
     })
   })
 
@@ -261,7 +281,11 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
     })
 
     it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
@@ -282,7 +306,11 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new MalformedParameterError('ID', '{ID}'))
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: {ID}'
+      })
     })
   })
 
@@ -321,7 +349,11 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
     })
 
     it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
@@ -342,7 +374,11 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new MalformedParameterError('ID', '{ID}'))
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: {ID}'
+      })
     })
   })
 })

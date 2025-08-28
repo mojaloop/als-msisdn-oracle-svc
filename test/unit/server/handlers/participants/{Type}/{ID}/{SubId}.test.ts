@@ -13,7 +13,7 @@ import {
   getParticipantsByTypeAndIDRequestSubId,
   mockPartyMapItemSubId
 } from 'test/data/data'
-import { IDTypeNotSupported, MalformedParameterError } from '~/model/errors'
+// Error imports removed - now testing response format directly
 
 jest.mock('~/shared/logger')
 
@@ -59,7 +59,11 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
     })
 
     it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
@@ -80,7 +84,11 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new MalformedParameterError('ID', '{ID}'))
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: {ID}'
+      })
     })
 
     it('should fail if SubId is undefined', async (): Promise<void> => {
@@ -122,7 +130,11 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new MalformedParameterError('SubId', '{SubId}'))
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid SubId parameter: {SubId}'
+      })
     })
   })
 
@@ -183,7 +195,11 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
     })
   })
 
@@ -265,7 +281,11 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
     })
   })
 
@@ -325,7 +345,11 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
     })
   })
 })
