@@ -147,6 +147,9 @@ describe('participants API Tests -->', () => {
       const payload = fixtures.mockPostParticipantsRequest()
       const id = '9998887777_put'
       
+      // First create the record
+      await axios.post(`${BASE_URL}/MSISDN/${id}`, payload)
+      
       // Hapi strips trailing slashes, so this should succeed
       const response = await axios.put(`${BASE_URL}/MSISDN/${id}/`, payload)
       expect(response.status).toBe(200)
@@ -167,7 +170,11 @@ describe('participants API Tests -->', () => {
     })
 
     test('should handle URL with trailing slash (e.g., /participants/MSISDN/9998887777/)', async () => {
+      const payload = fixtures.mockPostParticipantsRequest()
       const id = '9998887777_delete'
+      
+      // First create the record
+      await axios.post(`${BASE_URL}/MSISDN/${id}`, payload)
       
       // Hapi strips trailing slashes, so this should succeed
       const response = await axios.delete(`${BASE_URL}/MSISDN/${id}/`)
