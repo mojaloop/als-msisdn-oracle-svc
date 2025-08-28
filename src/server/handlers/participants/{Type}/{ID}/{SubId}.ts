@@ -4,14 +4,13 @@ import { retrievePartyMapItem, createPartyMapItem, updatePartyMapItem, deletePar
 import { Schemas } from '@mojaloop/api-snippets/lib/fspiop/v1_1';
 import { PartyMapItem } from '~/model/MSISDN';
 import * as Types from '~/interface/types';
-import { IDTypeNotSupported } from '../../../../../model/errors';
-import { boomify } from '@hapi/boom';
+import { validateParticipantSubIdParams } from '~/shared/validation';
 
 export async function get(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-    if (request.params.Type !== 'MSISDN') {
-        return boomify(new IDTypeNotSupported());
-    }
-
+    // Validate parameters
+    const validationError = validateParticipantSubIdParams(request.params.Type, request.params.ID, request.params.SubId, h);
+    if (validationError) return validationError;
+    
     const partyId = request.params.ID;
     const subId = request.params.SubId;
     const partyMapItem = await retrievePartyMapItem(partyId, subId);
@@ -19,10 +18,10 @@ export async function get(_context: Context, request: Request, h: ResponseToolki
 }
 
 export async function post(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-    if (request.params.Type !== 'MSISDN') {
-        return boomify(new IDTypeNotSupported());
-    }
-
+    // Validate parameters
+    const validationError = validateParticipantSubIdParams(request.params.Type, request.params.ID, request.params.SubId, h);
+    if (validationError) return validationError;
+    
     const partyId = request.params.ID;
     const subId = request.params.SubId;
     const payload = request.payload as Schemas.ParticipantsTypeIDSubIDPostRequest;
@@ -37,10 +36,10 @@ export async function post(_context: Context, request: Request, h: ResponseToolk
 }
 
 export async function put(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-    if (request.params.Type !== 'MSISDN') {
-        return boomify(new IDTypeNotSupported());
-    }
-
+    // Validate parameters
+    const validationError = validateParticipantSubIdParams(request.params.Type, request.params.ID, request.params.SubId, h);
+    if (validationError) return validationError;
+    
     const partyId = request.params.ID;
     const subId = request.params.SubId;
     const payload = request.payload as Types.ParticipantsTypeIDPostPutRequest;
@@ -54,10 +53,10 @@ export async function put(_context: Context, request: Request, h: ResponseToolki
 }
 
 export async function del(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-    if (request.params.Type !== 'MSISDN') {
-        return boomify(new IDTypeNotSupported());
-    }
-
+    // Validate parameters
+    const validationError = validateParticipantSubIdParams(request.params.Type, request.params.ID, request.params.SubId, h);
+    if (validationError) return validationError;
+    
     const partyId = request.params.ID;
     const subId = request.params.SubId;
     await deletePartyMapItem(partyId, subId);
