@@ -1,4 +1,4 @@
- /*****
+/*****
  License
  --------------
  Copyright © 2020-2025 Mojaloop Foundation

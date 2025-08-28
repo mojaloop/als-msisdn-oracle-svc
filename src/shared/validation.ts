@@ -32,11 +32,11 @@ import { IDTypeNotSupported, MalformedParameterError } from '~/model/errors';
  * @returns Error response if invalid, undefined if valid
  */
 export function validateTypeIsMSISDN(type: string, h: ResponseToolkit): ResponseObject | undefined {
-    if (type !== 'MSISDN') {
-        const error = new IDTypeNotSupported();
-        return h.response(error.errorInformation).code(error.statusCode);
-    }
-    return undefined;
+  if (type !== 'MSISDN') {
+    const error = new IDTypeNotSupported();
+    return h.response(error.errorInformation).code(error.statusCode);
+  }
+  return undefined;
 }
 
 /**
@@ -47,23 +47,23 @@ export function validateTypeIsMSISDN(type: string, h: ResponseToolkit): Response
  * @returns Error response if invalid, undefined if valid
  */
 export function validateParameter(paramName: string, paramValue: string | undefined, h: ResponseToolkit): ResponseObject | undefined {
-    // Check if parameter is missing or empty
-    if (!paramValue) {
-        return h.response({ 
-            errorInformation: { 
-                errorCode: '3002', 
-                errorDescription: `Unknown URI - ${paramName} parameter is missing` 
-            } 
-        }).code(404);
-    }
+  // Check if parameter is missing or empty
+  if (!paramValue) {
+    return h.response({ 
+      errorInformation: { 
+        errorCode: '3002', 
+        errorDescription: `Unknown URI - ${paramName} parameter is missing` 
+      } 
+    }).code(404);
+  }
     
-    // Check if parameter is a placeholder value
-    if (paramValue === `{${paramName}}` || paramValue.includes('{') || paramValue.includes('}')) {
-        const error = new MalformedParameterError(paramName, paramValue);
-        return h.response(error.errorInformation).code(error.statusCode);
-    }
+  // Check if parameter is a placeholder value
+  if (paramValue === `{${paramName}}` || paramValue.includes('{') || paramValue.includes('}')) {
+    const error = new MalformedParameterError(paramName, paramValue);
+    return h.response(error.errorInformation).code(error.statusCode);
+  }
     
-    return undefined;
+  return undefined;
 }
 
 /**
@@ -74,15 +74,15 @@ export function validateParameter(paramName: string, paramValue: string | undefi
  * @returns Error response if invalid, undefined if valid
  */
 export function validateParticipantParams(type: string, id: string | undefined, h: ResponseToolkit): ResponseObject | undefined {
-    // First validate Type
-    const typeError = validateTypeIsMSISDN(type, h);
-    if (typeError) return typeError;
+  // First validate Type
+  const typeError = validateTypeIsMSISDN(type, h);
+  if (typeError) return typeError;
     
-    // Then validate ID
-    const idError = validateParameter('ID', id, h);
-    if (idError) return idError;
+  // Then validate ID
+  const idError = validateParameter('ID', id, h);
+  if (idError) return idError;
     
-    return undefined;
+  return undefined;
 }
 
 /**
@@ -94,18 +94,18 @@ export function validateParticipantParams(type: string, id: string | undefined, 
  * @returns Error response if invalid, undefined if valid
  */
 export function validateParticipantSubIdParams(
-    type: string, 
-    id: string | undefined, 
-    subId: string | undefined, 
-    h: ResponseToolkit
+  type: string, 
+  id: string | undefined, 
+  subId: string | undefined, 
+  h: ResponseToolkit
 ): ResponseObject | undefined {
-    // First validate Type and ID
-    const baseError = validateParticipantParams(type, id, h);
-    if (baseError) return baseError;
+  // First validate Type and ID
+  const baseError = validateParticipantParams(type, id, h);
+  if (baseError) return baseError;
     
-    // Then validate SubId
-    const subIdError = validateParameter('SubId', subId, h);
-    if (subIdError) return subIdError;
+  // Then validate SubId
+  const subIdError = validateParameter('SubId', subId, h);
+  if (subIdError) return subIdError;
     
-    return undefined;
+  return undefined;
 }

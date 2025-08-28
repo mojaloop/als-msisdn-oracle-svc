@@ -27,7 +27,7 @@ export class NotFoundError extends Error {
   public readonly errorCode = '3201'; // FSPIOP ID_NOT_FOUND error code
   public readonly errorInformation = {
     errorCode: '3201',
-    errorDescription: `ID not found`
+    errorDescription: 'ID not found'
   };
 
   public constructor(resource: string, id: string) {
