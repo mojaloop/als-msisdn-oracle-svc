@@ -13,7 +13,7 @@ import {
   getParticipantsByTypeAndIDRequest,
   mockPartyMapItem
 } from 'test/data/data'
-import { IDTypeNotSupported } from '~/model/errors'
+// Error imports removed - now testing response format directly
 
 jest.mock('~/shared/logger')
 
@@ -28,7 +28,66 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
       mockRetrievePartyMapItem.mockResolvedValue(mockPartyMapItem)
     })
 
+    it('should return 404 if ID is empty string', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequest,
+        params: { ...(getParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = ''
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
+    })
+
+    it('should return 404 if ID is undefined', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequest,
+        params: { ...(getParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      delete req.params.ID
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
+    })
+
     it('should return a 200 success code.', async (): Promise<void> => {
+      const req = getParticipantsByTypeAndIDRequest as unknown as Request
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(Enum.Http.ReturnCodes.OK.CODE)
+    })
+
+    it('should return empty partyList when retrievePartyMapItem throws error', async (): Promise<void> => {
+      mockRetrievePartyMapItem.mockRejectedValueOnce(new Error('Not found'))
       const req = getParticipantsByTypeAndIDRequest as unknown as Request
       const response = await Handler.get(
         {
@@ -59,7 +118,61 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
+    })
+
+    it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequest,
+        params: { ...(getParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = '{ID}'
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: {ID}'
+      })
+    })
+
+    it('should fail if ID contains curly braces', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequest,
+        params: { ...(getParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = 'some{value}'
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: some{value}'
+      })
     })
   })
 
@@ -99,7 +212,36 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
+    })
+
+    it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
+      const req = { 
+        ...postParticipantsByTypeAndIDRequest,
+        params: { ...(postParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = '{ID}'
+
+      const response = await Handler.post(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: {ID}'
+      })
     })
   })
 
@@ -139,7 +281,36 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
+    })
+
+    it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
+      const req = { 
+        ...putParticipantsByTypeAndIDRequest,
+        params: { ...(putParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = '{ID}'
+
+      const response = await Handler.put(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: {ID}'
+      })
     })
   })
 
@@ -178,7 +349,36 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
+    })
+
+    it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
+      const req = { 
+        ...deleteParticipantsByTypeAndIDRequest,
+        params: { ...(deleteParticipantsByTypeAndIDRequest.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = '{ID}'
+
+      const response = await Handler.del(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: {ID}'
+      })
     })
   })
 })

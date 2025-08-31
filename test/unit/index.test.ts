@@ -1,8 +1,8 @@
 /*****
  License
  --------------
- Copyright © 2020 Mojaloop Foundation
- The Mojaloop files are made available by the Mojaloop Foundation under the Apache License, Version 2.0 (the "License") and you may not use these files except in compliance with the License. You may obtain a copy of the License at
+ Copyright © 2020-2025 Mojaloop Foundation
+ The Mojaloop files are made available by the 2020-2025 Mojaloop Foundation under the Apache License, Version 2.0 (the "License") and you may not use these files except in compliance with the License. You may obtain a copy of the License at
  http://www.apache.org/licenses/LICENSE-2.0
  Unless required by applicable law or agreed to in writing, the Mojaloop files are distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  Contributors
@@ -12,12 +12,14 @@
  should be listed with a '*' in the first column. People who have
  contributed from an organization can be listed under the organization
  that actually holds the copyright for their contributions (see the
- Gates Foundation organization for an example). Those individuals should have
+ Mojaloop Foundation organization for an example). Those individuals should have
  their names indented and be marked with a '-'. Email address can be added
  optionally within square brackets <email>.
+ * Mojaloop Foundation
 
- * Lewis Daly <lewis@vesselstech.com>
  * Vijay Kumar Guthi <vijaya.guthi@infitx.com>
+ * Lewis Daly <lewis@vesselstech.com>
+
  --------------
  ******/
 
@@ -57,7 +59,19 @@ jest.mock('~/server/handlers', () => ({
   ),
   ParticipantsByTypeAndIDDelete: jest.fn((_context: Context, _req: Request, h: ResponseToolkit) =>
     Promise.resolve(h.response({}).code(204))
-  )
+  ),
+  // Include the custom notFound handler that returns 404
+  notFound: jest.fn((_context: Context, _req: Request, h: ResponseToolkit) =>
+    Promise.resolve(h.response({
+      errorInformation: {
+        errorCode: '3002',
+        errorDescription: 'Unknown URI'
+      }
+    }).code(404))
+  ),
+  // Include other default handlers from central-services-shared
+  validationFail: jest.fn(),
+  methodNotAllowed: jest.fn()
 }))
 
 describe('index', (): void => {
@@ -141,6 +155,63 @@ describe('api routes', (): void => {
   })
 
   describe('Endpoint: /participants/{Type}/{ID}', (): void => {
+    it('should return 404 for GET /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+      const request = {
+        method: 'GET',
+        url: '/participants/MSISDN/',
+        headers: Headers
+      }
+
+      const response = await server.inject(request)
+      expect(response.statusCode).toBe(404) // Now returns 404 for consistency with account-lookup-service
+    })
+
+    it('should return 200 for GET /participants/MSISDN/9998887777/ (trailing slash stripped by Hapi)', async (): Promise<void> => {
+      const request = {
+        method: 'GET',
+        url: '/participants/MSISDN/9998887777/',
+        headers: Headers
+      }
+
+      const response = await server.inject(request)
+      expect(response.statusCode).toBe(200) // Hapi strips trailing slash, request succeeds
+    })
+
+    it('should return 404 for POST /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+      const request = {
+        method: 'POST',
+        url: '/participants/MSISDN/',
+        headers: Headers,
+        payload: MockParticipantsByTypeAndIDPost.payload
+      }
+
+      const response = await server.inject(request)
+      expect(response.statusCode).toBe(404) // Now returns 404 for consistency with account-lookup-service
+    })
+
+    it('should return 404 for PUT /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+      const request = {
+        method: 'PUT',
+        url: '/participants/MSISDN/',
+        headers: Headers,
+        payload: MockParticipantsByTypeAndIDPut.payload
+      }
+
+      const response = await server.inject(request)
+      expect(response.statusCode).toBe(404) // Now returns 404 for consistency with account-lookup-service
+    })
+
+    it('should return 404 for DELETE /participants/MSISDN/ (missing ID - validation error)', async (): Promise<void> => {
+      const request = {
+        method: 'DELETE',
+        url: '/participants/MSISDN/',
+        headers: Headers
+      }
+
+      const response = await server.inject(request)
+      expect(response.statusCode).toBe(404) // Now returns 404 for consistency with account-lookup-service
+    })
+
     it('GET', async (): Promise<void> => {
       const ParticipantsByTypeAndIDGet = jest.spyOn(Handlers, 'ParticipantsByTypeAndIDGet')
       ParticipantsByTypeAndIDGet.mockImplementationOnce((_context: Context, _req: Request, h: ResponseToolkit) =>

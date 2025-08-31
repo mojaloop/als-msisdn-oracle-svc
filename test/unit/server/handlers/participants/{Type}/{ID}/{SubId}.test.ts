@@ -13,7 +13,7 @@ import {
   getParticipantsByTypeAndIDRequestSubId,
   mockPartyMapItemSubId
 } from 'test/data/data'
-import { IDTypeNotSupported } from '~/model/errors'
+// Error imports removed - now testing response format directly
 
 jest.mock('~/shared/logger')
 
@@ -59,13 +59,109 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
+    })
+
+    it('should fail if ID is a placeholder value {ID}', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequestSubId,
+        params: { ...(getParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = '{ID}'
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid ID parameter: {ID}'
+      })
+    })
+
+    it('should fail if SubId is undefined', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequestSubId,
+        params: { ...(getParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      delete req.params.SubId
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
+    })
+
+    it('should fail if SubId is a placeholder value {SubId}', async (): Promise<void> => {
+      const req = { 
+        ...getParticipantsByTypeAndIDRequestSubId,
+        params: { ...(getParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.SubId = '{SubId}'
+
+      const response = await Handler.get(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - Invalid SubId parameter: {SubId}'
+      })
     })
   })
 
   describe('POST Handler', (): void => {
     beforeAll((): void => {
       mockCreatePartyMapItem.mockResolvedValue(undefined)
+    })
+
+    it('should fail if ID is empty', async (): Promise<void> => {
+      const req = { 
+        ...postParticipantsByTypeAndIDRequestSubId,
+        params: { ...(postParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = ''
+
+      const response = await Handler.post(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
     })
 
     it('should return a 201 success code.', async (): Promise<void> => {
@@ -99,13 +195,59 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
     })
   })
 
   describe('PUT Handler', (): void => {
     beforeAll((): void => {
       mockUpdatePartyMapItem.mockResolvedValue()
+    })
+
+    it('should fail if ID is empty', async (): Promise<void> => {
+      const req = { 
+        ...putParticipantsByTypeAndIDRequestSubId,
+        params: { ...(putParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = ''
+
+      const response = await Handler.put(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
+    })
+
+    it('should fail if SubId is empty', async (): Promise<void> => {
+      const req = { 
+        ...putParticipantsByTypeAndIDRequestSubId,
+        params: { ...(putParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.SubId = ''
+
+      const response = await Handler.put(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
     })
 
     it('should return a 200 success code.', async (): Promise<void> => {
@@ -139,13 +281,38 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
     })
   })
 
   describe('DELETE Handler', (): void => {
     beforeAll((): void => {
       mockDeletePartyMapItem.mockResolvedValue()
+    })
+
+    it('should fail if ID is empty', async (): Promise<void> => {
+      const req = { 
+        ...deleteParticipantsByTypeAndIDRequestSubId,
+        params: { ...(deleteParticipantsByTypeAndIDRequestSubId.params as Record<string, any>) }
+      } as unknown as Request
+      req.params.ID = ''
+
+      const response = await Handler.del(
+        {
+          method: req.method,
+          path: req.path,
+          body: req.payload,
+          query: req.query,
+          headers: req.headers
+        },
+        req,
+        h as unknown as ResponseToolkit
+      )
+      expect(response.statusCode).toBe(404)
     })
 
     it('should return a 204 no content code.', async (): Promise<void> => {
@@ -178,7 +345,11 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       )
-      expect(response).toStrictEqual(new IDTypeNotSupported())
+      expect(response.statusCode).toBe(400)
+      expect(response.source).toStrictEqual({
+        errorCode: '3101',
+        errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
+      })
     })
   })
 })
