@@ -23,7 +23,7 @@ defineFeature(feature, (test): void => {
       return server;
     });
 
-    when("I get 'Health Check' response", async (): Promise<ServerInjectResponse> => {
+    when('I get "Health Check" response', async (): Promise<ServerInjectResponse> => {
       const request = {
         method: 'GET',
         url: '/health'
