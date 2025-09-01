@@ -53,9 +53,11 @@
     "migrate:latest": "knex $npm_package_config_knex migrate:latest",
     "migrate:rollback": "knex $npm_package_config_knex migrate:rollback",
     "seed:run": "knex $npm_package_config_knex seed:run",
-    "wait-4-docker": "node ./scripts/_wait4_all.js"
+    "wait-4-docker": "node ./scripts/_wait4_all.js",
+    "echo": "echo 'Error: I SHOULD FAIL LOLOLOLOLOL' && exit 1"
   },
   "pre-commit": [
+    "echo",
     "lint",
     "test",
     "dep:check",
@@ -63,7 +65,7 @@
   ],
   "lint-staged": {
     "./{src,test}/**/*.ts": [
-      "eslint --cache --fix",
+      "npm run lint",
       "prettier --write --ignore-unknown"
     ]
   },
