@@ -29,6 +29,7 @@ defineFeature(feature, (test): void => {
         url: '/health'
       };
       response = await server.inject(request);
+      let s;
       return response;
     });
 
