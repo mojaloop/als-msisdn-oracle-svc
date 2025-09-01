@@ -18,14 +18,14 @@
   ],
   "compilerOptions": {
     "skipLibCheck": true,
-    "target": "es2018",
+    "target": "es2022",
     "module": "commonjs",
     "rootDirs": [
       "src",
       "test"
     ],
     "lib": [
-      "es2015"
+      "es2022"
     ],
     "importHelpers": true,
     "declaration": true,
