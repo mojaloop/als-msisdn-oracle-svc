@@ -25,4 +25,4 @@
 import { Logger } from '@mojaloop/sdk-standard-components';
 
 // default SDKLogger instance
-export const logger = Logger.loggerFactory({ context: 'MSISDN' });
+export const logger = Logger.loggerFactory({ context: 'ORACLE' });

@@ -29,23 +29,22 @@ import Handlers from '../handlers';
 
 const openapiDefinitionPath = path.resolve(__dirname, '../../interface/api.yaml');
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function initialize(): Promise<ServerRegisterPluginObject<any>> {
-    return {
-        plugin: {
-            name: 'openapi',
-            version: '1.0.0',
-            multiple: true,
-            register: function (server: Server, options: { [index: string]: string | object }): void {
-                server.expose('openapi', options.openapi);
-            }
-        },
-        options: {
-            openapi: await Util.OpenapiBackend.initialise(openapiDefinitionPath, Handlers)
-        }
-    };
+  return {
+    plugin: {
+      name: 'openapi',
+      version: '1.0.0',
+      multiple: true,
+      register: function (server: Server, options: { [index: string]: string | object }): void {
+        server.expose('openapi', options.openapi);
+      }
+    },
+    options: {
+      openapi: await Util.OpenapiBackend.initialise(openapiDefinitionPath, Handlers)
+    }
+  };
 }
 
 export default {
-    initialize
+  initialize
 };
