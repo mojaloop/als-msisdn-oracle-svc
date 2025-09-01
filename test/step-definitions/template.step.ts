@@ -29,11 +29,10 @@ defineFeature(feature, (test): void => {
         url: '/health'
       };
       response = await server.inject(request);
-      let s;
       return response;
     });
 
-    then("The status should be 'OK'", (): void => {
+    then('The status should be "OK"', (): void => {
       interface HealthResponse {
         status: string;
         uptime: number;
