@@ -6,21 +6,21 @@ import { IOracleDb, ILogger } from '../domain/types';
 declare module '@hapi/hapi' {
   // Hapi user-extensible type for application specific state
   interface ServerApplicationState {
-    logger: ILogger
-    oracleDB: IOracleDb
+    logger: ILogger;
+    oracleDB: IOracleDb;
     // add other cross-app deps, if needed
   }
 }
 
 export interface ParticipantsTypeIDPostPutRequest {
-  fspId: Schemas.FspId
-  currency?: Schemas.Currency
-  partySubIdOrType?: Schemas.PartySubIdOrType
+  fspId: Schemas.FspId;
+  currency?: Schemas.Currency;
+  partySubIdOrType?: Schemas.PartySubIdOrType;
 }
 
-export type PostParticipantsBulkRequest = Schemas.ParticipantsPostRequest
-export type PostParticipantsBulkResponse = Schemas.ParticipantsIDPutResponse
-export type PartyIdInfo = Schemas.PartyIdInfo
-export type PartyResult = Schemas.PartyResult
+export type PostParticipantsBulkRequest = Schemas.ParticipantsPostRequest;
+export type PostParticipantsBulkResponse = Schemas.ParticipantsIDPutResponse;
+export type PartyIdInfo = Schemas.PartyIdInfo;
+export type PartyResult = Schemas.PartyResult;
 
-export type ErrorInformation = Schemas.ErrorInformation
+export type ErrorInformation = Schemas.ErrorInformation;

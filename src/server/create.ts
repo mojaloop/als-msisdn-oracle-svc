@@ -23,7 +23,7 @@
  ******/
 
 // workaround for lack of typescript types for mojaloop dependencies
- 
+
 /// <reference path="../../ambient.d.ts"/>
 import { validateRoutes } from '@mojaloop/central-services-error-handling';
 import { Request, ResponseToolkit, Server } from '@hapi/hapi';

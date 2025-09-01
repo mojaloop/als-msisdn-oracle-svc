@@ -2,11 +2,11 @@ import { Enums } from '@mojaloop/central-services-error-handling';
 import { ErrorInformation } from '~/interface/types';
 
 export type ErrorResponse = {
-  statusCode: number
-  errorInformation: ErrorInformation
-}
+  statusCode: number;
+  errorInformation: ErrorInformation;
+};
 
-type MlErrorCode = keyof typeof Enums.FSPIOPErrorCodes
+type MlErrorCode = keyof typeof Enums.FSPIOPErrorCodes;
 
 // prettier-ignore
 export const baseErrorResponseDto = (

@@ -1,5 +1,5 @@
-import { ResponseObject } from '@hapi/hapi'
-import { PartyMapItem } from '~/model/MSISDN'
+import { ResponseObject } from '@hapi/hapi';
+import { PartyMapItem } from '~/model/MSISDN';
 
 /*
  * Mock Request Resources
@@ -11,20 +11,20 @@ export const h: Record<string, unknown> = {
         return {
           statusCode: num,
           source: payload
-        } as unknown as ResponseObject
+        } as unknown as ResponseObject;
       }
-    } as unknown as ResponseObject
+    } as unknown as ResponseObject;
   }
-}
+};
 
 export const mockPartyMapItem: PartyMapItem = {
   id: '987654321',
   fspId: 'dfspa'
-}
+};
 
 export const getParticipantsByTypeAndIDResponse: Record<string, unknown> = {
   partyList: [{ fspId: 'dfspa' }]
-}
+};
 
 export const postParticipantsRequest: Record<string, unknown> = {
   method: 'post',
@@ -42,7 +42,7 @@ export const postParticipantsRequest: Record<string, unknown> = {
       }
     ]
   }
-}
+};
 
 export const getParticipantsByTypeAndIDRequest: Record<string, unknown> = {
   method: 'get',
@@ -55,7 +55,7 @@ export const getParticipantsByTypeAndIDRequest: Record<string, unknown> = {
     ID: '987654321',
     Type: 'MSISDN'
   }
-}
+};
 
 export const postParticipantsByTypeAndIDRequest: Record<string, unknown> = {
   method: 'post',
@@ -71,7 +71,7 @@ export const postParticipantsByTypeAndIDRequest: Record<string, unknown> = {
     ID: '987654321',
     Type: 'MSISDN'
   }
-}
+};
 
 export const putParticipantsByTypeAndIDRequest: Record<string, unknown> = {
   method: 'put',
@@ -87,7 +87,7 @@ export const putParticipantsByTypeAndIDRequest: Record<string, unknown> = {
     ID: '987654321',
     Type: 'MSISDN'
   }
-}
+};
 
 export const deleteParticipantsByTypeAndIDRequest: Record<string, unknown> = {
   method: 'delete',
@@ -100,7 +100,7 @@ export const deleteParticipantsByTypeAndIDRequest: Record<string, unknown> = {
     ID: '987654321',
     Type: 'MSISDN'
   }
-}
+};
 
 export const getParticipantsByWrongTypeAndIDRequest: Record<string, unknown> = {
   method: 'get',
@@ -113,7 +113,7 @@ export const getParticipantsByWrongTypeAndIDRequest: Record<string, unknown> = {
     ID: '987654321',
     Type: 'ACCOUNT_ID'
   }
-}
+};
 
 export const postParticipantsByWrongTypeAndIDRequest: Record<string, unknown> = {
   method: 'post',
@@ -129,7 +129,7 @@ export const postParticipantsByWrongTypeAndIDRequest: Record<string, unknown> = 
     ID: '987654321',
     Type: 'ACCOUNT_ID'
   }
-}
+};
 
 export const putParticipantsByWrongTypeAndIDRequest: Record<string, unknown> = {
   method: 'put',
@@ -145,7 +145,7 @@ export const putParticipantsByWrongTypeAndIDRequest: Record<string, unknown> = {
     ID: '987654321',
     Type: 'ACCOUNT_ID'
   }
-}
+};
 
 export const deleteParticipantsByWrongTypeAndIDRequest: Record<string, unknown> = {
   method: 'delete',
@@ -158,7 +158,7 @@ export const deleteParticipantsByWrongTypeAndIDRequest: Record<string, unknown> 
     ID: '987654321',
     Type: 'ACCOUNT_ID'
   }
-}
+};
 
 // SubId
 
@@ -166,11 +166,11 @@ export const mockPartyMapItemSubId: PartyMapItem = {
   id: '987654321',
   subId: 'WORK',
   fspId: 'dfspa'
-}
+};
 
 export const getParticipantsByTypeAndIDResponseSubId: Record<string, unknown> = {
   partyList: [{ fspId: 'dfspa' }]
-}
+};
 
 export const postParticipantsRequestSubId: Record<string, unknown> = {
   method: 'post',
@@ -189,7 +189,7 @@ export const postParticipantsRequestSubId: Record<string, unknown> = {
       }
     ]
   }
-}
+};
 
 export const getParticipantsByTypeAndIDRequestSubId: Record<string, unknown> = {
   method: 'get',
@@ -203,7 +203,7 @@ export const getParticipantsByTypeAndIDRequestSubId: Record<string, unknown> = {
     Type: 'MSISDN',
     SubId: 'WORK'
   }
-}
+};
 
 export const postParticipantsByTypeAndIDRequestSubId: Record<string, unknown> = {
   method: 'post',
@@ -220,7 +220,7 @@ export const postParticipantsByTypeAndIDRequestSubId: Record<string, unknown> = 
     Type: 'MSISDN',
     SubId: 'WORK'
   }
-}
+};
 
 export const putParticipantsByTypeAndIDRequestSubId: Record<string, unknown> = {
   method: 'put',
@@ -237,7 +237,7 @@ export const putParticipantsByTypeAndIDRequestSubId: Record<string, unknown> = {
     Type: 'MSISDN',
     SubId: 'WORK'
   }
-}
+};
 
 export const deleteParticipantsByTypeAndIDRequestSubId: Record<string, unknown> = {
   method: 'delete',
@@ -251,7 +251,7 @@ export const deleteParticipantsByTypeAndIDRequestSubId: Record<string, unknown> 
     Type: 'MSISDN',
     SubId: 'WORK'
   }
-}
+};
 
 export const getParticipantsByWrongTypeAndIDRequestSubId: Record<string, unknown> = {
   method: 'get',
@@ -265,7 +265,7 @@ export const getParticipantsByWrongTypeAndIDRequestSubId: Record<string, unknown
     Type: 'ACCOUNT_ID',
     SubId: 'WORK'
   }
-}
+};
 
 export const postParticipantsByWrongTypeAndIDRequestSubId: Record<string, unknown> = {
   method: 'post',
@@ -282,7 +282,7 @@ export const postParticipantsByWrongTypeAndIDRequestSubId: Record<string, unknow
     Type: 'ACCOUNT_ID',
     SubId: 'WORK'
   }
-}
+};
 
 export const putParticipantsByWrongTypeAndIDRequestSubId: Record<string, unknown> = {
   method: 'put',
@@ -299,7 +299,7 @@ export const putParticipantsByWrongTypeAndIDRequestSubId: Record<string, unknown
     Type: 'ACCOUNT_ID',
     SubId: 'WORK'
   }
-}
+};
 
 export const deleteParticipantsByWrongTypeAndIDRequestSubId: Record<string, unknown> = {
   method: 'delete',
@@ -313,18 +313,18 @@ export const deleteParticipantsByWrongTypeAndIDRequestSubId: Record<string, unkn
     Type: 'ACCOUNT_ID',
     SubId: 'WORK'
   }
-}
+};
 
 export const getHealthRequest: Record<string, unknown> = {
   method: 'get',
   headers: {},
   payload: {},
   params: {}
-}
+};
 
 export const getMetricsRequest: Record<string, unknown> = {
   method: 'get',
   headers: {},
   payload: {},
   params: {}
-}
+};

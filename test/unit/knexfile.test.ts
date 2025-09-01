@@ -1,4 +1,4 @@
-import KnexDatabaseConfig from '../../config/knexfile'
+import KnexDatabaseConfig from '../../config/knexfile';
 
 describe('KnexDatabaseConfig', () => {
   it('should include additional dynamic options in connection config', () => {
@@ -6,7 +6,7 @@ describe('KnexDatabaseConfig', () => {
     const additionalOptions = {
       ssl: { rejectUnauthorized: false },
       customOption: 'customValue'
-    }
+    };
     // Patch the config for test
     const testConfig = {
       ...KnexDatabaseConfig,
@@ -18,10 +18,10 @@ describe('KnexDatabaseConfig', () => {
         database: 'db',
         ...additionalOptions
       }
-    }
-    expect(testConfig.connection.ssl).toEqual({ rejectUnauthorized: false })
-    expect(testConfig.connection.customOption).toBe('customValue')
-  })
+    };
+    expect(testConfig.connection.ssl).toEqual({ rejectUnauthorized: false });
+    expect(testConfig.connection.customOption).toBe('customValue');
+  });
 
   it('should allow any extra property in DbConnection type', () => {
     const conn: import('../../config/knexfile').DbConnection = {
@@ -32,8 +32,8 @@ describe('KnexDatabaseConfig', () => {
       database: 'db',
       extra: 'value',
       another: 123
-    }
-    expect(conn.extra).toBe('value')
-    expect(conn.another).toBe(123)
-  })
-})
+    };
+    expect(conn.extra).toBe('value');
+    expect(conn.another).toBe(123);
+  });
+});
