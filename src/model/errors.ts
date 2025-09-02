@@ -105,6 +105,7 @@ export class MalformedParameterError extends CustomOracleError {
 }
 
 export class DuplicationPartyError extends CustomOracleError {
+  public readonly statusCode = 400;
   public readonly errorCode = Enums.FSPIOPErrorCodes['ADD_PARTY_INFO_ERROR'].code;
   public readonly errorDescription = Enums.FSPIOPErrorCodes['ADD_PARTY_INFO_ERROR'].message;
   public readonly errorInformation = this.makeErrorInformation();
