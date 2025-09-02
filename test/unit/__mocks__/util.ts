@@ -22,16 +22,16 @@
  --------------
  ******/
 
-import { IOracleDb } from '~/domain/types';
-import { logger } from '~/shared/logger';
-import { mockPartyMapItem } from '../../data/data';
+import { IOracleDb } from '~/domain/types'
+import { logger } from '~/shared/logger'
+import { mockPartyMapItem } from '../../data/data'
 
 export default (): object => ({
   inspect: jest.fn((): string => {
-    logger.error('inspect-mock is used');
-    return 'inspected-object';
+    logger.error('inspect-mock is used')
+    return 'inspected-object'
   })
-});
+})
 
 export const createMockOracleDb = ({
   insert = jest.fn(async () => true),
@@ -49,7 +49,7 @@ export const createMockOracleDb = ({
   isConnected,
   isDuplicationError,
   isRetriableError
-});
+})
 // todo: add in-memory db for testing
 
 /* prettier-ignore */
