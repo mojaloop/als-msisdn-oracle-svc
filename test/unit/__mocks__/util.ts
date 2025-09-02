@@ -22,16 +22,16 @@
  --------------
  ******/
 
-import { IOracleDb } from '~/domain/types'
-import { logger } from '~/shared/logger'
-import { mockPartyMapItem } from '../../data/data'
+import { IOracleDb } from '~/domain/types';
+import { logger } from '~/shared/logger';
+import { mockPartyMapItem } from '../../data/data';
 
 export default (): object => ({
   inspect: jest.fn((): string => {
-    console.error('inspect-mock is used')
-    return 'inspected-object'
+    logger.error('inspect-mock is used');
+    return 'inspected-object';
   })
-})
+});
 
 export const createMockOracleDb = ({
   insert = jest.fn(async () => true),
@@ -39,20 +39,22 @@ export const createMockOracleDb = ({
   retrieve = jest.fn(async () => mockPartyMapItem),
   deleteFn = jest.fn(async () => 1),
   isConnected = jest.fn(async () => true),
-  isDuplicationError = jest.fn(() => false)
+  isDuplicationError = jest.fn(() => false),
+  isRetriableError = jest.fn(() => false)
 } = {}): IOracleDb => ({
   insert,
   update,
   retrieve,
   delete: deleteFn,
   isConnected,
-  isDuplicationError
-})
+  isDuplicationError,
+  isRetriableError
+});
 // todo: add in-memory db for testing
 
 /* prettier-ignore */
 export const createMockHapiServer = ({
-   oracleDB = createMockOracleDb(),
+  oracleDB = createMockOracleDb(),
 } = {}) => ({
   app: {
     oracleDB,

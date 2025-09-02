@@ -1,77 +1,48 @@
 import { Request, ResponseToolkit, ResponseObject } from '@hapi/hapi';
 import { Context } from '~/server/plugins';
-import {
-  retrievePartyMapItem,
-  createPartyMapItem,
-  updatePartyMapItem,
-  deletePartyMapItem
-} from '~/domain/participants';
-import { PartyMapItem } from '~/model/MSISDN';
-import { validateParticipantParams } from '~/shared/validation';
+import { createParticipantController } from '~/domain/createParticipantController';
 import * as Types from '~/interface/types';
 
 export async function get(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-  // Validate parameters
-  const validationError = validateParticipantParams(request.params.Type, request.params.ID, h);
-  if (validationError) return validationError;
+  const { Type, ID } = request.params;
 
-  const partyId = request.params.ID;
-  const subId = request.query?.partySubIdOrType;
-  try {
-    const partyMapItem = await retrievePartyMapItem(partyId, subId);
+  const controller = createParticipantController(request.server.app);
+  const { result, statusCode } = await controller.handleGetPartyById(Type, ID);
 
-    const responsePartyMapItem: any = { ...partyMapItem };
-    if (responsePartyMapItem.subId) {
-      responsePartyMapItem.partySubIdOrType = responsePartyMapItem.subId;
-      delete responsePartyMapItem.subId;
-    }
-    return h.response({ partyList: [responsePartyMapItem] }).code(200);
-  } catch {
-    return h.response({ partyList: [] }).code(200);
-  }
+  return h.response(result).code(statusCode);
 }
 
 export async function post(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-  // Validate parameters
-  const validationError = validateParticipantParams(request.params.Type, request.params.ID, h);
-  if (validationError) return validationError;
+  const { Type, ID } = request.params;
 
-  const partyId = request.params.ID;
-  const payload = request.payload as Types.ParticipantsTypeIDPostPutRequest;
-  const partyMapItem: PartyMapItem = {
-    id: partyId,
-    fspId: payload.fspId,
-    subId: payload.partySubIdOrType
-  };
-  const errResult = await createPartyMapItem(partyMapItem);
-  // istanbul ignore next
-  return h.response(errResult).code(!errResult ? 201 : errResult.statusCode);
+  const { result, statusCode } = await createParticipantController(request.server.app).handlePostParty(
+    Type,
+    ID,
+    request.payload as Types.ParticipantsTypeIDPostPutRequest
+  );
+
+  return h.response(result).code(statusCode);
 }
 
 export async function put(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-  // Validate parameters
-  const validationError = validateParticipantParams(request.params.Type, request.params.ID, h);
-  if (validationError) return validationError;
+  const { Type, ID } = request.params;
 
-  const partyId = request.params.ID;
-  const payload = request.payload as Types.ParticipantsTypeIDPostPutRequest;
-  const partyMapItem: PartyMapItem = {
-    id: partyId,
-    fspId: payload.fspId,
-    subId: payload.partySubIdOrType
-  };
-  await updatePartyMapItem(partyMapItem);
-  return h.response().code(200);
+  const { result, statusCode } = await createParticipantController(request.server.app).handlePutParty(
+    Type,
+    ID,
+    request.payload as Types.ParticipantsTypeIDPostPutRequest
+  );
+  // todo: think, if we need to validate payload?
+
+  return h.response(result).code(statusCode);
 }
 
 export async function del(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-  // Validate parameters
-  const validationError = validateParticipantParams(request.params.Type, request.params.ID, h);
-  if (validationError) return validationError;
+  const { Type, ID } = request.params;
 
-  const partyId = request.params.ID;
-  await deletePartyMapItem(partyId);
-  return h.response().code(204);
+  const { result, statusCode } = await createParticipantController(request.server.app).handleDeleteParty(Type, ID);
+
+  return h.response(result).code(statusCode);
 }
 
 export default {

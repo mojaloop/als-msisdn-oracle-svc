@@ -21,47 +21,124 @@
 
  --------------
  ******/
+// istanbul ignore file
 
-export class NotFoundError extends Error {
+import { Enums } from '@mojaloop/central-services-error-handling';
+import { ErrorInformation } from '~/interface/types';
+
+// type MlErrorCode = keyof typeof Enums.FSPIOPErrorCodes;
+type UnknownError = unknown;
+
+export class CustomOracleError extends Error {
+  public readonly statusCode: number = 500;
+  public readonly errorCode: string = '2000'; // ML error code
+  public readonly errorDescription: string = 'Generic server error';
+  public readonly errorInformation: ErrorInformation = this.makeErrorInformation(); // think, how to call it only in base class (CustomOracleError)
+
+  public readonly name = this.constructor.name;
+
+  constructor(message: string, { cause }: { cause?: UnknownError } = {}) {
+    super(message, { cause });
+    Error.captureStackTrace(this, this.constructor);
+  }
+
+  protected makeErrorInformation(): ErrorInformation {
+    const { errorCode, errorDescription } = this;
+    if (!errorCode) throw new Error('errorCode is required!');
+    if (!errorDescription) throw new Error('errorDescription is required!');
+
+    return {
+      errorCode,
+      errorDescription
+      // add extensionList?
+    };
+  }
+}
+
+export class NotFoundError extends CustomOracleError {
   public readonly statusCode = 404;
   public readonly errorCode = '3201'; // FSPIOP ID_NOT_FOUND error code
-  public readonly errorInformation = {
-    errorCode: '3201',
-    errorDescription: 'ID not found'
-  };
+  public readonly errorDescription = 'ID not found';
+  public readonly errorInformation = this.makeErrorInformation();
 
   public constructor(resource: string, id: string) {
     super(`NotFoundError: ${resource} for MSISDN Id ${id}`);
-    this.name = 'NotFoundError';
-    this.errorInformation.errorDescription = `${resource} for MSISDN Id ${id} not found`;
+    this.errorInformation.errorDescription += ` - ${resource} for MSISDN Id ${id} not found`;
   }
 }
 
-export class IDTypeNotSupported extends Error {
+export class IDTypeNotSupported extends CustomOracleError {
   public readonly statusCode = 400;
   public readonly errorCode = '3101'; // FSPIOP MALFORMED_SYNTAX error code
-  public readonly errorInformation = {
-    errorCode: '3101',
-    errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
-  };
+  public readonly errorDescription = 'Malformed syntax';
+  public readonly errorInformation = this.makeErrorInformation();
 
-  public constructor() {
-    super('This service supports only MSISDN ID types');
-    this.name = 'IDTypeNotSupported';
+  public constructor(message: string = 'This service supports only MSISDN ID types') {
+    super(message);
+    this.errorInformation.errorDescription += ` - ${message}`;
   }
 }
 
-export class MalformedParameterError extends Error {
+export class MissingParameterError extends CustomOracleError {
+  public readonly statusCode = 404;
+  public readonly errorCode = '3002';
+  public readonly errorDescription = 'Unknown URI';
+  public readonly errorInformation = this.makeErrorInformation();
+
+  public constructor(message: string) {
+    super(message);
+    this.errorInformation.errorDescription += ` - ${message}`;
+  }
+}
+
+// compare with InvalidIdParameterError
+export class MalformedParameterError extends CustomOracleError {
   public readonly statusCode = 400;
   public readonly errorCode = '3101'; // FSPIOP MALFORMED_SYNTAX error code
-  public readonly errorInformation = {
-    errorCode: '3101',
-    errorDescription: ''
-  };
+  public readonly errorDescription = 'Malformed syntax';
+  public readonly errorInformation = this.makeErrorInformation();
 
-  public constructor(parameter: string, value: string) {
-    super(`Invalid ${parameter} parameter: ${value}. ${parameter} must not be a placeholder value`);
-    this.name = 'MalformedParameterError';
-    this.errorInformation.errorDescription = `Malformed syntax - Invalid ${parameter} parameter: ${value}`;
+  public constructor(message: string) {
+    super(message);
+    this.errorInformation.errorDescription += ` - ${message}`;
+  }
+}
+
+export class DuplicationPartyError extends CustomOracleError {
+  public readonly errorCode = Enums.FSPIOPErrorCodes['ADD_PARTY_INFO_ERROR'].code;
+  public readonly errorDescription = Enums.FSPIOPErrorCodes['ADD_PARTY_INFO_ERROR'].message;
+  public readonly errorInformation = this.makeErrorInformation();
+
+  public constructor(message: string) {
+    super(message);
+    this.errorInformation.errorDescription += ` - ${message}`;
+  }
+}
+
+export class RetriableDbError extends CustomOracleError {
+  public readonly statusCode = 503;
+  public readonly errorCode = '2003';
+  public readonly errorDescription = 'Service currently unavailable';
+  public readonly errorInformation = this.makeErrorInformation();
+
+  constructor(message: string, cause?: UnknownError) {
+    super(message, { cause });
+    if (cause instanceof Error) {
+      this.errorInformation.errorDescription += ` - ${'code' in cause ? cause.code : cause.message}`;
+    }
+  }
+}
+
+export class InternalServerError extends CustomOracleError {
+  public readonly statusCode = 500;
+  public readonly errorCode = '2001';
+  public readonly errorDescription = 'Internal server error';
+  public readonly errorInformation = this.makeErrorInformation();
+
+  constructor(message: string, cause?: UnknownError) {
+    super(message, { cause });
+    if (cause instanceof Error) {
+      this.errorInformation.errorDescription += ` - ${message} [cause: ${cause?.message}]}`;
+    }
   }
 }

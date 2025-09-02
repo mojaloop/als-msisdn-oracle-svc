@@ -31,21 +31,39 @@ import {
   PostParticipantsBulkRequest,
   PostParticipantsBulkResponse,
   PartyResult,
-  ErrorInformation
+  ErrorInformation,
+  PartyTypeIdInfo,
+  ParticipantsTypeIDPostPutRequest
 } from '../interface/types';
-import { ParticipantServiceDeps, PartyMapItem, ILogger } from './types';
+import { ParticipantServiceDeps, PartyMapItem, ILogger, IParticipantService } from './types';
 import { ERROR_MESSAGES } from '~/constants';
+import { DuplicationPartyError } from '~/model/errors';
+import { partyMapItemDto } from '~/shared/dto';
 
-export class ParticipantService {
+export class ParticipantService implements IParticipantService {
   private readonly log: ILogger;
 
   constructor(private readonly deps: ParticipantServiceDeps) {
-    this.log = deps.logger.push({ component: ParticipantService.name });
+    this.log = deps.logger.child({ component: ParticipantService.name });
+  }
+
+  async createPartyMapItem(partyId: string, partyDetails: ParticipantsTypeIDPostPutRequest, subId?: string) {
+    const { oracleDB } = this.deps;
+    try {
+      const item = partyMapItemDto(partyId, partyDetails, subId);
+      const isCreated = await oracleDB.insert(item);
+      this.log.verbose('createPartyMapItem is done: ', { item, isCreated });
+      return isCreated;
+    } catch (err: unknown) {
+      const isDuplication = oracleDB.isDuplicationError(err);
+      this.log[isDuplication ? 'warn' : 'error']('error in createPartyMapItem: ', err);
+      throw isDuplication ? new DuplicationPartyError(`Party already exists [id: ${partyId}]`) : err;
+    }
   }
 
   async bulkCreate(payload: PostParticipantsBulkRequest, source: string): Promise<PostParticipantsBulkResponse> {
     try {
-      const inserting = payload.partyList.map((party) => this.createOneParty(party, source));
+      const inserting = payload.partyList.map((party) => this.createOnePartySafe(party, source));
       const partyList = await Promise.all(inserting);
       this.log.push({ partyList }).verbose('bulkCreate is done');
       return { partyList };
@@ -55,7 +73,32 @@ export class ParticipantService {
     }
   }
 
-  async createOneParty(partyId: PartyIdInfo, source: string): Promise<PartyResult> {
+  async updateParty(partyId: string, partyDetails: ParticipantsTypeIDPostPutRequest, subId?: string) {
+    const item = partyMapItemDto(partyId, partyDetails, subId);
+    return this.deps.oracleDB.update(item);
+  }
+
+  async retrieveOneParty(id: string, subId?: string): Promise<PartyTypeIdInfo> {
+    const partyMapItem = await this.deps.oracleDB.retrieve(id, subId);
+    // if no partyMapItem, NotFoundError will be thrown
+    this.log.debug('retrieve partyMapItem from DB is done: ', { id, subId, partyMapItem });
+
+    const partyInfo: PartyTypeIdInfo = {
+      fspId: partyMapItem.fspId,
+      ...(partyMapItem.subId && { partySubIdOrType: partyMapItem.subId })
+    };
+    this.log.verbose('retrieveOneParty is done: ', { id, subId, partyInfo });
+
+    return partyInfo;
+  }
+
+  async deleteParty(id: string, subId?: string): Promise<number> {
+    return this.deps.oracleDB.delete(id, subId);
+  }
+
+  // find a better method name
+  private async createOnePartySafe(partyId: PartyIdInfo, source: string): Promise<PartyResult> {
+    const { oracleDB } = this.deps;
     const log = this.log.push({ partyId, source });
 
     try {
@@ -76,25 +119,23 @@ export class ParticipantService {
         throw new Error(errMessage);
       }
 
-      await this.deps.oracleDB.insert(item);
-      log.debug('createOneParty is done');
+      await oracleDB.insert(item);
+      log.debug('createOneParty is done: ', { item });
 
       return { partyId };
     } catch (err: unknown) {
-      const errorInformation = this.formatErrorInfo();
+      const errorInformation = this.formatErrorInfo(err);
       log.error('error in createOneParty', err);
       return { partyId, errorInformation };
     }
   }
 
-  formatErrorInfo(): ErrorInformation {
+  formatErrorInfo(err: unknown): ErrorInformation {
     // todo: think, if we need to get some details from actual error
     const { code, message } = Enums.FSPIOPErrorCodes['ADD_PARTY_INFO_ERROR'];
     return {
       errorCode: code,
-      errorDescription: message
+      errorDescription: err instanceof Error ? `${message} - ${err.message}` : message
     };
   }
-
-  // todo: move all methods from  /.participants here
 }
