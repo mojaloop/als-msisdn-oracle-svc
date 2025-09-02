@@ -21,15 +21,15 @@
 
  --------------
  ******/
-import Config from '~/shared/config';
-import server from '~/server';
-jest.mock('~/server');
+import Config from '~/shared/config'
+import server from '~/server'
+jest.mock('~/server')
 
 // TODO: fix this test!
 describe('cli', (): void => {
   it('should use default port & host', async (): Promise<void> => {
-    const cli = await import('~/cli');
-    expect(cli).toBeDefined();
+    const cli = await import('~/cli')
+    expect(cli).toBeDefined()
     expect(server.run).toHaveBeenCalledWith(
       expect.objectContaining({
         PORT: Config.PORT,
@@ -40,6 +40,6 @@ describe('cli', (): void => {
           COLOR: true
         }
       })
-    );
-  });
-});
+    )
+  })
+})

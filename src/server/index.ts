@@ -22,8 +22,8 @@
  --------------
  ******/
 
-import run from './run';
+import run from './run'
 
 export default {
   run
-};
+}
