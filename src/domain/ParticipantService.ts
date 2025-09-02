@@ -25,19 +25,17 @@ optionally within square brackets <email>.
 * Eugen Klymniuk <eugen.klymniuk@infitx.com>
 *****/
 
-import { Enums } from '@mojaloop/central-services-error-handling';
 import {
   PartyIdInfo,
   PostParticipantsBulkRequest,
   PostParticipantsBulkResponse,
   PartyResult,
-  ErrorInformation,
   PartyTypeIdInfo,
   ParticipantsTypeIDPostPutRequest
 } from '../interface/types';
 import { ParticipantServiceDeps, PartyMapItem, ILogger, IParticipantService } from './types';
 import { ERROR_MESSAGES } from '~/constants';
-import { DuplicationPartyError } from '~/model/errors';
+import { AddPartyInfoError, DuplicationPartyError } from '~/model/errors';
 import { partyMapItemDto } from '~/shared/dto';
 
 export class ParticipantService implements IParticipantService {
@@ -124,18 +122,10 @@ export class ParticipantService implements IParticipantService {
 
       return { partyId };
     } catch (err: unknown) {
-      const errorInformation = this.formatErrorInfo(err);
-      log.error('error in createOneParty', err);
+      const errMessage = 'error in createOneParty: ';
+      log.warn(errMessage, err);
+      const { errorInformation } = new AddPartyInfoError(err instanceof Error ? err.message : errMessage);
       return { partyId, errorInformation };
     }
-  }
-
-  formatErrorInfo(err: unknown): ErrorInformation {
-    // todo: think, if we need to get some details from actual error
-    const { code, message } = Enums.FSPIOPErrorCodes['ADD_PARTY_INFO_ERROR'];
-    return {
-      errorCode: code,
-      errorDescription: err instanceof Error ? `${message} - ${err.message}` : message
-    };
   }
 }

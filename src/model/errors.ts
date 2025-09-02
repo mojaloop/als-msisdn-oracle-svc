@@ -63,26 +63,6 @@ export class NotFoundError extends CustomOracleError {
   }
 }
 
-export class IDTypeNotSupported extends CustomOracleError {
-  public readonly statusCode = 400;
-  public readonly errorInformation = this.makeErrorInfo('MALFORMED_SYNTAX');
-
-  public constructor(message: string = 'This service supports only MSISDN ID types') {
-    super(message);
-    this.errorInformation.errorDescription += ` - ${message}`;
-  }
-}
-
-export class MissingParameterError extends CustomOracleError {
-  public readonly statusCode = 400;
-  public readonly errorInformation = this.makeErrorInfo('MALFORMED_SYNTAX');
-
-  public constructor(message: string) {
-    super(message);
-    this.errorInformation.errorDescription += ` - ${message}`;
-  }
-}
-
 export class MalformedParameterError extends CustomOracleError {
   public readonly statusCode = 400;
   public readonly errorInformation = this.makeErrorInfo('MALFORMED_SYNTAX');
@@ -93,7 +73,19 @@ export class MalformedParameterError extends CustomOracleError {
   }
 }
 
-export class DuplicationPartyError extends CustomOracleError {
+export class MissingParameterError extends MalformedParameterError {}
+
+export class IDTypeNotSupported extends CustomOracleError {
+  public readonly statusCode = 400;
+  public readonly errorInformation = this.makeErrorInfo('MALFORMED_SYNTAX');
+
+  public constructor(message: string = 'This service supports only MSISDN ID types') {
+    super(message);
+    this.errorInformation.errorDescription += ` - ${message}`;
+  }
+}
+
+export class AddPartyInfoError extends CustomOracleError {
   public readonly statusCode = 400;
   public readonly errorInformation = this.makeErrorInfo('ADD_PARTY_INFO_ERROR');
 
@@ -102,6 +94,8 @@ export class DuplicationPartyError extends CustomOracleError {
     this.errorInformation.errorDescription += ` - ${message}`;
   }
 }
+
+export class DuplicationPartyError extends AddPartyInfoError {}
 
 export class RetriableDbError extends CustomOracleError {
   public readonly statusCode = 503;
