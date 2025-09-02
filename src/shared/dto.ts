@@ -1,6 +1,6 @@
-import { Enums } from '@mojaloop/central-services-error-handling';
-import { ErrorInformation, ParticipantsTypeIDPostPutRequest } from '~/interface/types';
-import { PartyMapItem } from '~/domain/types';
+import { Enums } from '@mojaloop/central-services-error-handling'
+import { ErrorInformation, ParticipantsTypeIDPostPutRequest } from '~/interface/types'
+import { PartyMapItem } from '~/domain/types'
 
 export const partyMapItemDto = (
   partyId: string,
@@ -11,15 +11,15 @@ export const partyMapItemDto = (
   fspId: partyDetails.fspId,
   subId: subId || partyDetails.partySubIdOrType
   // todo: clarify which subId to use in case of POST-PUT /participants/{Type}/{ID}/{SubId} - from params or from body?
-});
+})
 
 // compare with ControllerResponse<T = ResponseValue> type
 export type ErrorResponse = {
-  statusCode: number;
-  errorInformation: ErrorInformation;
-};
+  statusCode: number
+  errorInformation: ErrorInformation
+}
 
-type MlErrorCode = keyof typeof Enums.FSPIOPErrorCodes;
+type MlErrorCode = keyof typeof Enums.FSPIOPErrorCodes
 
 // prettier-ignore
 export const baseErrorResponseDto = (

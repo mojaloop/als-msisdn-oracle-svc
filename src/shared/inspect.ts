@@ -21,14 +21,14 @@
 
  --------------
  ******/
-import util from 'util';
-import config from './config';
+import util from 'util'
+import config from './config'
 
 export const defaults = {
   SHOW_HIDDEN: false,
   DEPTH: 5,
   COLOR: true
-};
+}
 
 export default function inspect(subject: any): string {
   return util.inspect(
@@ -36,5 +36,5 @@ export default function inspect(subject: any): string {
     (config.INSPECT && config.INSPECT.SHOW_HIDDEN) || defaults.SHOW_HIDDEN,
     (config.INSPECT && config.INSPECT.DEPTH) || defaults.DEPTH,
     (config.INSPECT && config.INSPECT.COLOR) || defaults.COLOR
-  );
+  )
 }
