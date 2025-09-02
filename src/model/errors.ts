@@ -26,15 +26,12 @@
 import { Enums } from '@mojaloop/central-services-error-handling';
 import { ErrorInformation } from '~/interface/types';
 
-// type MlErrorCode = keyof typeof Enums.FSPIOPErrorCodes;
+type MlErrorCode = keyof typeof Enums.FSPIOPErrorCodes;
 type UnknownError = unknown;
 
 export class CustomOracleError extends Error {
   public readonly statusCode: number = 500;
-  public readonly errorCode: string = '2000'; // ML error code
-  public readonly errorDescription: string = 'Generic server error';
-  public readonly errorInformation: ErrorInformation = this.makeErrorInformation(); // think, how to call it only in base class (CustomOracleError)
-
+  public readonly errorInformation: ErrorInformation = this.makeErrorInfo('SERVER_ERROR');
   public readonly name = this.constructor.name;
 
   constructor(message: string, { cause }: { cause?: UnknownError } = {}) {
@@ -42,8 +39,9 @@ export class CustomOracleError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 
-  protected makeErrorInformation(): ErrorInformation {
-    const { errorCode, errorDescription } = this;
+  protected makeErrorInfo(mlErrCode: MlErrorCode): ErrorInformation {
+    const { code: errorCode, message: errorDescription } = Enums.FSPIOPErrorCodes[mlErrCode] || {};
+
     if (!errorCode) throw new Error('errorCode is required!');
     if (!errorDescription) throw new Error('errorDescription is required!');
 
@@ -57,9 +55,7 @@ export class CustomOracleError extends Error {
 
 export class NotFoundError extends CustomOracleError {
   public readonly statusCode = 404;
-  public readonly errorCode = '3201'; // FSPIOP ID_NOT_FOUND error code
-  public readonly errorDescription = 'ID not found';
-  public readonly errorInformation = this.makeErrorInformation();
+  public readonly errorInformation = this.makeErrorInfo('ID_NOT_FOUND');
 
   public constructor(resource: string, id: string) {
     super(`NotFoundError: ${resource} for MSISDN Id ${id}`);
@@ -69,9 +65,7 @@ export class NotFoundError extends CustomOracleError {
 
 export class IDTypeNotSupported extends CustomOracleError {
   public readonly statusCode = 400;
-  public readonly errorCode = '3101'; // FSPIOP MALFORMED_SYNTAX error code
-  public readonly errorDescription = 'Malformed syntax';
-  public readonly errorInformation = this.makeErrorInformation();
+  public readonly errorInformation = this.makeErrorInfo('MALFORMED_SYNTAX');
 
   public constructor(message: string = 'This service supports only MSISDN ID types') {
     super(message);
@@ -80,10 +74,8 @@ export class IDTypeNotSupported extends CustomOracleError {
 }
 
 export class MissingParameterError extends CustomOracleError {
-  public readonly statusCode = 404;
-  public readonly errorCode = '3002';
-  public readonly errorDescription = 'Unknown URI';
-  public readonly errorInformation = this.makeErrorInformation();
+  public readonly statusCode = 400;
+  public readonly errorInformation = this.makeErrorInfo('MALFORMED_SYNTAX');
 
   public constructor(message: string) {
     super(message);
@@ -91,12 +83,9 @@ export class MissingParameterError extends CustomOracleError {
   }
 }
 
-// compare with InvalidIdParameterError
 export class MalformedParameterError extends CustomOracleError {
   public readonly statusCode = 400;
-  public readonly errorCode = '3101'; // FSPIOP MALFORMED_SYNTAX error code
-  public readonly errorDescription = 'Malformed syntax';
-  public readonly errorInformation = this.makeErrorInformation();
+  public readonly errorInformation = this.makeErrorInfo('MALFORMED_SYNTAX');
 
   public constructor(message: string) {
     super(message);
@@ -106,9 +95,7 @@ export class MalformedParameterError extends CustomOracleError {
 
 export class DuplicationPartyError extends CustomOracleError {
   public readonly statusCode = 400;
-  public readonly errorCode = Enums.FSPIOPErrorCodes['ADD_PARTY_INFO_ERROR'].code;
-  public readonly errorDescription = Enums.FSPIOPErrorCodes['ADD_PARTY_INFO_ERROR'].message;
-  public readonly errorInformation = this.makeErrorInformation();
+  public readonly errorInformation = this.makeErrorInfo('ADD_PARTY_INFO_ERROR');
 
   public constructor(message: string) {
     super(message);
@@ -118,9 +105,7 @@ export class DuplicationPartyError extends CustomOracleError {
 
 export class RetriableDbError extends CustomOracleError {
   public readonly statusCode = 503;
-  public readonly errorCode = '2003';
-  public readonly errorDescription = 'Service currently unavailable';
-  public readonly errorInformation = this.makeErrorInformation();
+  public readonly errorInformation = this.makeErrorInfo('SERVICE_CURRENTLY_UNAVAILABLE');
 
   constructor(message: string, cause?: UnknownError) {
     super(message, { cause });
@@ -132,9 +117,7 @@ export class RetriableDbError extends CustomOracleError {
 
 export class InternalServerError extends CustomOracleError {
   public readonly statusCode = 500;
-  public readonly errorCode = '2001';
-  public readonly errorDescription = 'Internal server error';
-  public readonly errorInformation = this.makeErrorInformation();
+  public readonly errorInformation = this.makeErrorInfo('INTERNAL_SERVER_ERROR');
 
   constructor(message: string, cause?: UnknownError) {
     super(message, { cause });

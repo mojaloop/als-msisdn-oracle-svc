@@ -44,7 +44,7 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
       mockRetrievePartyMapItem.mockResolvedValue(mockPartyMapItem);
     });
 
-    it('should return 404 if ID is empty string', async (): Promise<void> => {
+    it('should return 400 if ID is empty string', async (): Promise<void> => {
       const req = mockHapiRequest({
         ...getParticipantsByTypeAndIDRequest,
         params: { ...(getParticipantsByTypeAndIDRequest.params as Record<string, any>) }
@@ -62,10 +62,10 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       );
-      expect(response.statusCode).toBe(404);
+      expect(response.statusCode).toBe(400);
     });
 
-    it('should return 404 if ID is undefined', async (): Promise<void> => {
+    it('should return 400 if ID is undefined', async (): Promise<void> => {
       const req = mockHapiRequest({
         ...getParticipantsByTypeAndIDRequest,
         params: { ...(getParticipantsByTypeAndIDRequest.params as Record<string, any>) }
@@ -83,7 +83,7 @@ describe('server/handler/participants/{Type}/{ID}', (): void => {
         req,
         h as unknown as ResponseToolkit
       );
-      expect(response.statusCode).toBe(404);
+      expect(response.statusCode).toBe(400);
     });
 
     it('should return a 200 success code.', async (): Promise<void> => {

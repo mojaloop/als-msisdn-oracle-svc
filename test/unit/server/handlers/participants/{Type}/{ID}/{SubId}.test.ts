@@ -121,7 +121,7 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       );
-      expect(response.statusCode).toBe(404);
+      expect(response.statusCode).toBe(400);
     });
 
     it('should fail if SubId is a placeholder value {SubId}', async (): Promise<void> => {
@@ -172,7 +172,7 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       );
-      expect(response.statusCode).toBe(404);
+      expect(response.statusCode).toBe(400);
     });
 
     it('should return a 201 success code.', async (): Promise<void> => {
@@ -236,7 +236,7 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       );
-      expect(response.statusCode).toBe(404);
+      expect(response.statusCode).toBe(400);
     });
 
     it('should fail if SubId is empty', async (): Promise<void> => {
@@ -257,7 +257,7 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       );
-      expect(response.statusCode).toBe(404);
+      expect(response.statusCode).toBe(400);
     });
 
     it('should return a 200 success code.', async (): Promise<void> => {
@@ -321,7 +321,7 @@ describe('server/handler/participants/{Type}/{ID}/{SubId}', (): void => {
         req,
         h as unknown as ResponseToolkit
       );
-      expect(response.statusCode).toBe(404);
+      expect(response.statusCode).toBe(400);
     });
 
     it('should return a 204 no content code.', async (): Promise<void> => {
