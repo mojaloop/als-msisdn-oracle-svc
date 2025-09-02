@@ -22,9 +22,9 @@
  --------------
  ******/
 
-import PACKAGE from '../../package.json';
-import Config, { ServiceConfig } from '../../config/serviceConfig';
-import { DatabaseConfig } from '../../config/knexfile';
+import PACKAGE from '../../package.json'
+import Config, { ServiceConfig } from '../../config/serviceConfig'
+import { DatabaseConfig } from '../../config/knexfile'
 
-export default Config;
-export { PACKAGE, ServiceConfig, DatabaseConfig };
+export default Config
+export { PACKAGE, ServiceConfig, DatabaseConfig }

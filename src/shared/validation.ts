@@ -22,8 +22,8 @@
  --------------
  ******/
 
-import { ResponseToolkit, ResponseObject } from '@hapi/hapi';
-import { IDTypeNotSupported, MalformedParameterError } from '~/model/errors';
+import { ResponseToolkit, ResponseObject } from '@hapi/hapi'
+import { IDTypeNotSupported, MalformedParameterError } from '~/model/errors'
 
 /**
  * Validates that the Type parameter is MSISDN
@@ -33,10 +33,10 @@ import { IDTypeNotSupported, MalformedParameterError } from '~/model/errors';
  */
 export function validateTypeIsMSISDN(type: string, h: ResponseToolkit): ResponseObject | undefined {
   if (type !== 'MSISDN') {
-    const error = new IDTypeNotSupported();
-    return h.response(error.errorInformation).code(error.statusCode);
+    const error = new IDTypeNotSupported()
+    return h.response(error.errorInformation).code(error.statusCode)
   }
-  return undefined;
+  return undefined
 }
 
 /**
@@ -60,16 +60,16 @@ export function validateParameter(
           errorDescription: `Unknown URI - ${paramName} parameter is missing`
         }
       })
-      .code(404);
+      .code(404)
   }
 
   // Check if parameter is a placeholder value
   if (paramValue === `{${paramName}}` || paramValue.includes('{') || paramValue.includes('}')) {
-    const error = new MalformedParameterError(paramName, paramValue);
-    return h.response(error.errorInformation).code(error.statusCode);
+    const error = new MalformedParameterError(paramName, paramValue)
+    return h.response(error.errorInformation).code(error.statusCode)
   }
 
-  return undefined;
+  return undefined
 }
 
 /**
@@ -85,14 +85,14 @@ export function validateParticipantParams(
   h: ResponseToolkit
 ): ResponseObject | undefined {
   // First validate Type
-  const typeError = validateTypeIsMSISDN(type, h);
-  if (typeError) return typeError;
+  const typeError = validateTypeIsMSISDN(type, h)
+  if (typeError) return typeError
 
   // Then validate ID
-  const idError = validateParameter('ID', id, h);
-  if (idError) return idError;
+  const idError = validateParameter('ID', id, h)
+  if (idError) return idError
 
-  return undefined;
+  return undefined
 }
 
 /**
@@ -110,12 +110,12 @@ export function validateParticipantSubIdParams(
   h: ResponseToolkit
 ): ResponseObject | undefined {
   // First validate Type and ID
-  const baseError = validateParticipantParams(type, id, h);
-  if (baseError) return baseError;
+  const baseError = validateParticipantParams(type, id, h)
+  if (baseError) return baseError
 
   // Then validate SubId
-  const subIdError = validateParameter('SubId', subId, h);
-  if (subIdError) return subIdError;
+  const subIdError = validateParameter('SubId', subId, h)
+  if (subIdError) return subIdError
 
-  return undefined;
+  return undefined
 }

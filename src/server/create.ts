@@ -25,11 +25,11 @@
 // workaround for lack of typescript types for mojaloop dependencies
 
 /// <reference path="../../ambient.d.ts"/>
-import { validateRoutes } from '@mojaloop/central-services-error-handling';
-import { Request, ResponseToolkit, Server } from '@hapi/hapi';
-import { ParticipantServiceDeps } from '../domain/types';
-import { ServiceConfig } from '../shared/config';
-import onValidateFail from './handlers/onValidateFail';
+import { validateRoutes } from '@mojaloop/central-services-error-handling'
+import { Request, ResponseToolkit, Server } from '@hapi/hapi'
+import { ParticipantServiceDeps } from '../domain/types'
+import { ServiceConfig } from '../shared/config'
+import onValidateFail from './handlers/onValidateFail'
 
 export default async function create(config: ServiceConfig, deps: ParticipantServiceDeps): Promise<Server> {
   const server: Server = new Server({
@@ -39,13 +39,13 @@ export default async function create(config: ServiceConfig, deps: ParticipantSer
       validate: {
         options: validateRoutes(),
         failAction: (_req: Request, _h: ResponseToolkit, err?: Error) => {
-          return onValidateFail(deps.logger, err);
+          return onValidateFail(deps.logger, err)
         }
       }
     }
-  });
+  })
 
-  Object.assign(server.app, deps);
+  Object.assign(server.app, deps)
 
-  return server;
+  return server
 }
