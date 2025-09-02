@@ -6,7 +6,7 @@ import globals from "globals";
 
 export default [
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['**/*.ts'],
     languageOptions: {
         parser: tsParser,
         ecmaVersion: 'latest',
@@ -24,7 +24,6 @@ export default [
         indent: ["error", 2, {
             SwitchCase: 1,
         }],
-
         "linebreak-style": [2, "unix"],
         quotes: [2, "single"],
         "no-console": 2,

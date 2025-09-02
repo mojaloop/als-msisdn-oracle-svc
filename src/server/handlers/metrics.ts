@@ -27,11 +27,11 @@ import { Context } from '../plugins';
 import { Request, ResponseToolkit, ResponseObject } from '@hapi/hapi';
 
 async function get(_context: Context, _: Request, h: ResponseToolkit): Promise<ResponseObject> {
-    const metrics = await Metrics.getMetricsForPrometheus();
-    // todo: fix it, coz metrics is empty now
-    return h.response(metrics).code(200);
+  const metrics = await Metrics.getMetricsForPrometheus();
+  // todo: fix it, coz metrics is empty now
+  return h.response(metrics).code(200);
 }
 
 export default {
-    get
+  get
 };

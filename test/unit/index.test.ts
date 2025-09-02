@@ -62,12 +62,16 @@ jest.mock('~/server/handlers', () => ({
   ),
   // Include the custom notFound handler that returns 404
   notFound: jest.fn((_context: Context, _req: Request, h: ResponseToolkit) =>
-    Promise.resolve(h.response({
-      errorInformation: {
-        errorCode: '3002',
-        errorDescription: 'Unknown URI'
-      }
-    }).code(404))
+    Promise.resolve(
+      h
+        .response({
+          errorInformation: {
+            errorCode: '3002',
+            errorDescription: 'Unknown URI'
+          }
+        })
+        .code(404)
+    )
   ),
   // Include other default handlers from central-services-shared
   validationFail: jest.fn(),

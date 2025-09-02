@@ -27,7 +27,6 @@
 // This is required so that once we compile to js
 // the js `require()` can resolve the '~' paths
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 require('module-alias/register');
 
 import { Command } from 'commander';
@@ -41,14 +40,14 @@ const program = new Command(PACKAGE.name);
 // when unit tests are run commander runs process.exit on unknown option in jest's command line
 program.exitOverride();
 try {
-    program
-        .version(PACKAGE.version)
-        .description('als-msisdn-oracle-svc cli')
-        .option('-p, --port <number>', 'listen on port', Config.PORT.toString())
-        .option('-H, --host <string>', 'listen on host', Config.HOST)
-        .parse(process.argv);
+  program
+    .version(PACKAGE.version)
+    .description('als-msisdn-oracle-svc cli')
+    .option('-p, --port <number>', 'listen on port', Config.PORT.toString())
+    .option('-H, --host <string>', 'listen on host', Config.HOST)
+    .parse(process.argv);
 } catch (err) {
-    logger.error('error on program parsing process.argv', err);
+  logger.error('error on program parsing process.argv', err);
 }
 
 // overload Config with script parameters

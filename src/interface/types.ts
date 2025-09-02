@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-import { Schemas } from '@mojaloop/api-snippets/lib/fspiop/v1_1';
-import { IOracleDb, ILogger } from '../domain/types';
+import { Schemas } from '@mojaloop/api-snippets/lib/fspiop/v1_1'
+import { IOracleDb, ILogger } from '../domain/types'
 
 declare module '@hapi/hapi' {
   // Hapi user-extensible type for application specific state

@@ -23,45 +23,45 @@
  ******/
 
 export class NotFoundError extends Error {
-  public readonly statusCode = 404;
-  public readonly errorCode = '3201'; // FSPIOP ID_NOT_FOUND error code
+  public readonly statusCode = 404
+  public readonly errorCode = '3201' // FSPIOP ID_NOT_FOUND error code
   public readonly errorInformation = {
     errorCode: '3201',
     errorDescription: 'ID not found'
-  };
+  }
 
   public constructor(resource: string, id: string) {
-    super(`NotFoundError: ${resource} for MSISDN Id ${id}`);
-    this.name = 'NotFoundError';
-    this.errorInformation.errorDescription = `${resource} for MSISDN Id ${id} not found`;
+    super(`NotFoundError: ${resource} for MSISDN Id ${id}`)
+    this.name = 'NotFoundError'
+    this.errorInformation.errorDescription = `${resource} for MSISDN Id ${id} not found`
   }
 }
 
 export class IDTypeNotSupported extends Error {
-  public readonly statusCode = 400;
-  public readonly errorCode = '3101'; // FSPIOP MALFORMED_SYNTAX error code
+  public readonly statusCode = 400
+  public readonly errorCode = '3101' // FSPIOP MALFORMED_SYNTAX error code
   public readonly errorInformation = {
     errorCode: '3101',
     errorDescription: 'Malformed syntax - This service supports only MSISDN ID types'
-  };
+  }
 
   public constructor() {
-    super('This service supports only MSISDN ID types');
-    this.name = 'IDTypeNotSupported';
+    super('This service supports only MSISDN ID types')
+    this.name = 'IDTypeNotSupported'
   }
 }
 
 export class MalformedParameterError extends Error {
-  public readonly statusCode = 400;
-  public readonly errorCode = '3101'; // FSPIOP MALFORMED_SYNTAX error code
+  public readonly statusCode = 400
+  public readonly errorCode = '3101' // FSPIOP MALFORMED_SYNTAX error code
   public readonly errorInformation = {
     errorCode: '3101',
     errorDescription: ''
-  };
+  }
 
   public constructor(parameter: string, value: string) {
-    super(`Invalid ${parameter} parameter: ${value}. ${parameter} must not be a placeholder value`);
-    this.name = 'MalformedParameterError';
-    this.errorInformation.errorDescription = `Malformed syntax - Invalid ${parameter} parameter: ${value}`;
+    super(`Invalid ${parameter} parameter: ${value}. ${parameter} must not be a placeholder value`)
+    this.name = 'MalformedParameterError'
+    this.errorInformation.errorDescription = `Malformed syntax - Invalid ${parameter} parameter: ${value}`
   }
 }

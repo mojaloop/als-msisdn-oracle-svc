@@ -34,27 +34,29 @@ const OpenapiBackend = Util.OpenapiBackend;
 
 // Custom notFound handler that returns 404 for consistency with account-lookup-service
 const customNotFound = async (_context: Context, _request: Request, h: ResponseToolkit) => {
-    return h.response({
-        errorInformation: {
-            errorCode: '3002',
-            errorDescription: 'Unknown URI'
-        }
-    }).code(404);
+  return h
+    .response({
+      errorInformation: {
+        errorCode: '3002',
+        errorDescription: 'Unknown URI'
+      }
+    })
+    .code(404);
 };
 
 export default {
-    HealthGet: Health.get,
-    MetricsGet: Metrics.get,
-    validationFail: OpenapiBackend.validationFail,
-    notFound: customNotFound,
-    methodNotAllowed: OpenapiBackend.methodNotAllowed,
-    ParticipantsPost: handlePostBulk,
-    ParticipantsByTypeAndIDGet: ParticipantsTypeId.get,
-    ParticipantsByTypeAndIDPost: ParticipantsTypeId.post,
-    ParticipantsByTypeAndIDPut: ParticipantsTypeId.put,
-    ParticipantsByTypeAndIDDelete: ParticipantsTypeId.del,
-    ParticipantsSubIdByTypeAndIDGet: ParticipantsTypeIdSubId.get,
-    ParticipantsSubIdByTypeAndIDPost: ParticipantsTypeIdSubId.post,
-    ParticipantsSubIdByTypeAndIDPut: ParticipantsTypeIdSubId.put,
-    ParticipantsSubIdByTypeAndIDDelete: ParticipantsTypeIdSubId.del
+  HealthGet: Health.get,
+  MetricsGet: Metrics.get,
+  validationFail: OpenapiBackend.validationFail,
+  notFound: customNotFound,
+  methodNotAllowed: OpenapiBackend.methodNotAllowed,
+  ParticipantsPost: handlePostBulk,
+  ParticipantsByTypeAndIDGet: ParticipantsTypeId.get,
+  ParticipantsByTypeAndIDPost: ParticipantsTypeId.post,
+  ParticipantsByTypeAndIDPut: ParticipantsTypeId.put,
+  ParticipantsByTypeAndIDDelete: ParticipantsTypeId.del,
+  ParticipantsSubIdByTypeAndIDGet: ParticipantsTypeIdSubId.get,
+  ParticipantsSubIdByTypeAndIDPost: ParticipantsTypeIdSubId.post,
+  ParticipantsSubIdByTypeAndIDPut: ParticipantsTypeIdSubId.put,
+  ParticipantsSubIdByTypeAndIDDelete: ParticipantsTypeIdSubId.del
 };
