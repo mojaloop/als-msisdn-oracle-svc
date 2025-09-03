@@ -1,5 +1,6 @@
 'use strict'
 import { Knex } from 'knex'
+import { logger } from '~/shared/logger'
 
 export const msisdns = [
   {
@@ -16,8 +17,12 @@ export const msisdns = [
   }
 ]
 
-export function seed(knex: Knex): Promise<Knex.QueryBuilder<number[]>> {
+export function seed(knex: Knex): Promise<number[] | void> {
   return knex('oracleMSISDN')
-    .del()
     .then(() => knex('oracleMSISDN').insert(msisdns))
+    .then((data) => {
+      logger.info('seed is done: ', { data })
+      return data
+    })
+    .catch(err => { logger.error('error in seed: ', err) })
 }
