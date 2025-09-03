@@ -35,7 +35,7 @@ import {
 } from '../interface/types'
 import { ParticipantServiceDeps, PartyMapItem, ILogger, IParticipantService } from './types'
 import { ERROR_MESSAGES } from '~/constants'
-import { AddPartyInfoError, DuplicationPartyError } from '~/model/errors'
+import { AddPartyInfoError, DuplicationPartyError, NotFoundError } from '~/model/errors'
 import { partyMapItemDto } from '~/shared/dto'
 
 export class ParticipantService implements IParticipantService {
@@ -76,18 +76,27 @@ export class ParticipantService implements IParticipantService {
     return this.deps.oracleDB.update(item)
   }
 
-  async retrieveOneParty(id: string, subId?: string): Promise<PartyTypeIdInfo> {
-    const partyMapItem = await this.deps.oracleDB.retrieve(id, subId)
-    // if no partyMapItem, NotFoundError will be thrown
-    this.log.debug('retrieve partyMapItem from DB is done: ', { id, subId, partyMapItem })
+  async retrieveOneParty(id: string, subId?: string): Promise<PartyTypeIdInfo | null> {
+    const log = this.log.child({ id, subId } as any)
+    try {
+      const partyMapItem = await this.deps.oracleDB.retrieve(id, subId)
+      // if no partyMapItem, NotFoundError will be thrown
+      log.debug('retrieve partyMapItem from DB is done: ', { partyMapItem })
 
-    const partyInfo: PartyTypeIdInfo = {
-      fspId: partyMapItem.fspId,
-      ...(partyMapItem.subId && { partySubIdOrType: partyMapItem.subId })
+      const partyInfo: PartyTypeIdInfo = {
+        fspId: partyMapItem.fspId,
+        ...(partyMapItem.subId && { partySubIdOrType: partyMapItem.subId })
+      }
+      log.verbose('retrieveOneParty is done: ', { partyInfo })
+
+      return partyInfo
+    } catch (err: unknown) {
+      if (err instanceof NotFoundError) {
+        log.verbose('retrieveOneParty is done - no party found')
+        return null
+      }
+      throw err
     }
-    this.log.verbose('retrieveOneParty is done: ', { id, subId, partyInfo })
-
-    return partyInfo
   }
 
   async deleteParty(id: string, subId?: string): Promise<number> {

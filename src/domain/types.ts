@@ -55,7 +55,7 @@ export type IParticipantService = {
   bulkCreate(payload: PostParticipantsBulkRequest, source: string): Promise<PostParticipantsBulkResponse>
   createPartyMapItem(id: string, payload: ParticipantsTypeIDPostPutRequest, subId?: string): Promise<boolean>
   updateParty(id: string, partyDetails: ParticipantsTypeIDPostPutRequest, subId?: string): Promise<number>
-  retrieveOneParty(id: string, subId?: string): Promise<PartyTypeIdInfo> // or null ?
+  retrieveOneParty(id: string, subId?: string): Promise<PartyTypeIdInfo | null>
   deleteParty(id: string, subId?: string): Promise<number>
 }
 

@@ -38,9 +38,9 @@ export class ParticipantController implements IParticipantController {
         : this.validateRequestParamsWithSubId(partyType, partyId, subId)
 
       const party = await this.deps.participantService.retrieveOneParty(partyId, subId)
-      return this.formatSuccessResponse({
-        partyList: [party]
-      })
+      const partyList = party ? [party] : []
+      this.log.info('handleGetPartyById is done: ', { partyList, partyId, subId })
+      return this.formatSuccessResponse({ partyList })
     } catch (err) {
       return this.formatErrorResponse('error in handleGetPartyById: ', err)
     }

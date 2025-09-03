@@ -56,10 +56,11 @@ describe('create server Tests -->', () => {
         expect(JSON.parse(payload).errorInformation).toBeDefined()
       })
 
-      test('should return 404 for non-existent MSISDN', async () => {
-        deps.oracleDB.retrieve = jest.fn().mockRejectedValue(new NotFoundError('oracleMSISDN', '123'))
-        const { statusCode } = await injectHttpRequest('/participants/MSISDN/123')
-        expect(statusCode).toBe(404)
+      test('should return 200 and empty partiList for non-existent MSISDN', async () => {
+        deps.oracleDB.retrieve = jest.fn().mockRejectedValue(new NotFoundError('oracleMSISDN', 'x123'))
+        const { statusCode, payload } = await injectHttpRequest('/participants/MSISDN/123')
+        expect(statusCode).toBe(200)
+        expect(JSON.parse(payload).partyList).toEqual([])
       })
 
       test('should return 503 in case of retriable DB error', async () => {

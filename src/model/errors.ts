@@ -116,7 +116,7 @@ export class InternalServerError extends CustomOracleError {
   constructor(message: string, cause?: UnknownError) {
     super(message, { cause })
     if (cause instanceof Error) {
-      this.errorInformation.errorDescription += ` - ${message} [cause: ${cause?.message}]}`
+      this.errorInformation.errorDescription += ` - ${message} [cause: ${cause?.message}]`
     }
   }
 }
