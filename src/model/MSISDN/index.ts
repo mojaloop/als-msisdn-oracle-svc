@@ -22,4 +22,4 @@
  --------------
  ******/
 
-export { OracleDB as default, PartyMapItem, RETRIABLE_ERROR_CODES } from './PartyMapItem';
+export { OracleDB as default, PartyMapItem, RETRIABLE_ERROR_CODES } from './PartyMapItem'

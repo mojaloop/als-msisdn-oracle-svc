@@ -42,7 +42,7 @@ export class ParticipantController implements IParticipantController {
         partyList: [party]
       })
     } catch (err) {
-      return this.formatErrorResponse('error handleGetPartyById: ', err)
+      return this.formatErrorResponse('error in handleGetPartyById: ', err)
     }
   }
 
@@ -58,7 +58,7 @@ export class ParticipantController implements IParticipantController {
       this.log.info('handlePostParty is done: ', { isCreated, partyId, statusCode })
       return this.formatSuccessResponse(undefined, statusCode)
     } catch (err) {
-      return this.formatErrorResponse('error handlePostParty: ', err)
+      return this.formatErrorResponse('error in handlePostParty: ', err)
     }
   }
 
@@ -74,7 +74,7 @@ export class ParticipantController implements IParticipantController {
       // todo: think if count === 0?
       return this.formatSuccessResponse(undefined)
     } catch (err) {
-      return this.formatErrorResponse('error handlePutParty: ', err)
+      return this.formatErrorResponse('error in handlePutParty: ', err)
     }
   }
 
@@ -90,7 +90,7 @@ export class ParticipantController implements IParticipantController {
       // todo: think if count === 0?
       return this.formatSuccessResponse(undefined, 204)
     } catch (err) {
-      return this.formatErrorResponse('error handleDeleteParty: ', err)
+      return this.formatErrorResponse('error in handleDeleteParty: ', err)
     }
   }
 

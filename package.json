@@ -30,7 +30,7 @@
     "docker:clean": "docker-compose -f docker-compose.yml down --rmi local",
     "lint": "eslint -c ./eslint.config.mjs ./src/**/*.ts ./test/**/*.ts",
     "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --write --ignore-unknown ./src/**/*.ts ./test/**/*.ts",
+    "format": "prettier --write --ignore-unknown \"src/**/*.ts\" \"test/**/*.ts\"",
     "pretest": "echo \"pretest - TODO...\"",
     "release": "standard-version --releaseCommitMessageFormat 'chore(release): {{currentTag}} [skip ci]'",
     "snapshot": "standard-version --no-verify --skip.changelog --prerelease snapshot --releaseCommitMessageFormat 'chore(snapshot): {{currentTag}}'",
@@ -57,7 +57,7 @@
     "prepare": "husky || true"
   },
   "lint-staged": {
-    "./{src,test}/**/*.ts": [
+    "{src,test}/**/*.ts": [
       "npm run lint",
       "prettier --write --ignore-unknown"
     ]
