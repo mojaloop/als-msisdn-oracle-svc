@@ -7,6 +7,7 @@ import { NotFoundError, RetriableDbError } from '~/model/errors'
 import { ParticipantServiceDeps } from '~/domain/types'
 import { logger } from '~/shared/logger'
 import { createMockOracleDb } from 'test/unit/__mocks__/util'
+import * as fixtures from 'test/fixtures'
 
 // const makeUrl = (ID: string, Type: string = 'MSISDN') => `/participants/${Type}/${ID}`
 
@@ -47,6 +48,17 @@ describe('create server Tests -->', () => {
       const { statusCode, payload } = await injectHttpRequest('/health')
       expect(statusCode).toBe(200)
       expect(JSON.parse(payload).status).toBe('OK')
+    })
+
+    test('should reply with 409 in case of creation already existing party', async () => {
+      deps.oracleDB.isDuplicationError = jest.fn().mockResolvedValue(true)
+      deps.oracleDB.insert = jest.fn().mockRejectedValue({ code: 'ER_DUP_ENTRY' })
+      const { statusCode } = await injectHttpRequest(
+        '/participants/MSISDN/123',
+        'POST',
+        fixtures.mockPostParticipantsRequest()
+      )
+      expect(statusCode).toBe(409)
     })
 
     describe('GET /participants/... APIs Tests -->', () => {

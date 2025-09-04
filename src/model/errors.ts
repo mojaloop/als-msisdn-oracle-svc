@@ -86,7 +86,7 @@ export class IDTypeNotSupported extends CustomOracleError {
 }
 
 export class AddPartyInfoError extends CustomOracleError {
-  public readonly statusCode = 400
+  public readonly statusCode: number = 400
   public readonly errorInformation = this.makeErrorInfo('ADD_PARTY_INFO_ERROR')
 
   public constructor(message: string) {
@@ -95,7 +95,9 @@ export class AddPartyInfoError extends CustomOracleError {
   }
 }
 
-export class DuplicationPartyError extends AddPartyInfoError {}
+export class DuplicationPartyError extends AddPartyInfoError {
+  public readonly statusCode = 409
+}
 
 export class RetriableDbError extends CustomOracleError {
   public readonly statusCode = 503
