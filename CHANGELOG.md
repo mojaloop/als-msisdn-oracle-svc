@@ -1,4 +1,6 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.24](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.24-snapshot.4...v0.0.24) (2025-09-05)
+
 ### [0.0.21](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.21-snapshot.1...v0.0.21) (2025-07-17)
 
 
