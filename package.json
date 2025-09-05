@@ -1,6 +1,6 @@
 {
   "name": "@mojaloop/als-msisdn-oracle-svc",
-  "version": "0.0.21",
+  "version": "0.0.24-snapshot.4",
   "description": "An Account Lookup Service Oracle for MSISDN identifiers",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -30,7 +30,7 @@
     "docker:clean": "docker-compose -f docker-compose.yml down --rmi local",
     "lint": "eslint -c ./eslint.config.mjs ./src/**/*.ts ./test/**/*.ts",
     "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --write --ignore-unknown ./src/**/*.ts ./test/**/*.ts",
+    "format": "prettier --write --ignore-unknown \"src/**/*.ts\" \"test/**/*.ts\"",
     "pretest": "echo \"pretest - TODO...\"",
     "release": "standard-version --releaseCommitMessageFormat 'chore(release): {{currentTag}} [skip ci]'",
     "snapshot": "standard-version --no-verify --skip.changelog --prerelease snapshot --releaseCommitMessageFormat 'chore(snapshot): {{currentTag}}'",
@@ -57,7 +57,7 @@
     "prepare": "husky || true"
   },
   "lint-staged": {
-    "./{src,test}/**/*.ts": [
+    "{src,test}/**/*.ts": [
       "npm run lint",
       "prettier --write --ignore-unknown"
     ]
@@ -90,7 +90,7 @@
     "@redocly/cli": "^2.0.8",
     "@types/convict": "^6.1.6",
     "@types/jest": "30.0.0",
-    "@types/node": "^24.3.0",
+    "@types/node": "^24.3.1",
     "@types/rc": "^1.2.4",
     "@typescript-eslint/eslint-plugin": "^8.42.0",
     "@typescript-eslint/parser": "^8.42.0",

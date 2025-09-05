@@ -1,9 +1,11 @@
 import { Knex } from 'knex';
-import { NotFoundError } from '../errors';
+import { NotFoundError, RetriableDbError } from '../errors';
 import { PartyMapItem, IOracleDb } from '../../domain/types';
 import { logger } from '../../shared/logger';
 
 export { PartyMapItem }; // todo: remove this after changing imports in other files to use domain/types
+
+export const RETRIABLE_ERROR_CODES = ['ER_LOCK_DEADLOCK', 'PROTOCOL_CONNECTION_LOST'];
 
 /*
  * Class to abstract PartyMapItem DB operations
@@ -27,8 +29,7 @@ export class OracleDB implements IOracleDb {
 
       return true;
     } catch (err: unknown) {
-      this.log.warn('error in db.insert', err);
-      throw err;
+      throw this.handleError('error in oracleDB.insert: ', err);
     }
   }
 
@@ -68,8 +69,7 @@ export class OracleDB implements IOracleDb {
         return updateQuery;
       });
     } catch (err: unknown) {
-      this.log.warn('error in db.update', err);
-      throw err;
+      throw this.handleError('error in oracleDB.update: ', err);
     }
   }
 
@@ -95,8 +95,7 @@ export class OracleDB implements IOracleDb {
 
       return returnItem;
     } catch (err: unknown) {
-      this.log.warn('error in db.retrieve: ', err);
-      throw err;
+      throw this.handleError('error in oracleDB.retrieve: ', err);
     }
   }
 
@@ -118,8 +117,7 @@ export class OracleDB implements IOracleDb {
 
       return deleteCount;
     } catch (err: unknown) {
-      this.log.warn('error in db.delete: ', err);
-      throw err;
+      throw this.handleError('error in oracleDB.delete: ', err);
     }
   }
 
@@ -136,5 +134,19 @@ export class OracleDB implements IOracleDb {
 
   public isDuplicationError(error: unknown): boolean {
     return typeof error === 'object' && error !== null && 'code' in error && error.code === 'ER_DUP_ENTRY';
+  }
+
+  public isRetriableError(error: unknown): boolean {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      RETRIABLE_ERROR_CODES.includes(String(error.code))
+    );
+  }
+
+  protected handleError(message: string, err: unknown) {
+    this.log.warn(message, err);
+    return this.isRetriableError(err) ? new RetriableDbError(message, err) : err;
   }
 }

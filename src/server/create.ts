@@ -30,6 +30,7 @@ import { Request, ResponseToolkit, Server } from '@hapi/hapi'
 import { ParticipantServiceDeps } from '../domain/types'
 import { ServiceConfig } from '../shared/config'
 import onValidateFail from './handlers/onValidateFail'
+import plugins from '~/server/plugins'
 
 export default async function create(config: ServiceConfig, deps: ParticipantServiceDeps): Promise<Server> {
   const server: Server = new Server({
@@ -46,6 +47,7 @@ export default async function create(config: ServiceConfig, deps: ParticipantSer
   })
 
   Object.assign(server.app, deps)
+  await plugins.register(server)
 
   return server
 }

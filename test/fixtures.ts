@@ -1,5 +1,7 @@
 import { randomUUID } from 'node:crypto'
+import { ErrorResponse } from '~/domain/types'
 import { ParticipantsTypeIDPostPutRequest, PartyIdInfo, PostParticipantsBulkRequest } from '~/interface/types'
+// import { Request, ServerApplicationState } from '@hapi/hapi';
 
 /* prettier-ignore */
 export const mockPartyIdInfo = ({
@@ -35,4 +37,11 @@ export const mockPostParticipantsRequest = ({
   fspId,
   ...(currency && { currency }),
   ...(partySubIdOrType && { partySubIdOrType })
+})
+
+export const errorResponseDto = (errorCode: string, errorDescription: string): ErrorResponse => ({
+  errorInformation: {
+    errorCode,
+    errorDescription
+  }
 })

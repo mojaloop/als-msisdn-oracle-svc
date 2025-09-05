@@ -1,4 +1,5 @@
 'use strict'
+process.env.LOG_LEVEL = 'debug'
 
 const { pathsToModuleNameMapper } = require('ts-jest')
 const { compilerOptions } = require('./tsconfig')
