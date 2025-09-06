@@ -76,10 +76,12 @@ describe('create server Tests -->', () => {
       })
 
       test('should return 503 in case of retriable DB error', async () => {
-        deps.oracleDB.retrieve = jest.fn().mockRejectedValue(new RetriableDbError('Error'))
+        const dbErrMessage = 'dbErrMessage'
+        deps.oracleDB.retrieve = jest.fn().mockRejectedValue(new RetriableDbError(dbErrMessage))
         // todo: think how to emulate raw PROTOCOL_CONNECTION_LOST error
-        const { statusCode } = await injectHttpRequest('/participants/MSISDN/123')
+        const { statusCode, payload } = await injectHttpRequest('/participants/MSISDN/123')
         expect(statusCode).toBe(503)
+        expect(payload).toContain(dbErrMessage)
       })
     })
   })
