@@ -30,48 +30,56 @@ describe('server/handlers/onValidateFail', (): void => {
     const err = new Error('Invalid request path')
     expect(() => {
       onValidateFail(logger, err)
-    }).toThrow(Boom.notFound('Unknown URI', { 
-      errorInformation: { 
-        errorCode: '3002', 
-        errorDescription: 'Unknown URI' 
-      } 
-    }))
+    }).toThrow(
+      Boom.notFound('Unknown URI', {
+        errorInformation: {
+          errorCode: '3002',
+          errorDescription: 'Unknown URI'
+        }
+      })
+    )
   })
 
   it('should throw 404 error for Missing required parameter', (): void => {
     const err = new Error('Missing required parameter')
     expect(() => {
       onValidateFail(logger, err)
-    }).toThrow(Boom.notFound('Unknown URI', { 
-      errorInformation: { 
-        errorCode: '3002', 
-        errorDescription: 'Unknown URI' 
-      } 
-    }))
+    }).toThrow(
+      Boom.notFound('Unknown URI', {
+        errorInformation: {
+          errorCode: '3002',
+          errorDescription: 'Unknown URI'
+        }
+      })
+    )
   })
 
   it('should throw 404 error for Unknown route', (): void => {
     const err = new Error('Unknown route')
     expect(() => {
       onValidateFail(logger, err)
-    }).toThrow(Boom.notFound('Unknown URI', { 
-      errorInformation: { 
-        errorCode: '3002', 
-        errorDescription: 'Unknown URI' 
-      } 
-    }))
+    }).toThrow(
+      Boom.notFound('Unknown URI', {
+        errorInformation: {
+          errorCode: '3002',
+          errorDescription: 'Unknown URI'
+        }
+      })
+    )
   })
 
   it('should throw 404 error for no route matches request', (): void => {
     const err = new Error('404-notFound: no route matches request')
     expect(() => {
       onValidateFail(logger, err)
-    }).toThrow(Boom.notFound('Unknown URI', { 
-      errorInformation: { 
-        errorCode: '3002', 
-        errorDescription: 'Unknown URI' 
-      } 
-    }))
+    }).toThrow(
+      Boom.notFound('Unknown URI', {
+        errorInformation: {
+          errorCode: '3002',
+          errorDescription: 'Unknown URI'
+        }
+      })
+    )
   })
 
   it('should throw 400 error for other validation errors', (): void => {

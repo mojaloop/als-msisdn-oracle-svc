@@ -32,7 +32,6 @@ describe('participants API Tests -->', () => {
       let { status, data } = await sendPostParticipantsBulkRequest(payload)
       expect(status).toBe(201)
       expect(data.partyList[0].errorInformation).toBeUndefined()
-
       ;({ status, data } = await sendPostParticipantsBulkRequest(payload))
       expect(status).toBe(201)
       expect(data.partyList[0].errorInformation).toBeDefined()

@@ -22,12 +22,12 @@
  --------------
  ******/
 
-import path from 'node:path';
-import { Server, ServerRegisterPluginObject } from '@hapi/hapi';
-import { Util } from '@mojaloop/central-services-shared';
-import Handlers from '../handlers';
+import path from 'node:path'
+import { Server, ServerRegisterPluginObject } from '@hapi/hapi'
+import { Util } from '@mojaloop/central-services-shared'
+import Handlers from '../handlers'
 
-const openapiDefinitionPath = path.resolve(__dirname, '../../interface/api.yaml');
+const openapiDefinitionPath = path.resolve(__dirname, '../../interface/api.yaml')
 
 async function initialize(): Promise<ServerRegisterPluginObject<any>> {
   return {
@@ -36,15 +36,15 @@ async function initialize(): Promise<ServerRegisterPluginObject<any>> {
       version: '1.0.0',
       multiple: true,
       register: function (server: Server, options: { [index: string]: string | object }): void {
-        server.expose('openapi', options.openapi);
+        server.expose('openapi', options.openapi)
       }
     },
     options: {
       openapi: await Util.OpenapiBackend.initialise(openapiDefinitionPath, Handlers)
     }
-  };
+  }
 }
 
 export default {
   initialize
-};
+}

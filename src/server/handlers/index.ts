@@ -21,16 +21,16 @@
 
  --------------
  ******/
-import { Util } from '@mojaloop/central-services-shared';
-import { Request, ResponseToolkit } from '@hapi/hapi';
-import { Context } from '~/server/plugins';
-import Health from './health';
-import Metrics from './metrics';
-import { handlePostBulk } from './participants';
-import ParticipantsTypeId from './participants/{Type}/{ID}';
-import ParticipantsTypeIdSubId from './participants/{Type}/{ID}/{SubId}';
+import { Util } from '@mojaloop/central-services-shared'
+import { Request, ResponseToolkit } from '@hapi/hapi'
+import { Context } from '~/server/plugins'
+import Health from './health'
+import Metrics from './metrics'
+import { handlePostBulk } from './participants'
+import ParticipantsTypeId from './participants/{Type}/{ID}'
+import ParticipantsTypeIdSubId from './participants/{Type}/{ID}/{SubId}'
 
-const OpenapiBackend = Util.OpenapiBackend;
+const OpenapiBackend = Util.OpenapiBackend
 
 // Custom notFound handler that returns 404 for consistency with account-lookup-service
 const customNotFound = async (_context: Context, _request: Request, h: ResponseToolkit) => {
@@ -41,8 +41,8 @@ const customNotFound = async (_context: Context, _request: Request, h: ResponseT
         errorDescription: 'Unknown URI'
       }
     })
-    .code(404);
-};
+    .code(404)
+}
 
 export default {
   HealthGet: Health.get,
@@ -59,4 +59,4 @@ export default {
   ParticipantsSubIdByTypeAndIDPost: ParticipantsTypeIdSubId.post,
   ParticipantsSubIdByTypeAndIDPut: ParticipantsTypeIdSubId.put,
   ParticipantsSubIdByTypeAndIDDelete: ParticipantsTypeIdSubId.del
-};
+}
