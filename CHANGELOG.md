@@ -1,4 +1,11 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.25](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.24...v0.0.25) (2025-09-08)
+
+
+### Bug Fixes
+
+* **csi-1767:** fixed max length of errorDescription ([#30](https://github.com/mojaloop/als-msisdn-oracle-svc/issues/30)) ([ecb57d9](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/ecb57d98b38c0e84e6b69c994676410eab1ecbb1))
+
 ### [0.0.24](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.24-snapshot.4...v0.0.24) (2025-09-05)
 
 ### [0.0.21](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.21-snapshot.1...v0.0.21) (2025-07-17)
