@@ -29,7 +29,7 @@ export class OracleDB implements IOracleDb {
 
       return true
     } catch (err: unknown) {
-      throw this.handleError('error in oracleDB.insert: ', err)
+      throw this.handleDbError('error in oracleDB.insert: ', err, { item })
     }
   }
 
@@ -69,7 +69,7 @@ export class OracleDB implements IOracleDb {
         return updateQuery
       })
     } catch (err: unknown) {
-      throw this.handleError('error in oracleDB.update: ', err)
+      throw this.handleDbError('error in oracleDB.update: ', err, { partyMapItem })
     }
   }
 
@@ -95,7 +95,7 @@ export class OracleDB implements IOracleDb {
 
       return returnItem
     } catch (err: unknown) {
-      throw this.handleError('error in oracleDB.retrieve: ', err)
+      throw this.handleDbError('error in oracleDB.retrieve: ', err, { id, subId })
     }
   }
 
@@ -117,7 +117,7 @@ export class OracleDB implements IOracleDb {
 
       return deleteCount
     } catch (err: unknown) {
-      throw this.handleError('error in oracleDB.delete: ', err)
+      throw this.handleDbError('error in oracleDB.delete: ', err, { id, subId })
     }
   }
 
@@ -127,7 +127,7 @@ export class OracleDB implements IOracleDb {
       this.log.verbose('db connection is ok')
       return true
     } catch (err: unknown) {
-      this.log.warn('db connection check failed', err)
+      this.log.warn('db connection check failed: ', err)
       return false
     }
   }
@@ -145,8 +145,8 @@ export class OracleDB implements IOracleDb {
     )
   }
 
-  protected handleError(message: string, err: unknown) {
-    this.log.warn(message, err)
+  protected handleDbError(message: string, err: unknown, details = {}) {
+    this.log.child(details).warn(message, err)
     return this.isRetriableError(err) ? new RetriableDbError(message, { cause: err }) : err
   }
 }

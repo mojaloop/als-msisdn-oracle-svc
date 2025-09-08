@@ -96,8 +96,8 @@ export class AddPartyInfoError extends CustomOracleError {
   public readonly statusCode: number = 400
   public readonly errorInformation: ErrorInformation
 
-  public constructor(message: string) {
-    super(message)
+  public constructor(message: string, { cause }: ErrOptions = {}) {
+    super(message, { cause })
     this.errorInformation = this.makeErrorInfo('ADD_PARTY_INFO_ERROR', message)
   }
 }
