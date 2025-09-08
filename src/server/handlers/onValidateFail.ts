@@ -22,14 +22,14 @@
  --------------
  ******/
 
-import Boom from '@hapi/boom';
-import { Lifecycle } from '@hapi/hapi';
-import { Logger } from '@mojaloop/sdk-standard-components';
+import Boom from '@hapi/boom'
+import { Lifecycle } from '@hapi/hapi'
+import { Logger } from '@mojaloop/sdk-standard-components'
 
 export default function onValidateFail(logger: Logger.SdkLogger, err?: Error): Lifecycle.ReturnValue {
   // istanbul ignore next
-  const error = err || new Error('Validation Error');
-  logger.error('onValidateFail error: ', error);
+  const error = err || new Error('Validation Error')
+  logger.error('onValidateFail error: ', error)
 
   // Check if this is a route/path validation error (missing required path parameters)
   // These should return 404 to be consistent with account-lookup-service
@@ -45,9 +45,9 @@ export default function onValidateFail(logger: Logger.SdkLogger, err?: Error): L
         errorCode: '3002',
         errorDescription: 'Unknown URI'
       }
-    });
+    })
   }
 
   // For other validation errors, return 400 Bad Request
-  throw Boom.badRequest(error.message);
+  throw Boom.badRequest(error.message)
 }

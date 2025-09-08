@@ -23,7 +23,7 @@
  ******/
 
 // https://hapi.dev/module/good/api/?v=9.0.0
-import HapiGood from '@hapi/good';
+import HapiGood from '@hapi/good'
 
 export default {
   plugin: HapiGood,
@@ -32,4 +32,4 @@ export default {
       interval: 1000
     }
   }
-};
+}

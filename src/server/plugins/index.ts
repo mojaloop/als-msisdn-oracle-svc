@@ -22,19 +22,19 @@
  --------------
  ******/
 
-import Inert from '@hapi/inert';
-import Vision from '@hapi/vision';
-import HapiSwagger from 'hapi-swagger';
-import Blip from 'blipp';
-import { Server, ServerRoute, Utils as HapiUtil, RequestQuery } from '@hapi/hapi';
-import { Readable as StreamReadable } from 'stream';
-import { Util } from '@mojaloop/central-services-shared';
-import ErrorHandling from '@mojaloop/central-services-error-handling';
-import Good from './good';
-import OpenAPI from './openAPI';
+import Inert from '@hapi/inert'
+import Vision from '@hapi/vision'
+import HapiSwagger from 'hapi-swagger'
+import Blip from 'blipp'
+import { Server, ServerRoute, Utils as HapiUtil, RequestQuery } from '@hapi/hapi'
+import { Readable as StreamReadable } from 'stream'
+import { Util } from '@mojaloop/central-services-shared'
+import ErrorHandling from '@mojaloop/central-services-error-handling'
+import Good from './good'
+import OpenAPI from './openAPI'
 
 async function register(server: Server): Promise<Server> {
-  const openapiBackend = await OpenAPI.initialize();
+  const openapiBackend = await OpenAPI.initialize()
 
   const hapiSwaggerObj = {
     plugin: HapiSwagger,
@@ -46,7 +46,7 @@ async function register(server: Server): Promise<Server> {
         tryItOutEnabled: false
       }
     }
-  };
+  }
 
   const plugins = [
     Util.Hapi.OpenapiBackendValidator,
@@ -62,9 +62,9 @@ async function register(server: Server): Promise<Server> {
     // TODO: ALS is sending incorrect headers (vnd.application.parties instead of vnd.interoperability.participants)
     // So we need to disable this validation for now
     // Util.Hapi.FSPIOPHeaderValidation
-  ];
+  ]
 
-  await server.register(plugins);
+  await server.register(plugins)
 
   // use as a catch-all handler
   server.route({
@@ -82,19 +82,19 @@ async function register(server: Server): Promise<Server> {
         req,
         h
       )
-  });
-  return server;
+  })
+  return server
 }
 
 // Context is required for OpenAPI
 export interface Context {
-  method: string;
-  path: string;
-  body: StreamReadable | Buffer | string | object;
-  query: RequestQuery;
-  headers: HapiUtil.Dictionary<string>;
+  method: string
+  path: string
+  body: StreamReadable | Buffer | string | object
+  query: RequestQuery
+  headers: HapiUtil.Dictionary<string>
 }
 
 export default {
   register
-};
+}
