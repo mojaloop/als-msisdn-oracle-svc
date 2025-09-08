@@ -2,6 +2,7 @@ import { oracleDB } from '~/lib/db'
 import { PartyMapItem } from '~/model/MSISDN'
 import { logger } from '~/shared/logger'
 import * as dto from '~/shared/dto'
+// todo: check the file usage - looks like it's used only in tests
 
 export async function retrievePartyMapItem(id: string, subId?: string): Promise<PartyMapItem> {
   const item: PartyMapItem = await oracleDB.retrieve(id, subId)
