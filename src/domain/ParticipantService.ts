@@ -35,7 +35,7 @@ import {
 } from '../interface/types'
 import { ParticipantServiceDeps, PartyMapItem, ILogger, IParticipantService } from './types'
 import { ERROR_MESSAGES } from '~/constants'
-import { AddPartyInfoError, DuplicationPartyError, NotFoundError } from '~/model/errors'
+import { AddPartyInfoError, CustomOracleError, DuplicationPartyError, NotFoundError } from '~/model/errors'
 import { partyMapItemDto } from '~/shared/dto'
 
 export class ParticipantService implements IParticipantService {
@@ -53,9 +53,7 @@ export class ParticipantService implements IParticipantService {
       this.log.verbose('createPartyMapItem is done: ', { item, isCreated })
       return isCreated
     } catch (err: unknown) {
-      const isDuplication = oracleDB.isDuplicationError(err)
-      this.log[isDuplication ? 'warn' : 'error']('error in createPartyMapItem: ', err)
-      throw isDuplication ? new DuplicationPartyError(`Party already exists [id: ${partyId}]`) : err
+      throw this.checkDbDuplicationError('error in createPartyMapItem: ', err, partyId)
     }
   }
 
@@ -127,14 +125,23 @@ export class ParticipantService implements IParticipantService {
       }
 
       await oracleDB.insert(item)
-      log.debug('createOneParty is done: ', { item })
+      log.debug('createOnePartySafe is done: ', { item })
 
       return { partyId }
     } catch (err: unknown) {
-      const errMessage = 'error in createOneParty: '
-      log.warn(errMessage, err)
-      const { errorInformation } = new AddPartyInfoError(err instanceof Error ? err.message : errMessage)
+      const errMessage = 'error in createOnePartySafe: '
+      const error = this.checkDbDuplicationError(errMessage, err, partyId.partyIdentifier)
+      const { errorInformation } =
+        error instanceof CustomOracleError
+          ? error
+          : new AddPartyInfoError(`${errMessage}${err instanceof Error ? err.message : ''}`, { cause: err })
       return { partyId, errorInformation }
     }
+  }
+
+  protected checkDbDuplicationError(errLogMessage: string, err: unknown, partyId: string) {
+    const isDuplication = this.deps.oracleDB.isDuplicationError(err)
+    this.log[isDuplication ? 'warn' : 'error'](errLogMessage, err)
+    return isDuplication ? new DuplicationPartyError(`Party already exists [id: ${partyId}]`) : err
   }
 }

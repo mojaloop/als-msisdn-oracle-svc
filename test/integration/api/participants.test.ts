@@ -26,6 +26,18 @@ describe('participants API Tests -->', () => {
       expect(data.partyList[0].partyId).toEqual(payload.partyList[0])
     })
 
+    // todo: clarify if this is a correct behavior (if no parties are created)
+    test('should return 201 even if a party already exists', async () => {
+      const payload = fixtures.mockPostParticipantsBulkRequest()
+      let { status, data } = await sendPostParticipantsBulkRequest(payload)
+      expect(status).toBe(201)
+      expect(data.partyList[0].errorInformation).toBeUndefined()
+
+      ;({ status, data } = await sendPostParticipantsBulkRequest(payload))
+      expect(status).toBe(201)
+      expect(data.partyList[0].errorInformation).toBeDefined()
+    })
+
     test('should support partial party creation', async () => {
       const payload = fixtures.mockPostParticipantsBulkRequest({
         partyList: [
