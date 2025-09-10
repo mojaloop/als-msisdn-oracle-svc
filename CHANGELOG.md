@@ -1,4 +1,17 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.26](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.25...v0.0.26) (2025-09-10)
+
+
+### Bug Fixes
+
+* enhance getPartyById function to include partySubIdOrType ([#32](https://github.com/mojaloop/als-msisdn-oracle-svc/issues/32)) ([7c91587](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/7c91587d5c08c1c8b6c8d7cf47497e75c584f135))
+
+
+### Chore
+
+* reformatting ([#31](https://github.com/mojaloop/als-msisdn-oracle-svc/issues/31)) ([f84af79](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/f84af79706d97cc18d086a107fae840a5e5215d1))
+* **sbom:** update sbom [skip ci] ([b3c1888](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/b3c1888de2c6928e4b8162df284af5675e605068))
+
 ### [0.0.25](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.24...v0.0.25) (2025-09-08)
 
 
