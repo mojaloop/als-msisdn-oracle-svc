@@ -131,7 +131,7 @@
     "@mojaloop/central-services-health": "15.1.0",
     "@mojaloop/central-services-metrics": "12.7.1",
     "@mojaloop/central-services-shared": "18.32.0",
-    "@mojaloop/sdk-standard-components": "19.16.7",
+    "@mojaloop/sdk-standard-components": "19.16.8",
     "ajv": "8.17.1",
     "ajv-keywords": "5.x.x",
     "blipp": "^4.0.2",
