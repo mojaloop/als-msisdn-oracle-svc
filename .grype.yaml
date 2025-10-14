@@ -2,7 +2,8 @@
 disabled: false
 
 ignore:
-
+  - vulnerability: CVE-2025-56200
+    reason: "No fix available without breaking changes - validator.js URL validation bypass in hapi-openapi/hapi-swagger dependency chain. Fix would require downgrading hapi-openapi to 1.2.6 which is a major breaking change."
 
 # Set output format defaults
 output:
