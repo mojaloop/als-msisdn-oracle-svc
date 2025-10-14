@@ -8,6 +8,12 @@ ignore:
     reason: "busybox vulnerability in Alpine base image - no fix available in Alpine 3.22, low severity with minimal risk"
   - vulnerability: CVE-2024-58251
     reason: "busybox/ssl_client vulnerability in Alpine base image - inherent to Alpine Linux, low severity with minimal risk"
+  - vulnerability: CVE-2025-9230
+    reason: "libcrypto3/libssl3 vulnerability in Alpine 3.22 base image - fix requires Alpine package updates which could introduce instability. HIGH severity but low EPSS risk."
+  - vulnerability: CVE-2025-9231
+    reason: "libcrypto3 vulnerability in Alpine 3.22 base image - fix requires Alpine package updates which could introduce instability. MEDIUM severity with minimal risk."
+  - vulnerability: CVE-2025-9232
+    reason: "libssl3 vulnerability in Alpine 3.22 base image - fix requires Alpine package updates which could introduce instability. MEDIUM severity with minimal risk."
 
 # Set output format defaults
 output:
