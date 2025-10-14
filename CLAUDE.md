@@ -2,87 +2,149 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## ALS MSISDN Oracle Service
+## Repository Overview
 
-This is a Mojaloop Account Lookup Service (ALS) Oracle for MSISDN identifiers. The service provides participant lookup functionality for mobile subscriber identification numbers.
+The ALS MSISDN Oracle Service is a Mojaloop component that provides MSISDN (Mobile Station International Subscriber Directory Number) lookup functionality within the Account Lookup Service (ALS) ecosystem. It stores and manages mappings between MSISDNs and participant identifiers.
+
+## Key Architecture
+
+### Service Structure
+```
+src/
+├── cli.ts               # CLI entry point
+├── server/             # HTTP server setup and handlers
+│   ├── handlers/       # Route handlers
+│   └── plugins/        # Hapi plugins (OpenAPI, metrics, health)
+├── domain/             # Business logic layer
+│   ├── participants.ts # Core participant operations
+│   └── ParticipantService.ts # Service orchestration
+├── model/              # Data models
+│   └── MSISDN/        # MSISDN-specific models
+├── lib/               # Infrastructure utilities
+│   └── db.ts          # Database connection setup
+└── shared/            # Shared utilities (config, logging)
+```
+
+### Key Dependencies
+- **Hapi.js**: HTTP server framework
+- **Knex.js**: SQL query builder for MySQL
+- **TypeScript**: Primary language with strict type checking
+- **Mojaloop libraries**: Error handling, health, metrics, shared components
 
 ## Development Commands
 
-### Build and Development
-- `npm run build` - Full build including OpenAPI generation, TypeScript compilation, and file copying
-- `npm run build:openapi` - Generate OpenAPI spec from yaml templates
-- `npm run start` - Start the service (requires build first)
-- `npm run start:dev` - Build and start with ts-node
-- `npm run start:watch` - Start with file watching using nodemon
+### Node.js Version
+```bash
+nvm use  # Always run this when entering the directory
+```
+
+### Building
+```bash
+npm run build           # Full build with OpenAPI spec generation
+npm run build:openapi   # Generate OpenAPI spec only
+npm run watch          # Watch mode for TypeScript compilation
+```
+
+### Running
+```bash
+npm start              # Run the compiled service
+npm run start:dev      # Build and run in development
+npm run start:watch    # Run with auto-restart on changes
+```
 
 ### Testing
-- `npm run test` - Run both unit and integration tests
-- `npm run test:unit` - Run unit tests only
-- `npm run test:integration` - Run integration tests (requires database)
-- `npm run test:int` - Alternative integration test command with jest
-- `npm run test:coverage` - Run tests with coverage
-- `npm run test:bdd` - Run BDD/Cucumber tests
+```bash
+npm test                           # Run all tests (unit + integration)
+npm run test:unit                  # Unit tests only
+npm run test:integration           # Integration tests only
+npm run test:coverage              # Tests with coverage report
+npm run test:coverage-check        # Check coverage thresholds
+npm run test:bdd                   # BDD feature tests
+
+# Run a single test file
+npm test -- test/unit/path/to/test.ts
+```
 
 ### Code Quality
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Run ESLint with auto-fix
-- `npm run format` - Format code with Prettier
+```bash
+npm run lint           # ESLint check
+npm run lint:fix       # Auto-fix linting issues
+npm run audit:check    # Security vulnerability check
+npm run audit:fix      # Fix vulnerabilities
+npm run dep:check      # Check for outdated dependencies
+npm run dep:update     # Update dependencies
+```
 
 ### Database Operations
-- `npm run migrate` - Run migrations and seeds
-- `npm run migrate:latest` - Run database migrations
-- `npm run seed:run` - Run database seeds
+```bash
+npm run migrate              # Run all migrations
+npm run migrate:latest       # Run latest migrations
+npm run migrate:rollback     # Rollback last migration
+npm run seed:run            # Run database seeds
+```
 
-### Docker Development
-- `npm run docker:build` - Build Docker image
-- `npm run docker:run` - Run Docker container
-- `npm run docker:up` - Start services with docker-compose
-- `docker-compose up -d mysql` - Start only MySQL for local development
+### Docker
+```bash
+npm run docker:build    # Build Docker image
+npm run docker:up       # Start with docker-compose
+npm run docker:down     # Stop and remove containers
+npm run docker:clean    # Full cleanup including images
+```
 
-## Architecture Overview
+## Database Schema
 
-### Core Structure
-- **Domain Layer** (`src/domain/`): Business logic and participant services
-  - `ParticipantService.ts` - Core business operations
-  - `ParticipantController.ts` - Request/response handling
-  - `participants.ts` - Domain functions for CRUD operations
+The service uses a MySQL database with the following key table:
+- `oracleMsisdn`: Stores MSISDN to participant mappings
 
-- **Server Layer** (`src/server/`): Hapi.js web server setup
-  - Uses Hapi.js framework with OpenAPI/Swagger integration
-  - Route handlers in `handlers/` directory with dynamic paths like `{Type}/{ID}`
-  - Plugin architecture for OpenAPI, logging, and health checks
+## API Endpoints
 
-- **Model Layer** (`src/model/`): Data models and database interactions
-  - `MSISDN/PartyMapItem.ts` - Core data model for party mapping
-  - Database operations abstracted through `~/lib/db`
+### Health & Monitoring
+- `GET /health` - Service health check
+- `GET /metrics` - Prometheus metrics
 
-- **Shared Services** (`src/shared/`): Common utilities
-  - Configuration management with Convict
-  - Logger setup
-  - DTO transformations
+### Participant Operations
+- `POST /participants/{Type}/{ID}` - Create participant mapping
+- `PUT /participants/{Type}/{ID}` - Update participant mapping
+- `DELETE /participants/{Type}/{ID}/{SubId}` - Delete specific mapping
+- `POST /participants` - Batch create participants
 
-### Database Integration
-- Uses Knex.js for database operations and migrations
-- Supports MySQL (primary) and SQLite (testing)
-- Database abstraction in `src/lib/db.ts`
-- Migrations and seeds in respective directories
+## Configuration
 
-### API Design
-- OpenAPI 3.0 specification built from YAML templates
-- RESTful endpoints following Mojaloop conventions
-- Participant management endpoints with pattern matching for types and IDs
-- Health and metrics endpoints included
+Configuration is managed through:
+- Environment variables
+- `config/default.json` for defaults
+- Convict for validation and type safety
 
-### Testing Strategy
-- Unit tests: Individual component testing
-- Integration tests: Database and API endpoint testing
-- BDD tests: Feature-based testing with Cucumber
-- Test data and fixtures in `test/data/` and `test/fixtures.ts`
+Key configuration areas:
+- Database connection settings
+- Server host/port
+- Logging levels
+- API documentation settings
 
-## Key Development Notes
+## Testing Approach
 
-- Uses `module-alias` with `~` prefix pointing to `dist/src/`
-- TypeScript with strict configuration
-- ESLint with TypeScript support
-- Node.js 22.17+ required
-- Multi-stage Docker build for production
+- **Unit tests**: Fast, isolated tests using mocks
+- **Integration tests**: Test with real database using Docker
+- **Coverage**: Configured thresholds must be met
+- **BDD tests**: Feature-based testing with Cucumber
+
+## Local Development Setup
+
+1. Ensure MySQL is running (use docker-compose):
+   ```bash
+   docker-compose up -d mysql
+   ```
+
+2. Run database migrations:
+   ```bash
+   npm run migrate
+   ```
+
+3. Start the service:
+   ```bash
+   npm run start:dev
+   ```
+
+4. Service available at: http://localhost:3000
+   - API docs: http://localhost:3000/api/documentation
+   - Health: http://localhost:3000/health
