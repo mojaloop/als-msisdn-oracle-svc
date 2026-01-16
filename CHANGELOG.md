@@ -1,4 +1,12 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.28](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.27...v0.0.28) (2026-01-16)
+
+
+### Chore
+
+* **sbom:** update sbom [skip ci] ([5daa9c0](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/5daa9c011e5f345819bfad4598f52e813525dca5))
+* update dependencies and security patches ([#44](https://github.com/mojaloop/als-msisdn-oracle-svc/issues/44)) ([4b5cc68](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/4b5cc681bc3276bf6d69d62eaac119022c162662))
+
 ### [0.0.27](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.26...v0.0.27) (2025-10-16)
 
 

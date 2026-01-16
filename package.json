@@ -1,6 +1,6 @@
 {
   "name": "@mojaloop/als-msisdn-oracle-svc",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "An Account Lookup Service Oracle for MSISDN identifiers",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -164,7 +164,7 @@
       "yargs-parser": "21.1.1"
     },
     "jsonpointer": "5.0.0",
-        "qs": "6.14.1",
+    "qs": "6.14.1",
     "validator": "13.15.22",
     "glob@10.4.5": "10.5.0",
     "glob@11.0.3": "11.1.0",
