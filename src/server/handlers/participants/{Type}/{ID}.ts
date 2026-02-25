@@ -7,7 +7,7 @@ export async function get(_context: Context, request: Request, h: ResponseToolki
   const { Type, ID } = request.params
 
   const controller = createParticipantController(request.server.app)
-  const subType = request.query?.partySubIdOrType
+  const subType = request.query?.partySubIdOrType as string | undefined
   const { result, statusCode } = subType
     ? await controller.handleGetPartyById(Type, ID, subType)
     : await controller.handleGetPartyById(Type, ID)
