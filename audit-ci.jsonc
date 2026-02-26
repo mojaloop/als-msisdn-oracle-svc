@@ -8,7 +8,6 @@
     "GHSA-xffm-g5w8-qvg7",
     "GHSA-2g4f-4pwh-qvx6",
     "GHSA-43fc-jf86-j433",
-    "GHSA-xxjr-mmjv-4gpg",
-    "GHSA-3ppc-4f35-3m26" // minimatch ReDoS - fix requires v10 (major version break), unfixable via override
+    "GHSA-xxjr-mmjv-4gpg"
   ]
 }
