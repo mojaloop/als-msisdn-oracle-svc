@@ -1,4 +1,6 @@
 disabled: false
+scan-type: source
+
 ignore:
   - vulnerability: CVE-2025-46394
     reason: No fixes to busybox apk available as of 2025-10-16 on Dockerfile base image 22.20.0-alpine3.22
