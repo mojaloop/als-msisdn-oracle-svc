@@ -792,38 +792,9 @@ components:
       maxLength: 128
       description: Identifier of the Party.
       example: '16135551212'
-    Extension-2:
-      title: Extension
-      type: object
-      additionalProperties: false
-      description: Data model for the complex type Extension.
-      properties:
-        key:
-          $ref: '#/components/schemas/ExtensionKey'
-        value:
-          $ref: '#/components/schemas/ExtensionValue'
-      required:
-        - key
-        - value
-    ExtensionList-2:
-      title: ExtensionList
-      type: object
-      additionalProperties: false
-      description: Data model for the complex type ExtensionList. An optional list of extensions, specific to deployment.
-      properties:
-        extension:
-          type: array
-          items:
-            $ref: '#/components/schemas/Extension-2'
-          minItems: 1
-          maxItems: 16
-          description: Number of Extension elements.
-      required:
-        - extension
     PartyIdInfo:
       title: PartyIdInfo
       type: object
-      additionalProperties: false
       description: Data model for the complex type PartyIdInfo. An ExtensionList element has been added to this reqeust in version v1.1
       properties:
         partyIdType:
@@ -835,14 +806,13 @@ components:
         fspId:
           $ref: '#/components/schemas/FspId'
         extensionList:
-          $ref: '#/components/schemas/ExtensionList-2'
+          $ref: '#/components/schemas/ExtensionList'
       required:
         - partyIdType
         - partyIdentifier
     ParticipantsPostRequest:
       title: ParticipantsPostRequest
       type: object
-      additionalProperties: false
       description: The object sent in the POST /participants request.
       properties:
         requestId:
@@ -859,37 +829,20 @@ components:
       required:
         - requestId
         - partyList
-    ErrorInformation-2:
-      title: ErrorInformation
-      type: object
-      additionalProperties: false
-      description: Data model for the complex type ErrorInformation.
-      properties:
-        errorCode:
-          $ref: '#/components/schemas/ErrorCode'
-        errorDescription:
-          $ref: '#/components/schemas/ErrorDescription'
-        extensionList:
-          $ref: '#/components/schemas/ExtensionList-2'
-      required:
-        - errorCode
-        - errorDescription
     PartyResult:
       title: PartyResult
       type: object
-      additionalProperties: false
       description: Data model for the complex type PartyResult.
       properties:
         partyId:
           $ref: '#/components/schemas/PartyIdInfo'
         errorInformation:
-          $ref: '#/components/schemas/ErrorInformation-2'
+          $ref: '#/components/schemas/ErrorInformation'
       required:
         - partyId
     ParticipantsIDPutResponse:
       title: ParticipantsIDPutResponse
       type: object
-      additionalProperties: false
       description: The object sent in the PUT /participants/{ID} callback.
       properties:
         partyList:
