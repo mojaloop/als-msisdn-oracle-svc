@@ -11,7 +11,7 @@ export const handlePostBulk = async (_context: Context, req: Request, h: Respons
   const controller = createParticipantController(req.server.app)
   const { result, statusCode } = await controller.handleBulkCreate(
     req.payload as PostParticipantsBulkRequest,
-    req.headers[FSPIOP.SOURCE]
+    req.headers[FSPIOP.SOURCE] as string
   )
 
   return h.response(result).code(statusCode)

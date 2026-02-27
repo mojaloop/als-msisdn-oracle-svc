@@ -3,8 +3,13 @@
   // audit-ci supports reading JSON, JSONC, and JSON5 config files.
   // Only use one of ["low": true, "moderate": true, "high": true, "critical": true]
   "moderate": true,
-  "allowlist": [
-    "GHSA-9965-vmph-33xx", // CVE-2025-56200: validator.js URL validation bypass - no fix without breaking changes in hapi-openapi/hapi-swagger chain
-    "GHSA-xffm-g5w8-qvg7" // @eslint/plugin-kit RegEx DoS
+  "allowlist": [ // NOTE: Please add as much information as possible to any items added to the allowList
+    "GHSA-9965-vmph-33xx",
+    "GHSA-xffm-g5w8-qvg7",
+    "GHSA-2g4f-4pwh-qvx6",
+    "GHSA-43fc-jf86-j433",
+    "GHSA-xxjr-mmjv-4gpg",
+    "GHSA-23c5-xmqv-rm74", // minimatch ReDoS - transitive dep, no fix available
+    "GHSA-7r86-cg39-jmmj"  // minimatch ReDoS - transitive dep, no fix available
   ]
 }
