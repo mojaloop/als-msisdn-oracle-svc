@@ -1,0 +1,53 @@
+/*****
+ License
+ --------------
+ Copyright © 2020-2025 Mojaloop Foundation
+ The Mojaloop files are made available by the 2020-2025 Mojaloop Foundation under the Apache License, Version 2.0 (the "License") and you may not use these files except in compliance with the License. You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, the Mojaloop files are distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+ Contributors
+ --------------
+ This is the official list of the Mojaloop project contributors for this file.
+ Names of the original copyright holders (individuals or organizations)
+ should be listed with a '*' in the first column. People who have
+ contributed from an organization can be listed under the organization
+ that actually holds the copyright for their contributions (see the
+ Mojaloop Foundation organization for an example). Those individuals should have
+ their names indented and be marked with a '-'. Email address can be added
+ optionally within square brackets <email>.
+ * Mojaloop Foundation
+
+ * Vijay Kumar Guthi <vijaya.guthi@infitx.com>
+
+ --------------
+ ******/
+
+import Boom from '@hapi/boom'
+import { Lifecycle } from '@hapi/hapi'
+import { Logger } from '@mojaloop/sdk-standard-components'
+
+export default function onValidateFail(logger: Logger.SdkLogger, err?: Error): Lifecycle.ReturnValue {
+  // istanbul ignore next
+  const error = err || new Error('Validation Error')
+  logger.error('onValidateFail error: ', error)
+
+  // Check if this is a route/path validation error (missing required path parameters)
+  // These should return 404 to be consistent with account-lookup-service
+  if (
+    error.message &&
+    (error.message.includes('Invalid request path') ||
+      error.message.includes('Missing required') ||
+      error.message.includes('Unknown route') ||
+      error.message.includes('no route matches request'))
+  ) {
+    throw Boom.notFound('Unknown URI', {
+      errorInformation: {
+        errorCode: '3002',
+        errorDescription: 'Unknown URI'
+      }
+    })
+  }
+
+  // For other validation errors, return 400 Bad Request
+  throw Boom.badRequest(error.message)
+}

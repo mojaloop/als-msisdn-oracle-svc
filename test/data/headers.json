@@ -1,0 +1,7 @@
+{
+    "fspiop-source": "als",
+    "fspiop-destination": "als-msisdn-oracle-svc",
+    "date": "Thu, 23 Jan 2020 10:22:12 GMT",
+    "accept": "application/vnd.interoperability.participants+json;version=1.1",
+    "content-type": "application/vnd.interoperability.participants+json;version=1.1"
+}
