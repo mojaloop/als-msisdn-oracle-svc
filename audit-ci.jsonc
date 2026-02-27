@@ -8,6 +8,8 @@
     "GHSA-xffm-g5w8-qvg7",
     "GHSA-2g4f-4pwh-qvx6",
     "GHSA-43fc-jf86-j433",
-    "GHSA-xxjr-mmjv-4gpg"
+    "GHSA-xxjr-mmjv-4gpg",
+    "GHSA-23c5-xmqv-rm74", // minimatch ReDoS - transitive dep, no fix available
+    "GHSA-7r86-cg39-jmmj"  // minimatch ReDoS - transitive dep, no fix available
   ]
 }
