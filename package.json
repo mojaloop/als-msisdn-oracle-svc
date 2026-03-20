@@ -97,7 +97,7 @@
     "@typescript-eslint/parser": "^8.56.1",
     "add": "^2.0.6",
     "audit-ci": "^7.1.0",
-    "axios": "1.13.5",
+    "axios": "1.13.6",
     "babel-jest": "^30.2.0",
     "eslint": "^10.0.2",
     "eslint-config-prettier": "10.1.8",
@@ -170,9 +170,12 @@
     "glob@10.4.5": "10.5.0",
     "glob@11.0.3": "11.1.0",
     "js-yaml": "4.1.1",
-    "tar": "7.5.8",
-    "fast-xml-parser": "5.3.6",
+    "tar": "7.5.12",
+    "fast-xml-parser": "5.5.7",
     "lodash": "4.17.23",
-    "undici": "7.18.2"
+    "undici": "7.24.5",
+    "immutable": "5.1.5",
+    "lodash-es": "4.17.23",
+    "axios": "1.13.6"
   }
 }
