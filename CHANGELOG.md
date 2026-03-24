@@ -1,4 +1,12 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.29](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.28...v0.0.29) (2026-03-24)
+
+
+### Chore
+
+* add private:true to prevent npm publish ([#4384](https://github.com/mojaloop/als-msisdn-oracle-svc/issues/4384)) ([#50](https://github.com/mojaloop/als-msisdn-oracle-svc/issues/50)) ([2a384d2](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/2a384d237b0c8c96fdd8a5ff21604618fb128968))
+* maintenance updates ([#49](https://github.com/mojaloop/als-msisdn-oracle-svc/issues/49)) ([d63d1ab](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/d63d1abd9b1b96fdeda90506e6e941203af9125a))
+
 ### [0.0.28](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.27...v0.0.28) (2026-01-16)
 
 

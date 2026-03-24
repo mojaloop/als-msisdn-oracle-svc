@@ -1,6 +1,6 @@
 {
   "name": "@mojaloop/als-msisdn-oracle-svc",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "private": true,
   "description": "An Account Lookup Service Oracle for MSISDN identifiers",
   "main": "dist/src/index.js",
