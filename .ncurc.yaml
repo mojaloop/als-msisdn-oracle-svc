@@ -1,0 +1,8 @@
+## Add a comment for each rejected upgrade.
+reject: [
+  # @types/node 26.x changes typings that surface TS2345 "unknown" errors in
+  # src/server/handlers/participants; hold on the 25.x line main pins.
+  # Policy note: runtime is node 24, types ideally track the runtime major.
+  # Reproduced 2026-08-27 [mojaloop/#4479].
+  "@types/node",
+]
