@@ -1,0 +1,10 @@
+{
+  "reject": [
+    "@types/node",
+    "why-types-node: 26.x changes typings that surface TS2345 unknown errors in the participants handlers; hold on the 25.x line main pins (carried over from the yaml config, reproduced 2026-08-27)",
+    "typescript",
+    "why-typescript: 7.x ships Go-built tsgo binaries that make the CircleCI Grype source scan report High Go stdlib CVEs, and the ts lint parser peer range tops out below 6.1 (carried over from the js config)",
+    "ts-jest",
+    "why-ts-jest: 29.4.10 started honouring moduleResolution nodeNext with per-import resolutionMode, which makes namespace-style type references resolve to a package's ESM d.ts and fail with TS2503; hold at 29.4.6 until the sources use named type imports (reproduced 2026-09-18 in another repo)"
+  ]
+}
