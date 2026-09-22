@@ -88,7 +88,7 @@
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
     "@jest/globals": "^30.5.2",
-    "@redocly/cli": "2.54.1",
+    "@redocly/cli": "2.54.2",
     "@types/convict": "^6.1.6",
     "@types/jest": "30.0.0",
     "@types/node": "^26.6.2",
