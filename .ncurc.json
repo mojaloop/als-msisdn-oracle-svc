@@ -1,0 +1,8 @@
+{
+  "reject": [
+    "@types/node",
+    "why-types-node: 26.x changes typings that surface TS2345 unknown errors in the participants handlers; hold on the 25.x line main pins (carried over from the yaml config, reproduced 2026-08-27)",
+    "typescript",
+    "why-typescript: 7.0.2 fails npm install with ERESOLVE because the ts lint parser 8.72 declares a peer range of typescript <6.1.0, and its Go-built tsgo binaries trip the Grype source scan (re-tested 2026-10-20)"
+  ]
+}
