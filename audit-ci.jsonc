@@ -4,5 +4,12 @@
   // Only use one of ["low": true, "moderate": true, "high": true, "critical": true]
   "moderate": true,
   "allowlist": [ // NOTE: Please add as much information as possible to any items added to the allowList
+    {
+      "GHSA-g3hv-75wg-m249": {
+        "active": true,
+        "notes": "minimatch globparts DoS, fixed only in minimatch 11 (named-export API). The 10.x copies are overridden to 11.0.4. The 3.x copies are pinned by npm-run-all (script runner used by the npm start scripts only) and dotgitignore (standard-version); the 5.x copies by @redocly/openapi-core 1.34 (via @mojaloop/api-snippets) and filelist (jake, via shins). All of them call minimatch as a function and cannot take 11; lint, test, release and codegen tooling only, not reachable at runtime. Reassess when they move to minimatch 11.",
+        "expiry": "2026-12-31"
+      }
+    }
   ]
 }
