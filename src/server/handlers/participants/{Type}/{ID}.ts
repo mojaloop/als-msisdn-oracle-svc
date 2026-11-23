@@ -4,7 +4,7 @@ import { createParticipantController } from '~/domain/createParticipantControlle
 import * as Types from '~/interface/types'
 
 export async function get(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-  const { Type, ID } = request.params
+  const { Type, ID } = request.params as Record<string, string>
 
   const controller = createParticipantController(request.server.app)
   const subType = request.query?.partySubIdOrType as string | undefined
@@ -16,7 +16,7 @@ export async function get(_context: Context, request: Request, h: ResponseToolki
 }
 
 export async function post(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-  const { Type, ID } = request.params
+  const { Type, ID } = request.params as Record<string, string>
 
   const { result, statusCode } = await createParticipantController(request.server.app).handlePostParty(
     Type,
@@ -28,7 +28,7 @@ export async function post(_context: Context, request: Request, h: ResponseToolk
 }
 
 export async function put(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-  const { Type, ID } = request.params
+  const { Type, ID } = request.params as Record<string, string>
 
   const { result, statusCode } = await createParticipantController(request.server.app).handlePutParty(
     Type,
@@ -41,7 +41,7 @@ export async function put(_context: Context, request: Request, h: ResponseToolki
 }
 
 export async function del(_context: Context, request: Request, h: ResponseToolkit): Promise<ResponseObject> {
-  const { Type, ID } = request.params
+  const { Type, ID } = request.params as Record<string, string>
 
   const { result, statusCode } = await createParticipantController(request.server.app).handleDeleteParty(Type, ID)
 
