@@ -1,4 +1,11 @@
 # Changelog: [mojaloop/als-msisdn-oracle-svc](https://github.com/mojaloop/als-msisdn-oracle-svc)
+### [0.0.30](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.29...v0.0.30) (2026-11-23)
+
+
+### Bug Fixes
+
+* **security:** patch 72 vulnerabilities + update orb, docker ([#52](https://github.com/mojaloop/als-msisdn-oracle-svc/issues/52)) ([7da9a10](https://github.com/mojaloop/als-msisdn-oracle-svc/commit/7da9a100ee80c57522f44060afdca57b802c73b9))
+
 ### [0.0.29](https://github.com/mojaloop/als-msisdn-oracle-svc/compare/v0.0.28...v0.0.29) (2026-03-24)
 
 
