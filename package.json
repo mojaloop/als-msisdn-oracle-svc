@@ -107,7 +107,7 @@
     "jest": "30.5.2",
     "jest-cucumber": "^4.5.0",
     "jest-junit": "17.0.0",
-    "lint-staged": "^17.6.1",
+    "lint-staged": "^17.6.2",
     "multi-file-swagger": "^2.3.0",
     "nodemon": "^3.1.14",
     "npm-check-updates": "23.1.1",
